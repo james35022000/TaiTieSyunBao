@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">TrainOrderSystem</string>
+    <string name="main_tab_name">首頁</string>
+    <string name="menu_tab_name">餐點</string>
+    <string name="like_tab_name">喜歡</string>
+    <string name="sub_tab_name">建議</string>
+
+</resources>
