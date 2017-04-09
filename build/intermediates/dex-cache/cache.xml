@@ -3,165 +3,48 @@
 
     <item
         is-multidex="true"
-        jar="C:\Users\Jack-PC\.android\build-cache\aa5e4316e9782b3524e443c7d21955714ca7595f\output\jars\classes.jar"
+        jar="C:\Users\Jack-PC\Documents\GitHub\TrainOrderSystem\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="c2c594cace5d83a3227b2b6e658ecbfd586d3ed9">
-        <dex dex="C:\Users\Jack-PC\Desktop\TrainOrderSystem\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_412e1914ad830abb60bb04c4187450f7ad48c613\classes.dex" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\Jack-PC\.android\build-cache\c14610414ecee301053d18dfded0141d54c047a8\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.0"
-        sha1="67bd36ee9340ec7c254108936ad16b24bed160cc">
-        <dex dex="C:\Users\Jack-PC\Desktop\TrainOrderSystem\app\build\intermediates\pre-dexed\debug\classes_8a83799396c91e756ba51ca07c79c498f79adaee.jar" />
+        sha1="178e4bf31642f549f41fc7094626c8e8155ddb83">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TrainOrderSystem\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_ef3446531b72e80a62d175c9790e6d96bbf2c812\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\Jack-PC\Desktop\TrainOrderSystem\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jar="C:\Users\Jack-PC\.android\build-cache\baf4e51670289db138159ebe446fb1a605b84b35\output\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="5a0f3b75991319cbf5d6fe140e063870f41412ff">
-        <dex dex="C:\Users\Jack-PC\Desktop\TrainOrderSystem\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_df0392a4371ead1fe327b3e632f13ecd988300ac\classes.dex" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\Jack-PC\.android\build-cache\aa5e4316e9782b3524e443c7d21955714ca7595f\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.0"
-        sha1="c2c594cace5d83a3227b2b6e658ecbfd586d3ed9">
-        <dex dex="C:\Users\Jack-PC\Desktop\TrainOrderSystem\app\build\intermediates\pre-dexed\debug\classes_412e1914ad830abb60bb04c4187450f7ad48c613.jar" />
+        sha1="5326d9a850d491714fef8cbfaa9ea3416f0bf0d2">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TrainOrderSystem\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_ea5a91b1cf9bf7d70f6b045def8a7d0c309a5ec3\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\Jack-PC\.android\build-cache\c14610414ecee301053d18dfded0141d54c047a8\output\jars\classes.jar"
+        jar="C:\Users\Jack-PC\.android\build-cache\1c6e45e4204ce731b17cec0b8ddd04adfeab617b\output\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="67bd36ee9340ec7c254108936ad16b24bed160cc">
-        <dex dex="C:\Users\Jack-PC\Desktop\TrainOrderSystem\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_8a83799396c91e756ba51ca07c79c498f79adaee\classes.dex" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\Jack-PC\.android\build-cache\2e5df575c65016e1ae5bdeb612c8741e6ddaf4e8\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.0"
-        sha1="de4db3785756bfb0915a9f59a9b3f2fea7407be4">
-        <dex dex="C:\Users\Jack-PC\Desktop\TrainOrderSystem\app\build\intermediates\pre-dexed\debug\classes_811c24c80503341162bdd0e4d4bab0bafabe04cb.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\Jack-PC\.android\build-cache\c14610414ecee301053d18dfded0141d54c047a8\output\jars\libs\internal_impl-23.4.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.0"
-        sha1="ea3c07504d2c8f4b13aa17c45c1b68ed9c1c3674">
-        <dex dex="C:\Users\Jack-PC\Desktop\TrainOrderSystem\app\build\intermediates\pre-dexed\debug\internal_impl-23.4.0_6f9262fc0f41aea15681cda8273f1d2cf577f1fa.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\Jack-PC\AppData\Local\Android\sdk\extras\m2repository\com\android\support\constraint\constraint-layout-solver\1.0.2\constraint-layout-solver-1.0.2.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.0"
-        sha1="b9cd8fc6bd15cb915735d34535db30ece0c44603">
-        <dex dex="C:\Users\Jack-PC\Desktop\TrainOrderSystem\app\build\intermediates\pre-dexed\debug\constraint-layout-solver-1.0.2_286e8dc9af83fc6997329d2af2f78c998a363938.jar" />
+        sha1="d9ecde39b460470e655de6e47c05573d2d5a8bfb">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TrainOrderSystem\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_26f86683ddb10a068ea501987ceb5fbb4904c205\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\Jack-PC\Desktop\TrainOrderSystem\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jar="C:\Users\Jack-PC\.android\build-cache\27e84513e37b05470a8764adca7bbcdc40775abb\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="ec75036c3c52e451d0cde50a5aedaf5fd32354a0">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TrainOrderSystem\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_7bb71a146a80935bbc0a057f4f821ce4982fbf52\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Jack-PC\Documents\GitHub\TrainOrderSystem\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
         sha1="510aa6efc159983dfbffa676a0dae37568c0a46f">
-        <dex dex="C:\Users\Jack-PC\Desktop\TrainOrderSystem\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_08d2ab66a913c2b8d55e87ec610d27eb8752474a\classes.dex" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\Jack-PC\.android\build-cache\f7f0d2a0e04c9bf20cff9618cc7b412f889d40c8\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.0"
-        sha1="44ee06abb66da30f5855e6bf54574e64cdcd982a">
-        <dex dex="C:\Users\Jack-PC\Desktop\TrainOrderSystem\app\build\intermediates\pre-dexed\debug\classes_3d4f75817d7a5d0931a9092b14d731da1b8e00fb.jar" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Jack-PC\AppData\Local\Android\sdk\extras\m2repository\com\android\support\constraint\constraint-layout-solver\1.0.2\constraint-layout-solver-1.0.2.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="b9cd8fc6bd15cb915735d34535db30ece0c44603">
-        <dex dex="C:\Users\Jack-PC\Desktop\TrainOrderSystem\app\build\intermediates\transforms\dex\debug\folders\1000\10\constraint-layout-solver-1.0.2_286e8dc9af83fc6997329d2af2f78c998a363938\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Jack-PC\.android\build-cache\f7f0d2a0e04c9bf20cff9618cc7b412f889d40c8\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="44ee06abb66da30f5855e6bf54574e64cdcd982a">
-        <dex dex="C:\Users\Jack-PC\Desktop\TrainOrderSystem\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_3d4f75817d7a5d0931a9092b14d731da1b8e00fb\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Jack-PC\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.4.0\support-annotations-23.4.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="ffbe55fdb2bb456b1485831706a9eac3300bb6b8">
-        <dex dex="C:\Users\Jack-PC\Desktop\TrainOrderSystem\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-23.4.0_350efdc2a58bd38ab3d1693e8f1f04aedd10e175\classes.dex" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\Jack-PC\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.4.0\support-annotations-23.4.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.0"
-        sha1="ffbe55fdb2bb456b1485831706a9eac3300bb6b8">
-        <dex dex="C:\Users\Jack-PC\Desktop\TrainOrderSystem\app\build\intermediates\pre-dexed\debug\support-annotations-23.4.0_350efdc2a58bd38ab3d1693e8f1f04aedd10e175.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\Jack-PC\.android\build-cache\2213015d67c30640693ab04f89f082c317f25da2\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.0"
-        sha1="548f06de403a9409f00554b3ee12a9fdea0e236c">
-        <dex dex="C:\Users\Jack-PC\Desktop\TrainOrderSystem\app\build\intermediates\pre-dexed\debug\classes_9fea2450f808218144e2766deb164170d5aa570b.jar" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Jack-PC\.android\build-cache\c14610414ecee301053d18dfded0141d54c047a8\output\jars\libs\internal_impl-23.4.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="ea3c07504d2c8f4b13aa17c45c1b68ed9c1c3674">
-        <dex dex="C:\Users\Jack-PC\Desktop\TrainOrderSystem\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-23.4.0_6f9262fc0f41aea15681cda8273f1d2cf577f1fa\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Jack-PC\.android\build-cache\2213015d67c30640693ab04f89f082c317f25da2\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="548f06de403a9409f00554b3ee12a9fdea0e236c">
-        <dex dex="C:\Users\Jack-PC\Desktop\TrainOrderSystem\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_9fea2450f808218144e2766deb164170d5aa570b\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Jack-PC\.android\build-cache\2e5df575c65016e1ae5bdeb612c8741e6ddaf4e8\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="de4db3785756bfb0915a9f59a9b3f2fea7407be4">
-        <dex dex="C:\Users\Jack-PC\Desktop\TrainOrderSystem\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_811c24c80503341162bdd0e4d4bab0bafabe04cb\classes.dex" />
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TrainOrderSystem\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_86d5bc09d546c0e312ecaa4a13a4d735696825a1\classes.dex" />
     </item>
 
 </items>

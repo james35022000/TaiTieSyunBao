@@ -1,7 +1,6 @@
 package com.example.jack_pc.trainordersystem;
 
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v4.view.ViewPager;
@@ -97,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         fragmentList.add(new SugFragment());
 
         viewPager.addOnPageChangeListener(this);
-        viewPager.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(), fragmentList));
+        viewPager.setAdapter(new MainPagerAdapter(getSupportFragmentManager(), fragmentList));
     }
 
 
