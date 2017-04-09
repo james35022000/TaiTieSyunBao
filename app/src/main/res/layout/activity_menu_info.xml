@@ -1,66 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/menu_cardView"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:clickable="true"
-    android:foreground="?android:attr/selectableItemBackground"
-    android:longClickable="true"
-    android:orientation="horizontal"
-    card_view:cardBackgroundColor="@android:color/white"
-    card_view:cardCornerRadius="10dp"
-    card_view:cardElevation="5dp"
-    card_view:cardPreventCornerOverlap="true"
-    card_view:cardUseCompatPadding="true"
-    card_view:contentPadding="7dp">
 
-    <LinearLayout
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/menu_activity_toolbar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:minHeight="?attr/actionBarSize"
+        android:background="?attr/colorPrimary">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity = "center"
+            android:textSize="20sp"
+            android:id="@+id/toolbar_title" />
+
+    </android.support.v7.widget.Toolbar>
+
+
+    <android.support.v7.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/info_activ_cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:longClickable="true"
+        android:orientation="horizontal"
+        card_view:cardBackgroundColor="@android:color/white"
+        card_view:cardCornerRadius="10dp"
+        card_view:cardElevation="5dp"
+        card_view:cardPreventCornerOverlap="true"
+        card_view:cardUseCompatPadding="true"
+        card_view:contentPadding="7dp">
 
-        <ImageView
-            android:id="@+id/img_cardView"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:scaleType="fitXY" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/img_cardView"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:scaleType="fitXY" />
 
-            <LinearLayout
-                android:id="@+id/info_layout"
+            <TextView
+                android:id="@+id/price_cardView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:orientation="vertical"
-                android:layout_marginBottom="20dp">
-
-                <TextView
-                    android:id="@+id/name_cardView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="24sp" />
-
-                <TextView
-                    android:id="@+id/price_cardView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp" />
-
-            </LinearLayout>
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/info_cardView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/info_layout"/>
+                android:layout_height="wrap_content"/>
 
-        </RelativeLayout>
+        </LinearLayout>
 
-    </LinearLayout>
-
-</android.support.v7.widget.CardView>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

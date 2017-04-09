@@ -10,6 +10,7 @@ import android.support.design.widget.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 /**
  * Created by Jack-PC on 2017/4/7.
@@ -21,7 +22,7 @@ public class MenuFragment extends Fragment {
     private MenuViewPager viewPager;
     private int menuTab[] = {R.string.rice_tab, R.string.drink_tab,
                                 R.string.snacks_tab, R.string.others_tab};
-    private List<Fragment> list = new ArrayList<Fragment>();
+    private List<Fragment> list = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -75,15 +76,12 @@ public class MenuFragment extends Fragment {
             }
 
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabUnselected(TabLayout.Tab tab) {  }
 
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabReselected(TabLayout.Tab tab) {  }
         });
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
     }
 }

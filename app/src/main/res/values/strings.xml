@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TrainOrderSystem</string>
+    <string name="app_name">台鐵尋飽</string>
     <string name="main_tab_name">首頁</string>
     <string name="menu_tab_name">餐點</string>
     <string name="like_tab_name">喜歡</string>
@@ -26,11 +26,11 @@
             <string name="rice4_info">「臺鐵‧北海道特色便當」是由臺北鐵路餐廳與北海道釧祥館雙方廚藝技術
                 交流、共同研發設計便當之菜色，內容採用兩地盛產之食材，主打北海道常用食材鮭魚、帆立貝及牛蒡
                 絲、海帶卷等日本風味小菜，另臺灣特色食材為臺鐵便當古早味的香滷排骨、滷蛋及國產蔬菜，讓消費
-                者一次就能體驗日本與臺灣鐵路便當2種不同的風味。※TEL:02-23619309(週一~週五09:00~17:00)、
-                02-23611909(國定假日、週六日09:00~17:00) </string>
+                者一次就能體驗日本與臺灣鐵路便當2種不同的風味。</string>
 
     <string name="drink_tab">飲料</string>
     <string name="snacks_tab">零食</string>
     <string name="others_tab">其他</string>
 
+    <string name="amount">數量</string>
 </resources>

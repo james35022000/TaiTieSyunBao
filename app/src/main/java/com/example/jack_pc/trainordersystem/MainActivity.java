@@ -18,6 +18,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener,
     TabHost.OnTabChangeListener{
 
+    public List<CardStruct> buyList = new ArrayList<>();
+
     private int tabImage[] = {R.drawable.main_tab_selector, R.drawable.menu_tab_selector,
                                 R.drawable.like_tab_selector, R.drawable.sug_tab_selector};
     private int tabText[] = {R.string.main_tab_name, R.string.menu_tab_name,

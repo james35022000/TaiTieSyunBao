@@ -61,10 +61,10 @@ public class RiceMenuFragment extends Fragment {
 
     private void getGoodsList() {
         // Now using static goods list temporarily (No connection)
-        list.add(new CardStruct(getActivity(), R.drawable.food1, R.string.rice1, 80, R.string.rice1_info, 10));
-        list.add(new CardStruct(getActivity(), R.drawable.food2, R.string.rice2, 80, R.string.rice2_info, 0));
-        list.add(new CardStruct(getActivity(), R.drawable.food3, R.string.rice3, 100, R.string.rice3_info, 3));
-        list.add(new CardStruct(getActivity(), R.drawable.food4, R.string.rice4, 150, R.string.rice4_info, 1));
+        list.add(new CardStruct(R.drawable.food1, R.string.rice1, 80, R.string.rice1_info, 10));
+        list.add(new CardStruct(R.drawable.food2, R.string.rice2, 80, R.string.rice2_info, 0));
+        list.add(new CardStruct(R.drawable.food3, R.string.rice3, 100, R.string.rice3_info, 3));
+        list.add(new CardStruct(R.drawable.food4, R.string.rice4, 150, R.string.rice4_info, 1));
 
     }
 
