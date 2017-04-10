@@ -1,8 +1,10 @@
 package com.example.jack_pc.trainordersystem;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,25 +20,30 @@ import java.util.Vector;
 
 public class MenuFragment extends Fragment {
 
+    private LikeFragment.onLikeListener likeListener;
     private TabLayout tabLayout;
     private MenuViewPager viewPager;
     private int menuTab[] = {R.string.rice_tab, R.string.drink_tab,
                                 R.string.snacks_tab, R.string.others_tab};
     private List<Fragment> list = new ArrayList<>();
+    private FloatingActionButton floatingActionButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.menu_frg_layout, container, false);
+        likeListener = (LikeFragment.onLikeListener) getActivity();
         tabLayout = (TabLayout) view.findViewById(R.id.tabs);
         viewPager = (MenuViewPager) view.findViewById(R.id.pager_menu);
-        initTab();
-        initPage();
+        floatingActionButton = (FloatingActionButton) view.findViewById(R.id.menu_floatingActionButton);
         return view;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initTab();
+        initPage();
+        initListener();
     }
 
     @Override
@@ -65,10 +72,11 @@ public class MenuFragment extends Fragment {
         list.add(new OthersMenuFragment());
 
         viewPager.setAdapter(new MenuPagerAdapter(getChildFragmentManager(), list));
-        initListener();
+
     }
 
     private void initListener() {
+
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -83,5 +91,8 @@ public class MenuFragment extends Fragment {
         });
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
+        //floatingActionButton.setOnClickListener();
     }
+
+
 }

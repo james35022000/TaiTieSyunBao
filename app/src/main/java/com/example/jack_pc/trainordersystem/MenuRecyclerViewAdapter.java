@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.AdapterView;
 
 import java.util.List;
+import java.util.Vector;
 
 /**
  * Created by Jack-PC on 2017/4/9.
@@ -23,12 +24,13 @@ import java.util.List;
 public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerViewAdapter.ViewHolder> {
     private Context context;
     private List<CardStruct> list;
-    private CardView cardView;
-    private Spinner spinner;
+    private LikeFragment.onLikeListener likeListener;
 
-    public MenuRecyclerViewAdapter(Context context, List<CardStruct> list) {
+    public MenuRecyclerViewAdapter(Context context, List<CardStruct> list
+            , LikeFragment.onLikeListener likeListener) {
         this.context = context;
         this.list = list;
+        this.likeListener = likeListener;
     }
 
     @Override
@@ -36,45 +38,30 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.menu_card_view, viewGroup, false);
 
-        cardView = (CardView) v.findViewById(R.id.menu_cardView);
-        spinner= (Spinner) v.findViewById(R.id.amount_spinner);
-
-
-        final ImageView imageView = (ImageView) v.findViewById(R.id.like_imageView);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(imageView.isSelected()) {
-                    imageView.setSelected(false);
-                }
-                else {
-                    imageView.setSelected(true);
-                }
-            }
-        });
-
         return new ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int index) {
-        viewHolder.img_cardView.setImageResource(list.get(index).getImageID(context));
-        viewHolder.name_cardView.setText(list.get(index).getName(context));
-        viewHolder.price_cardView.setText(list.get(index).getPrice(context) + "元");
+
+
+        viewHolder.pic_imageView.setImageResource(list.get(index).getImageID(context));
+        viewHolder.name_textView.setText(list.get(index).getName(context));
+        viewHolder.price_textView.setText(list.get(index).getPrice(context) + "元");
         ArrayAdapter<String> amountAdapter = new ArrayAdapter<String>(context
                 , R.layout.spinner_center_item, list.get(index).getAmountList(context));
         amountAdapter.setDropDownViewResource(R.layout.spinner_center_item);
-        viewHolder.amount_cardView.setAdapter(amountAdapter);
 
-        initListener(index);
+        setLikeState(viewHolder, index);
+        initListener(viewHolder, index);
 
         // Set MarginBottom of the last card in order not to cover the Like bottom.
         if(index == list.size()-1) {
-            ViewGroup.LayoutParams layoutParams = cardView.getLayoutParams();
+            ViewGroup.LayoutParams layoutParams = viewHolder.menu_cardView.getLayoutParams();
             ViewGroup.MarginLayoutParams marginLayoutParams =
                                                 (ViewGroup.MarginLayoutParams) layoutParams;
             marginLayoutParams.setMargins(0, 0, 0, 190);
-            cardView.setLayoutParams(marginLayoutParams);
+            viewHolder.menu_cardView.setLayoutParams(marginLayoutParams);
         }
     }
 
@@ -84,21 +71,23 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public ImageView img_cardView;
-        public TextView name_cardView, price_cardView;
-        public Spinner amount_cardView;
-
+        public CardView menu_cardView;
+        public ImageView pic_imageView, like_imageView;
+        public TextView name_textView, price_textView;
         public ViewHolder(View view) {
             super(view);
-            img_cardView = (ImageView) view.findViewById(R.id.pic_imageView);
-            name_cardView = (TextView) view.findViewById(R.id.name_textView);
-            price_cardView = (TextView) view.findViewById(R.id.price_textView);
-            amount_cardView = (Spinner) view.findViewById(R.id.amount_spinner);
+            pic_imageView = (ImageView) view.findViewById(R.id.pic_imageView);
+            menu_cardView = (CardView) view.findViewById(R.id.menu_cardView);
+            like_imageView = (ImageView) view.findViewById(R.id.like_imageView);
+            name_textView = (TextView) view.findViewById(R.id.name_textView);
+            price_textView = (TextView) view.findViewById(R.id.price_textView);
         }
     }
 
-    private void initListener(int index) {
+    private void initListener(ViewHolder viewHolder, int index) {
         final int j = index;
+        final ViewHolder v = viewHolder;
+
         View.OnClickListener clickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,16 +96,30 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
                 context.startActivity(intent);
             }
         };
-        cardView.setOnClickListener(clickListener);
+        v.menu_cardView.setOnClickListener(clickListener);
 
-        spinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener(){
-            public void onItemSelected(AdapterView adapterView, View view, int position, long id){
-                list.get(j).setAmount(position);
-                
-            }
-            public void onNothingSelected(AdapterView arg0) {
-                // Do nothing
+
+        v.like_imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(v.like_imageView.isSelected()) {
+                    v.like_imageView.setSelected(false);
+                    likeListener.delLikeList(list.get(j));
+                }
+                else {
+                    view.setSelected(true);
+                    likeListener.addLikeList(list.get(j));
+                }
             }
         });
+    }
+
+    private void setLikeState(ViewHolder viewHolder, int index) {
+        if(likeListener.isExist(list.get(index)) != -1) {
+            viewHolder.like_imageView.setSelected(true);
+        }
+        else {
+            viewHolder.like_imageView.setSelected(false);
+        }
     }
 }

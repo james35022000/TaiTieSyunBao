@@ -10,16 +10,18 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.lang.reflect.GenericArrayType;
+import org.w3c.dom.Text;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener,
-    TabHost.OnTabChangeListener, LikeFragment.onLikeListener{
+    TabHost.OnTabChangeListener, LikeFragment.onLikeListener {
 
-    public List<CardStruct> likeList = new ArrayList<>();
+    public Vector<CardStruct> likeList = new Vector<>();
     private int tabImage[] = {R.drawable.main_tab_selector, R.drawable.menu_tab_selector,
                                 R.drawable.like_tab_selector, R.drawable.sug_tab_selector};
     private int tabText[] = {R.string.main_tab_name, R.string.menu_tab_name,
@@ -28,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     private Class contentFragment[] = {MainFragment.class, MenuFragment.class,
                                         LikeFragment.class, SugFragment.class};
 
-    private List<Fragment> fragmentList = new ArrayList<Fragment>();
+    private List<Fragment> fragmentList = new ArrayList<>();
     private FragmentTabHost mTabHost;
     private ViewPager viewPager;
 
@@ -143,7 +145,8 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
      * Return likeList to other fragment.
      */
     @Override
-    public List<CardStruct> getLikeList() {
+    public Vector<CardStruct> getLikeList() {
+        if(likeList == null)  likeList = new Vector<>();
         return likeList;
     }
 
@@ -155,8 +158,53 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
      * Set likeList.
      */
     @Override
-    public void setLikeList(List<CardStruct> likeList) {
+    public void setLikeList(Vector<CardStruct> likeList) {
         this.likeList = likeList;
+    }
+
+    /**
+     * Declare in LikeFragment.
+     *
+     * @param cardStruct
+     *
+     * Add item to likeList.
+     */
+    @Override
+    public void addLikeList(CardStruct cardStruct) {
+        if(likeList == null)  likeList = new Vector<>();
+        if(isExist(cardStruct) == -1) {
+            likeList.add(cardStruct);
+        }
+    }
+
+    /**
+     *
+     * @param cardStruct
+     * @return true if remove item successfully. false if item not found.
+     */
+    @Override
+    public boolean delLikeList(CardStruct cardStruct) {
+        int index = isExist(cardStruct);
+        if(index >= 0) {
+            likeList.remove(index);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     *
+     * @param cardStruct
+     * @return the index of the exist item. If the item is not exist, return -1.
+     */
+    @Override
+    public int isExist(CardStruct cardStruct) {
+        for(int i = 0; i < likeList.size(); i++) {
+            if(likeList.get(i).getImageID(this) == cardStruct.getImageID(this)) {
+                return i;
+            }
+        }
+        return -1;
     }
 
 }

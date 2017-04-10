@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
+import java.util.Vector;
 
 /**
  * Created by Jack-PC on 2017/4/7.
@@ -17,14 +18,17 @@ import java.util.List;
 
 public class LikeFragment extends Fragment {
 
-    private List<CardStruct> likeList;
+    private Vector<CardStruct> likeList;
     private RecyclerView recyclerView;
     private LikeRecyclerViewAdapter adapter;
 
     public interface onLikeListener {
 
-        List<CardStruct> getLikeList();
-        public void setLikeList(List<CardStruct> list);
+        Vector<CardStruct> getLikeList();
+        void setLikeList(Vector<CardStruct> list);
+        void addLikeList(CardStruct cardStruct);
+        boolean delLikeList(CardStruct cardStruct);
+        int isExist(CardStruct cardStruct);
 
     }
 
@@ -53,7 +57,7 @@ public class LikeFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
         likeList = likeListener.getLikeList();
-        adapter = new LikeRecyclerViewAdapter(getActivity(), likeList);
+        adapter = new LikeRecyclerViewAdapter(getActivity(), likeListener);
         recyclerView.setAdapter(adapter);
     }
 

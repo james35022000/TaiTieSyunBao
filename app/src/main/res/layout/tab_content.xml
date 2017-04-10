@@ -12,7 +12,9 @@
 
     <TextView
         android:id="@+id/tab_textView"
+        android:textSize="12sp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textColor="@drawable/bottom_tab_color_selector"/>
 
 </LinearLayout>

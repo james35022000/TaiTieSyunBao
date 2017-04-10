@@ -1,5 +1,6 @@
 package com.example.jack_pc.trainordersystem;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
@@ -16,11 +17,20 @@ import java.util.ArrayList;
  * Created by Jack-PC on 2017/4/8.
  */
 
-public class RiceMenuFragment extends Fragment {
+public class RiceMenuFragment extends Fragment  {
 
+    private LikeFragment.onLikeListener likeListener;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
-    private ArrayList<CardStruct> list = new ArrayList<>();
+    static public ArrayList<CardStruct> list = new ArrayList<>();
+
+
+
+    @Override
+    public void onAttach(Context context){
+        super.onAttach(context);
+        likeListener = (LikeFragment.onLikeListener) context;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -37,7 +47,7 @@ public class RiceMenuFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
         getGoodsList();
-        adapter = new MenuRecyclerViewAdapter(getActivity(), list);
+        adapter = new MenuRecyclerViewAdapter(getActivity(), list, likeListener);
         recyclerView.setAdapter(adapter);
     }
 
@@ -59,11 +69,13 @@ public class RiceMenuFragment extends Fragment {
         if(list.size() == 4) {
             return;
         }
-        list.add(new CardStruct(R.drawable.food1, R.string.rice1, 80, R.string.rice1_info, 10));
-        list.add(new CardStruct(R.drawable.food2, R.string.rice2, 80, R.string.rice2_info, 0));
-        list.add(new CardStruct(R.drawable.food3, R.string.rice3, 100, R.string.rice3_info, 3));
-        list.add(new CardStruct(R.drawable.food4, R.string.rice4, 150, R.string.rice4_info, 1));
+        list.add(new CardStruct(R.drawable.food_1, R.string.rice1, 80, R.string.rice1_info, 10));
+        list.add(new CardStruct(R.drawable.food_2, R.string.rice2, 80, R.string.rice2_info, 0));
+        list.add(new CardStruct(R.drawable.food_3, R.string.rice3, 100, R.string.rice3_info, 3));
+        list.add(new CardStruct(R.drawable.food_4, R.string.rice4, 150, R.string.rice4_info, 1));
 
     }
+
+
 
 }

@@ -20,37 +20,36 @@ import java.util.List;
 public class LikeRecyclerViewAdapter extends RecyclerView.Adapter<LikeRecyclerViewAdapter.ViewHolder> {
     private Context context;
     private List<CardStruct> list;
-    private CardView like_cardView;
-    private ImageView pic_imageView, like_imageView;
-    private TextView name_textView, price_textView;
+    private LikeFragment.onLikeListener likeListener;
 
 
-    public LikeRecyclerViewAdapter(Context context, List<CardStruct> list) {
+    public LikeRecyclerViewAdapter(Context context, LikeFragment.onLikeListener likeListener) {
         this.context = context;
-        this.list = list;
+        this.likeListener = likeListener;
+        this.list = likeListener.getLikeList();
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.like_card_view, viewGroup, false);
-
-        like_cardView = (CardView) v.findViewById(R.id.like_cardView);
-        pic_imageView = (ImageView) v.findViewById(R.id.pic_imageView);
-        like_imageView = (ImageView) v.findViewById(R.id.like_imageView);
-        name_textView = (TextView) v.findViewById(R.id.name_textView);
-        price_textView = (TextView) v.findViewById(R.id.price_textView);
-
+        //list = likeListener.getLikeList();
         return new ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int index) {
-        pic_imageView.setImageResource(list.get(index).getImageID(context));
-        name_textView.setText(list.get(index).getName(context));
-        price_textView.setText(list.get(index).getPrice(context) + "元");
 
-        initListener(index);
+        initListener(viewHolder, index);
+        setLikeState(viewHolder, index);
+
+        if(list.size() != likeListener.getLikeList().size()) {
+            list = likeListener.getLikeList();
+        }
+        viewHolder.pic_imageView.setImageResource(list.get(index).getImageID(context));
+        viewHolder.name_textView.setText(list.get(index).getName(context));
+        viewHolder.price_textView.setText(list.get(index).getPrice(context) + "元");
+
     }
 
     @Override
@@ -59,13 +58,22 @@ public class LikeRecyclerViewAdapter extends RecyclerView.Adapter<LikeRecyclerVi
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+        public CardView like_cardView;
+        public ImageView pic_imageView, like_imageView;
+        public TextView name_textView, price_textView;
         public ViewHolder(View view) {
             super(view);
+            like_cardView = (CardView) view.findViewById(R.id.like_cardView);
+            pic_imageView = (ImageView) view.findViewById(R.id.pic_imageView);
+            like_imageView = (ImageView) view.findViewById(R.id.like_imageView);
+            name_textView = (TextView) view.findViewById(R.id.name_textView);
+            price_textView = (TextView) view.findViewById(R.id.price_textView);
         }
     }
 
-    private void initListener(int index) {
+    private void initListener(ViewHolder viewHolder, int index) {
         final int j = index;
+        final ViewHolder v = viewHolder;
         View.OnClickListener clickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,17 +82,29 @@ public class LikeRecyclerViewAdapter extends RecyclerView.Adapter<LikeRecyclerVi
                 context.startActivity(intent);
             }
         };
-        like_cardView.setOnClickListener(clickListener);
+        viewHolder.like_imageView.setOnClickListener(clickListener);
 
-        like_imageView.setOnClickListener(new View.OnClickListener() {
+        viewHolder.like_imageView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                if (like_imageView.isSelected()) {
-                    like_imageView.setSelected(false);
+            public void onClick(View view) {
+                if (v.like_imageView.isSelected()) {
+                    v.like_imageView.setSelected(false);
+                    likeListener.delLikeList(list.get(j));
                 } else {
-                    like_imageView.setSelected(true);
+                    v.like_imageView.setSelected(true);
+                    likeListener.addLikeList(list.get(j));
                 }
             }
         });
+    }
+
+
+    private void setLikeState(ViewHolder viewHolder, int index) {
+        if(likeListener.isExist(list.get(index)) != -1) {
+            viewHolder.like_imageView.setSelected(true);
+        }
+        else {
+            viewHolder.like_imageView.setSelected(false);
+        }
     }
 }
