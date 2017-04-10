@@ -17,6 +17,7 @@ public class CardStruct implements Serializable {
     private int info_StringID;
     private ArrayList<String> amountList;
     private int amount;
+    private boolean like;
 
     // Default constructor
     public CardStruct(int img_drawableID, int name_StringID, int price,
@@ -29,6 +30,7 @@ public class CardStruct implements Serializable {
         this.price = price;
         this.info_StringID = info_StringID;
         this.amount = 0;
+        this.like = false;
 
         maxAmount = maxAmount > 5? 5:maxAmount;
         for(int i = 0; i <= maxAmount; i++) {

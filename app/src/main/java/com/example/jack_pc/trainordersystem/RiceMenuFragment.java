@@ -24,8 +24,12 @@ public class RiceMenuFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.menu_sort_rice, container, false);
+        return inflater.inflate(R.layout.menu_sort_rice, container, false);
+    }
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         recyclerView = (RecyclerView) view.findViewById(R.id.rice_recyclerView);
         recyclerView.setHasFixedSize(true);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -35,15 +39,6 @@ public class RiceMenuFragment extends Fragment {
         getGoodsList();
         adapter = new MenuRecyclerViewAdapter(getActivity(), list);
         recyclerView.setAdapter(adapter);
-
-
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
     }
 
     @Override
@@ -61,6 +56,9 @@ public class RiceMenuFragment extends Fragment {
 
     private void getGoodsList() {
         // Now using static goods list temporarily (No connection)
+        if(list.size() == 4) {
+            return;
+        }
         list.add(new CardStruct(R.drawable.food1, R.string.rice1, 80, R.string.rice1_info, 10));
         list.add(new CardStruct(R.drawable.food2, R.string.rice2, 80, R.string.rice2_info, 0));
         list.add(new CardStruct(R.drawable.food3, R.string.rice3, 100, R.string.rice3_info, 3));

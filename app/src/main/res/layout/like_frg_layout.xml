@@ -4,11 +4,10 @@
     android:layout_height="match_parent"
     android:background="#ecf0f1">
 
-    <TextView
-        android:id="@+id/textView"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/like_recyclerView"
+        android:scrollbars="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="Like Fragment" />
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

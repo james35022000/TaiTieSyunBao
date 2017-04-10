@@ -2,9 +2,9 @@ package com.example.jack_pc.trainordersystem;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,10 +34,11 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.card_view, viewGroup, false);
+                .inflate(R.layout.menu_card_view, viewGroup, false);
 
         cardView = (CardView) v.findViewById(R.id.menu_cardView);
         spinner= (Spinner) v.findViewById(R.id.amount_spinner);
+
 
         final ImageView imageView = (ImageView) v.findViewById(R.id.like_imageView);
         imageView.setOnClickListener(new View.OnClickListener() {
@@ -67,6 +68,14 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
 
         initListener(index);
 
+        // Set MarginBottom of the last card in order not to cover the Like bottom.
+        if(index == list.size()-1) {
+            ViewGroup.LayoutParams layoutParams = cardView.getLayoutParams();
+            ViewGroup.MarginLayoutParams marginLayoutParams =
+                                                (ViewGroup.MarginLayoutParams) layoutParams;
+            marginLayoutParams.setMargins(0, 0, 0, 190);
+            cardView.setLayoutParams(marginLayoutParams);
+        }
     }
 
     @Override

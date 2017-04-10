@@ -12,14 +12,14 @@ import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.lang.reflect.GenericArrayType;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener,
-    TabHost.OnTabChangeListener{
+    TabHost.OnTabChangeListener, LikeFragment.onLikeListener{
 
-    public List<CardStruct> buyList = new ArrayList<>();
-
+    public List<CardStruct> likeList = new ArrayList<>();
     private int tabImage[] = {R.drawable.main_tab_selector, R.drawable.menu_tab_selector,
                                 R.drawable.like_tab_selector, R.drawable.sug_tab_selector};
     private int tabText[] = {R.string.main_tab_name, R.string.menu_tab_name,
@@ -38,8 +38,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        errorCheck();
-
         initActionBar();
         initUI();
         initPage();
@@ -51,12 +49,24 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     @Override
     public void onPageScrolled(int arg0, float arg1, int arg2) {    }
 
+    /**
+     *
+     * @param arg0
+     *
+     * Tab change with viewPager.
+     */
     @Override
     public void onPageSelected(int arg0) {
         mTabHost.setCurrentTab(arg0);
         setTitle(getResources().getString(tabText[arg0]));
     }
 
+    /**
+     *
+     * @param tabId
+     *
+     * ViewPager change with tab.
+     */
     @Override
     public void onTabChanged(String tabId) {
         int index = mTabHost.getCurrentTab();
@@ -64,19 +74,20 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         setTitle(getResources().getString(tabText[index]));
     }
 
-    private void errorCheck() {
-        if((tabImage.length != tabText.length) || (tabImage.length != contentFragment.length)) {
-            Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
-            System.exit(1);
-        }
-    }
-
+    /**
+     *
+     * Initialize toolbar.
+     */
     private void initActionBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.activity_main_toolbar);
         setTitle(getResources().getString(tabText[0]));
         setSupportActionBar(toolbar);
     }
 
+    /**
+     *
+     * Initialize tab at bottom.
+     */
     private void initUI() {
         viewPager = (ViewPager) findViewById(R.id.pager);
         mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
@@ -91,6 +102,11 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         }
     }
 
+
+    /**
+     *
+     * Initialize contents of each tab.
+     */
     private void initPage() {
         fragmentList.add(new MainFragment());
         fragmentList.add(new MenuFragment());
@@ -118,4 +134,29 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         textView.setText(tabText[index]);
         return view;
     }
+
+    /**
+     * Declare in LikeFragment.
+     *
+     * @return
+     *
+     * Return likeList to other fragment.
+     */
+    @Override
+    public List<CardStruct> getLikeList() {
+        return likeList;
+    }
+
+    /**
+     * Declare in LikeFragment.
+     *
+     * @param likeList
+     *
+     * Set likeList.
+     */
+    @Override
+    public void setLikeList(List<CardStruct> likeList) {
+        this.likeList = likeList;
+    }
+
 }
