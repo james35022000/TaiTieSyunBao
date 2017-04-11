@@ -1,7 +1,9 @@
 package com.example.jack_pc.trainordersystem;
 
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -19,20 +21,23 @@ import java.util.List;
 import java.util.Vector;
 
 public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener,
-    TabHost.OnTabChangeListener, LikeFragment.onLikeListener {
+    TabHost.OnTabChangeListener, LikeFragment.onLikeListener, MenuFragment.OnBuyItemListListener {
 
-    public Vector<CardStruct> likeList = new Vector<>();
+    public Vector<CardStruct> likeList = new Vector<>(), buyList = new Vector<>();
     private int tabImage[] = {R.drawable.main_tab_selector, R.drawable.menu_tab_selector,
                                 R.drawable.like_tab_selector, R.drawable.sug_tab_selector};
     private int tabText[] = {R.string.main_tab_name, R.string.menu_tab_name,
                                 R.string.like_tab_name, R.string.sub_tab_name};
+    private int toolbarImage[] = {R.drawable.main_tittle, R.drawable.menu_tittle,
+                                    R.drawable.like_tittle, R.drawable.sug_tittle};
     /* If adding new fragment, you also need to add the fragment in "initPage()" function. */
     private Class contentFragment[] = {MainFragment.class, MenuFragment.class,
                                         LikeFragment.class, SugFragment.class};
 
     private List<Fragment> fragmentList = new ArrayList<>();
     private FragmentTabHost mTabHost;
-    private ViewPager viewPager;
+    private MainViewPager viewPager;
+    private ImageView toolbar_icon;
 
 
     @Override
@@ -60,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     @Override
     public void onPageSelected(int arg0) {
         mTabHost.setCurrentTab(arg0);
-        setTitle(getResources().getString(tabText[arg0]));
+        toolbar_icon.setImageDrawable(getDrawable(toolbarImage[arg0]));
     }
 
     /**
@@ -73,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     public void onTabChanged(String tabId) {
         int index = mTabHost.getCurrentTab();
         viewPager.setCurrentItem(index);
-        setTitle(getResources().getString(tabText[index]));
+        toolbar_icon.setImageDrawable(getDrawable(toolbarImage[index]));
     }
 
     /**
@@ -81,8 +86,10 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
      * Initialize toolbar.
      */
     private void initActionBar() {
+        toolbar_icon = (ImageView) findViewById(R.id.toolbar_icon);
         Toolbar toolbar = (Toolbar) findViewById(R.id.activity_main_toolbar);
-        setTitle(getResources().getString(tabText[0]));
+        toolbar_icon.setImageDrawable(getDrawable(toolbarImage[0]));
+        setTitle("");
         setSupportActionBar(toolbar);
     }
 
@@ -91,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
      * Initialize tab at bottom.
      */
     private void initUI() {
-        viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager = (MainViewPager) findViewById(R.id.pager);
         mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
         mTabHost.setup(this, getSupportFragmentManager(), R.id.pager);
         mTabHost.getTabWidget().setDividerDrawable(null);
@@ -207,4 +214,32 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         return -1;
     }
 
+    @Override
+    public Vector<CardStruct> getList() {
+        return buyList;
+    }
+
+    @Override
+    public void addList(CardStruct cardStruct) {
+        delLikeList(cardStruct);
+        if(cardStruct.getAmount(null) == 0)  return;
+        buyList.add(cardStruct);
+    }
+
+    @Override
+    public void delList(CardStruct cardStruct) {
+        int index = isItemExist(cardStruct);
+        if(index == -1)  return;
+        buyList.remove(index);
+    }
+
+    @Override
+    public int isItemExist(CardStruct cardStruct) {
+        for(int i = 0; i < buyList.size(); i++) {
+            if(buyList.get(i).getImageID(null) == cardStruct.getImageID(null)) {
+                return i;
+            }
+        }
+        return -1;
+    }
 }

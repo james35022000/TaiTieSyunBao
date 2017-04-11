@@ -18,6 +18,7 @@ import java.util.ArrayList;
 public class DrinkMenuFragment extends Fragment {
 
     private LikeFragment.onLikeListener likeListener;
+    private MenuFragment.OnBuyItemListListener buyItemListListener;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     static public ArrayList<CardStruct> list = new ArrayList<>();
@@ -28,6 +29,7 @@ public class DrinkMenuFragment extends Fragment {
     public void onAttach(Context context){
         super.onAttach(context);
         likeListener = (LikeFragment.onLikeListener) context;
+        buyItemListListener = (MenuFragment.OnBuyItemListListener) context;
     }
 
     @Override
@@ -45,7 +47,7 @@ public class DrinkMenuFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
         getGoodsList();
-        adapter = new MenuRecyclerViewAdapter(getActivity(), list, likeListener);
+        adapter = new MenuRecyclerViewAdapter(getActivity(), list, likeListener, buyItemListListener);
         recyclerView.setAdapter(adapter);
     }
 

@@ -2,6 +2,13 @@ package com.example.jack_pc.trainordersystem;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
+import android.provider.ContactsContract;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.AdapterView;
+import android.widget.Toast;
 
 import java.util.List;
 import java.util.Vector;
@@ -25,20 +33,22 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
     private Context context;
     private List<CardStruct> list;
     private LikeFragment.onLikeListener likeListener;
+    private MenuFragment.OnBuyItemListListener buyItemListListener;
 
     public MenuRecyclerViewAdapter(Context context, List<CardStruct> list
-            , LikeFragment.onLikeListener likeListener) {
+            , LikeFragment.onLikeListener likeListener, MenuFragment.OnBuyItemListListener buyItemListListener) {
         this.context = context;
         this.list = list;
         this.likeListener = likeListener;
+        this.buyItemListListener = buyItemListListener;
     }
+
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext())
+        View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.menu_card_view, viewGroup, false);
-
-        return new ViewHolder(v);
+        return new ViewHolder(view);
     }
 
     @Override
@@ -70,36 +80,40 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
         return list == null ? 0 : list.size();
     }
 
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public CardView menu_cardView;
-        public ImageView pic_imageView, like_imageView;
-        public TextView name_textView, price_textView;
+        public ImageView pic_imageView, like_imageView, info_imageView, plus_imageView, minus_imageView;
+        public TextView name_textView, price_textView, amount_textView;
         public ViewHolder(View view) {
             super(view);
             pic_imageView = (ImageView) view.findViewById(R.id.pic_imageView);
             menu_cardView = (CardView) view.findViewById(R.id.menu_cardView);
             like_imageView = (ImageView) view.findViewById(R.id.like_imageView);
+            info_imageView = (ImageView) view.findViewById(R.id.info_imageView);
+            plus_imageView = (ImageView) view.findViewById(R.id.plus_imageView);
+            minus_imageView = (ImageView) view.findViewById(R.id.minus_imageView);
             name_textView = (TextView) view.findViewById(R.id.name_textView);
             price_textView = (TextView) view.findViewById(R.id.price_textView);
+            amount_textView = (TextView) view.findViewById(R.id.amount_textView);
         }
     }
+
 
     private void initListener(ViewHolder viewHolder, int index) {
         final int j = index;
         final ViewHolder v = viewHolder;
 
-        View.OnClickListener clickListener = new View.OnClickListener() {
+        viewHolder.info_imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, MenuInfoActivity.class);
                 intent.putExtra("List", list.get(j));
                 context.startActivity(intent);
             }
-        };
-        v.menu_cardView.setOnClickListener(clickListener);
+        });
 
-
-        v.like_imageView.setOnClickListener(new View.OnClickListener() {
+        viewHolder.like_imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(v.like_imageView.isSelected()) {
@@ -112,6 +126,38 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
                 }
             }
         });
+
+        viewHolder.plus_imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int amount = Integer.valueOf(v.amount_textView.getText().toString());
+                if(amount < list.get(j).getAmount(null)) {
+                    v.amount_textView.setText(String.valueOf(amount + 1));
+                    list.get(j).setAmount(amount + 1);
+                    buyItemListListener.addList(list.get(j));
+                }
+                else {
+                    Toast.makeText(context, "已達到最大數量", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        viewHolder.minus_imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int amount = Integer.valueOf(v.amount_textView.getText().toString());
+                if(amount > 0) {
+                    v.amount_textView.setText(String.valueOf(amount - 1));
+                    list.get(j).setAmount(amount - 1);
+                    buyItemListListener.addList(list.get(j));
+                }
+                else {
+                    // null
+                }
+            }
+        });
+
+
     }
 
     private void setLikeState(ViewHolder viewHolder, int index) {

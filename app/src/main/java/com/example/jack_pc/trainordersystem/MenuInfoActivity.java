@@ -41,7 +41,7 @@ public class MenuInfoActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.menu_activity_toolbar);
         TextView textView = (TextView) findViewById(R.id.toolbar_title);
         textView.setText(cardStruct.getName(this));
-        toolbar.setNavigationIcon(R.drawable.remove_symbol);
+        toolbar.setNavigationIcon(R.drawable.close_icon);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

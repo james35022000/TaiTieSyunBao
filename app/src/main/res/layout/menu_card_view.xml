@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/menu_cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:clickable="true"
+    android:clickable="false"
     android:foreground="?android:attr/selectableItemBackground"
-    android:longClickable="true"
+    android:longClickable="false"
     android:orientation="horizontal"
     card_view:cardBackgroundColor="@android:color/white"
     card_view:cardCornerRadius="10dp"
@@ -31,9 +30,9 @@
                 android:id="@+id/name_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
                 android:layout_marginLeft="10dp"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/price_textView"
@@ -48,9 +47,10 @@
             android:id="@+id/pic_imageView"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
             android:scaleType="fitXY" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -60,25 +60,55 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:textSize="15sp"
-                android:clickable="true"
                 android:layout_marginRight="10dp"
-                android:text="@string/amount" />
+                android:layout_marginTop="5dp"
+                android:clickable="true"
+                android:text="@string/amount"
+                android:textSize="15sp" />
+
+            <ImageView
+                android:id="@+id/minus_imageView"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/amount"
+                android:clickable="true"
+                android:src="@drawable/minus_icon" />
 
             <TextView
-                android:visibility="gone"
                 android:id="@+id/amount_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="false"
-                android:layout_toRightOf="@+id/amount" />
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_toRightOf="@+id/minus_imageView"
+                android:text="0" />
+
+            <ImageView
+                android:id="@+id/plus_imageView"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/amount_textView"
+                android:clickable="true"
+                android:src="@drawable/add_icon" />
+
+            <ImageView
+                android:id="@+id/info_imageView"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginRight="5dp"
+                android:layout_toLeftOf="@+id/like_imageView"
+                android:clickable="true"
+                card_view:srcCompat="@drawable/info_icon" />
 
             <ImageView
                 android:id="@+id/like_imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerInParent="false"
                 android:layout_marginRight="10dp"

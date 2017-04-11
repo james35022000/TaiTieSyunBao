@@ -16,6 +16,7 @@ public class CardStruct implements Serializable {
     private int price;
     private int info_StringID;
     private ArrayList<String> amountList;
+    private int maxAmount;
     private int amount;
     private boolean like;
 
@@ -36,6 +37,7 @@ public class CardStruct implements Serializable {
         for(int i = 0; i <= maxAmount; i++) {
             this.amountList.add(String.valueOf(i));
         }
+        this.maxAmount = maxAmount;
     }
 
     public void setAmount(int amount) {
@@ -62,8 +64,8 @@ public class CardStruct implements Serializable {
         return amountList;
     }
 
-    public void getAmount() {
-
+    public int getAmount(Context context) {
+        return maxAmount;
     }
 
 }

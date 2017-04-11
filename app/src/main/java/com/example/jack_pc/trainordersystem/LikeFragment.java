@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +19,6 @@ import java.util.Vector;
 
 public class LikeFragment extends Fragment {
 
-    private Vector<CardStruct> likeList;
     private RecyclerView recyclerView;
     private LikeRecyclerViewAdapter adapter;
 
@@ -43,21 +43,24 @@ public class LikeFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.like_frg_layout, container, false);
+        View view = inflater.inflate(R.layout.like_frg_layout, container, false);
+        recyclerView = (RecyclerView) view.findViewById(R.id.like_recyclerView);
+        return view;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.like_recyclerView);
         recyclerView.setHasFixedSize(true);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
 
-        likeList = likeListener.getLikeList();
-        adapter = new LikeRecyclerViewAdapter(getActivity(), likeListener);
+        if(adapter == null) {
+            adapter = new LikeRecyclerViewAdapter(getActivity(), likeListener);
+        }
+
         recyclerView.setAdapter(adapter);
     }
 
@@ -72,6 +75,19 @@ public class LikeFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if(isVisibleToUser && (recyclerView != null)) {
+            adapter = new LikeRecyclerViewAdapter(getActivity(), likeListener);
+            recyclerView.setAdapter(adapter);
+        }
+        else {
+
+        }
     }
 
 }

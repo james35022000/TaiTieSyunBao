@@ -10,13 +10,13 @@ import android.view.View;
  * Created by Jack-PC on 2017/4/8.
  */
 
-public class MenuViewPager extends ViewPager {
+public class MainViewPager extends ViewPager {
 
-    public MenuViewPager(Context context) {
+    public MainViewPager(Context context) {
         super(context);
     }
 
-    public MenuViewPager(Context context, AttributeSet attrs) {
+    public MainViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
