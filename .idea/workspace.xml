@@ -7,7 +7,7 @@
   </component>
   <component name="AndroidLogFilters">
     <option name="TOOL_WINDOW_LOG_LEVEL" value="verbose" />
-    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Firebase" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0d41df5b-16aa-41c5-a80c-7d6b7af2e3f7" name="Default" comment="" />
@@ -51,21 +51,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-3262">
-              <caret line="57" column="5" selection-start-line="57" selection-start-column="5" selection-end-line="57" selection-end-column="5" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MainFragment.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/MainFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="70">
-              <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+            <state relative-caret-position="401">
+              <caret line="273" column="69" selection-start-line="273" selection-start-column="69" selection-end-line="273" selection-end-column="69" />
               <folding />
             </state>
           </provider>
@@ -93,7 +83,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ItemInfo.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ItemInfo.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/ItemInfo.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="460">
@@ -119,8 +109,8 @@
       <file leaf-file-name="LikeFragment.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/LikeFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="26" column="41" selection-start-line="26" selection-start-column="41" selection-end-line="26" selection-end-column="41" />
+            <state relative-caret-position="299">
+              <caret line="80" column="48" selection-start-line="80" selection-start-column="48" selection-end-line="80" selection-end-column="48" />
               <folding />
             </state>
           </provider>
@@ -2020,7 +2010,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/SugFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/sug_frg_layout.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/CardStruct.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/DrinkMenuFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/SnackMenuFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/MenuInfoActivity.java" />
@@ -2032,14 +2021,14 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/OtherMenuFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/BuyInfoFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/LikeRecyclerViewAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/MainActivity.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1376" />
-    <option name="height" value="744" />
+    <option name="x" value="-7" />
+    <option name="width" value="1372" />
+    <option name="height" value="735" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -2546,7 +2535,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1376" height="744" extended-state="6" />
+    <frame x="-7" y="0" width="1372" height="735" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32924107" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -2563,7 +2552,7 @@
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20592706" sideWeight="0.49417636" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20655487" sideWeight="0.49417636" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3270548" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -2625,13 +2614,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values/values.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="222">
-          <caret line="437" column="48" selection-start-line="437" selection-start-column="48" selection-end-line="437" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/star_selector.xml" />
     <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/star_selector.xml" />
     <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/like_item_clicked.png">
@@ -2977,10 +2959,42 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/DrinkMenuFragment.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/BuyRecyclerViewAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="51" column="10" selection-start-line="51" selection-start-column="10" selection-end-line="51" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/OtherMenuFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
           <caret line="29" column="4" selection-start-line="29" selection-start-column="4" selection-end-line="29" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/support-v4/23.4.0/support-v4-23.4.0-sources.jar!/android/support/v4/app/Fragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5933">
+          <caret line="442" column="6" selection-start-line="442" selection-start-column="6" selection-end-line="442" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/LikeFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="80" column="48" selection-start-line="80" selection-start-column="48" selection-end-line="80" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/LikeRecyclerViewAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-270">
+          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -2995,31 +3009,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/BuyRecyclerViewAdapter.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/ItemInfo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="51" column="10" selection-start-line="51" selection-start-column="10" selection-end-line="51" selection-end-column="10" />
-          <folding />
+        <state relative-caret-position="460">
+          <caret line="38" column="35" selection-start-line="38" selection-start-column="35" selection-end-line="38" selection-end-column="35" />
+          <folding>
+            <element signature="e#1616#1617#0" expanded="true" />
+            <element signature="e#1686#1687#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/LikeRecyclerViewAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-270">
-          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/LikeFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="26" column="41" selection-start-line="26" selection-start-column="41" selection-end-line="26" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/OtherMenuFragment.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/DrinkMenuFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
           <caret line="29" column="4" selection-start-line="29" selection-start-column="4" selection-end-line="29" selection-end-column="4" />
@@ -3029,20 +3030,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3262">
-          <caret line="57" column="5" selection-start-line="57" selection-start-column="5" selection-end-line="57" selection-end-column="5" />
+        <state relative-caret-position="401">
+          <caret line="273" column="69" selection-start-line="273" selection-start-column="69" selection-end-line="273" selection-end-column="69" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/ItemInfo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="460">
-          <caret line="38" column="35" selection-start-line="38" selection-start-column="35" selection-end-line="38" selection-end-column="35" />
-          <folding>
-            <element signature="e#1616#1617#0" expanded="true" />
-            <element signature="e#1686#1687#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>

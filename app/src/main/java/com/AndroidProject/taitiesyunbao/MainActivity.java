@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     // Store all pages' fragment in order to set MainPagerAdapter to initialize pager.
     private List<Fragment> fragmentList = new ArrayList<>();
 
-    // Layout initialize.
+    // Layout declare.
     private FragmentTabHost mTabHost;
     private MainViewPager viewPager;
     private ImageView toolbar_icon;
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         setLikeList(new Vector<ItemInfo>());
         setBuyList(new Vector<ItemInfo>());
 
-        // Initialize action bar(I use android.support.v7.widget.Toolbar as toolbar)
+        // Initialize action bar(Use android.support.v7.widget.Toolbar as toolbar)
         initActionBar();
         // Initialize tabs.
         initUI();
@@ -271,6 +271,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     @Override
     public int isBuyItemExist(ItemInfo ItemInfo) {
         for(int i = 0; i < buyList.size(); i++) {
+            // Using Image ID to check whether they are equal or not.
             if(buyList.get(i).getImageID() == ItemInfo.getImageID()) {
                 return i;
             }
