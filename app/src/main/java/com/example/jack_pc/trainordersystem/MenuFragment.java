@@ -111,6 +111,7 @@ public class MenuFragment extends Fragment {
                 FragmentManager fragmentManager = getChildFragmentManager();
                 fragmentManager.beginTransaction().setCustomAnimations(
                         R.anim.enter_from_left, R.anim.exit_to_right).replace(R.id.menu_fragment, buyInfoFragment).commit();
+                floatingActionButton.setVisibility(View.GONE);
                 //FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction()
                 //        .setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_left);
                 //fragmentTransaction.hide(getFragmentManager().findFragmentById(R.id.menu_fragment))
@@ -119,6 +120,5 @@ public class MenuFragment extends Fragment {
         });
 
     }
-
 
 }

@@ -58,6 +58,7 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
         viewHolder.pic_imageView.setImageResource(list.get(index).getImageID(context));
         viewHolder.name_textView.setText(list.get(index).getName(context));
         viewHolder.price_textView.setText(list.get(index).getPrice(context) + "元");
+        viewHolder.amount_textView.setText(String.valueOf(list.get(index).getAmount(context)));
         ArrayAdapter<String> amountAdapter = new ArrayAdapter<String>(context
                 , R.layout.spinner_center_item, list.get(index).getAmountList(context));
         amountAdapter.setDropDownViewResource(R.layout.spinner_center_item);
@@ -131,7 +132,7 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
             @Override
             public void onClick(View view) {
                 int amount = Integer.valueOf(v.amount_textView.getText().toString());
-                if(amount < list.get(j).getAmount(null)) {
+                if(amount < list.get(j).getMaxAmount(null)) {
                     v.amount_textView.setText(String.valueOf(amount + 1));
                     list.get(j).setAmount(amount + 1);
                     buyItemListListener.addList(list.get(j));

@@ -2,6 +2,7 @@ package com.example.jack_pc.trainordersystem;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,6 +22,7 @@ public class BuyInfoFragment extends Fragment {
     private BuyRecyclerViewAdapter adapter;
     private MenuFragment.OnBuyItemListListener buyItemListListener;
     private ImageView back_imageView;
+    private FloatingActionButton floatingActionButton;
 
     @Override
     public void onAttach(Context context) {
@@ -32,6 +34,7 @@ public class BuyInfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.buy_info_layout, container, false);
         back_imageView = (ImageView) view.findViewById(R.id.back_imageView);
+        floatingActionButton = (FloatingActionButton) view.findViewById(R.id.menu_floatingActionButton);
         return view;
     }
 
@@ -54,6 +57,7 @@ public class BuyInfoFragment extends Fragment {
                 FragmentManager fragmentManager = getChildFragmentManager();
                 fragmentManager.beginTransaction().setCustomAnimations(
                         R.anim.enter_from_left, R.anim.exit_to_left).replace(R.id.buy_info_fragment, menuFragment).commit();
+
             }
         });
     }

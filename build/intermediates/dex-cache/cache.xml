@@ -3,21 +3,21 @@
 
     <item
         is-multidex="true"
-        jar="C:\Users\Jack-PC\Documents\GitHub\TrainOrderSystem\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jar="C:\Users\Jack-NB\Documents\GitHub\TrainOrderSystem\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="c2956d742f9de467d7ad676b3a54f538e84d6c6d">
+        <dex dex="C:\Users\Jack-NB\Documents\GitHub\TrainOrderSystem\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_1c35059e99c707bd75dad3de9a9df3489f3b62b5\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Jack-NB\Documents\GitHub\TrainOrderSystem\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
         sha1="510aa6efc159983dfbffa676a0dae37568c0a46f">
-        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TrainOrderSystem\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_86d5bc09d546c0e312ecaa4a13a4d735696825a1\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Jack-PC\Documents\GitHub\TrainOrderSystem\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="c0da4d784230dc12c9937271b09096175e36386d">
-        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TrainOrderSystem\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_ef3446531b72e80a62d175c9790e6d96bbf2c812\classes.dex" />
+        <dex dex="C:\Users\Jack-NB\Documents\GitHub\TrainOrderSystem\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_89516591c715cfbff00f8c45b3943b70822620af\classes.dex" />
     </item>
 
 </items>

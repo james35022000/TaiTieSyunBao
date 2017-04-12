@@ -52,6 +52,10 @@ public class CardStruct implements Serializable {
         return context.getResources().getString(name_StringID);
     }
 
+    public int getMaxAmount(Context context) {
+        return maxAmount;
+    }
+
     public int getPrice(Context context) {
         return price;
     }
@@ -65,7 +69,7 @@ public class CardStruct implements Serializable {
     }
 
     public int getAmount(Context context) {
-        return maxAmount;
+        return amount;
     }
 
 }

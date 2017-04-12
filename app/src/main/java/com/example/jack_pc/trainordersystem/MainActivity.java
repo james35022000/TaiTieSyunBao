@@ -221,7 +221,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     @Override
     public void addList(CardStruct cardStruct) {
-        delLikeList(cardStruct);
+        delList(cardStruct);
         if(cardStruct.getAmount(null) == 0)  return;
         buyList.add(cardStruct);
     }
