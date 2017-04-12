@@ -1,163 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ecf0f1">
 
-    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ecf0f1"
-        tools:context="com.example.android_project_feedback.MainActivity">
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="368dp"
-            android:layout_height="495dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:gravity="center_horizontal"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            android:background="#ecf0f1">
+            android:orientation="horizontal">
 
-            <RelativeLayout
-                android:layout_width="350dp"
-                android:layout_height="440dp">
+            <LinearLayout
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:gravity="center_horizontal"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:gravity="center_horizontal"
-                            android:orientation="horizontal">
-
-                            <ImageButton
-                                android:id="@+id/imgbtn001"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:background="@color/colorBackground"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/star_selector" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="50dp"
-                            android:layout_height="match_parent"
-                            android:gravity="center_horizontal"
-                            android:orientation="horizontal">
-
-                            <ImageButton
-                                android:id="@+id/imgbtn002"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:background="@color/colorBackground"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/star_selector" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="50dp"
-                            android:layout_height="match_parent"
-                            android:gravity="center_horizontal"
-                            android:orientation="horizontal">
-
-                            <ImageButton
-                                android:id="@+id/imgbtn003"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:background="@color/colorBackground"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/star_selector" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="50dp"
-                            android:layout_height="match_parent"
-                            android:gravity="center_horizontal"
-                            android:orientation="horizontal">
-
-                            <ImageButton
-                                android:id="@+id/imgbtn004"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:background="@color/colorBackground"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/star_selector" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:gravity="center_horizontal"
-                            android:orientation="horizontal">
-
-                            <ImageButton
-                                android:id="@+id/imgbtn005"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:background="@color/colorBackground"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/star_selector" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <EditText
-                        android:id="@+id/editText"
-                        android:layout_width="325dp"
-                        android:layout_height="250dp"
-                        android:inputType="textMultiLine"
-                        android:scrollbars="vertical"
-
-                        />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <ImageButton
+                    android:id="@+id/imgbtn001"
+                    android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:layout_alignParentBottom="true"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical">
+                    android:background="@color/colorBackground"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/star_selector" />
 
-                    <Button
-                        android:id="@+id/btn_check"
-                        android:layout_width="100dp"
-                        android:layout_height="match_parent"
-                        android:text="送出"
-                        android:textSize="20sp" />
+            </LinearLayout>
 
-                </LinearLayout>
+            <LinearLayout
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
 
-            </RelativeLayout>
+                <ImageButton
+                    android:id="@+id/imgbtn002"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@color/colorBackground"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/star_selector" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/imgbtn003"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@color/colorBackground"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/star_selector" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/imgbtn004"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@color/colorBackground"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/star_selector" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/imgbtn005"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@color/colorBackground"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/star_selector" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
-    </android.support.constraint.ConstraintLayout>
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="325dp"
+            android:layout_height="250dp"
+            android:inputType="textMultiLine"
+            android:scrollbars="vertical"
 
-</LinearLayout>
+            />
+
+    </LinearLayout>
+
+</RelativeLayout>

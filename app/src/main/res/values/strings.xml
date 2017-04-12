@@ -3,22 +3,22 @@
     <string name="main_tab_name">首頁</string>
     <string name="menu_tab_name">餐點</string>
     <string name="like_tab_name">喜歡</string>
-    <string name="sub_tab_name">建議</string>
+    <string name="sug_tab_name">建議</string>
 
-    <string name="rice_tab">便當</string>
-        <string name="rice1">臺鐵雞腿南瓜米粉炒麵</string>
-            <string name="rice1_info">以生鮮現宰雞腿肉為主菜，搭配養生補血聖品--南瓜，加上炒麵及炒米粉路邊攤
+    <string name="food_tab">便當</string>
+        <string name="food1">臺鐵雞腿南瓜米粉炒麵</string>
+            <string name="food1_info">以生鮮現宰雞腿肉為主菜，搭配養生補血聖品--南瓜，加上炒麵及炒米粉路邊攤
                 小吃，提供消費者除了白米飯之外的主食新選擇。 </string>
 
-        <string name="rice2">臺鐵古早味焢肉飯</string>
-            <string name="rice2_info">精選白肉及瘦肉比例均衡之豬肉塊，以特製滷汁熬製而成，搭配四角油豆腐、滷
+        <string name="food2">臺鐵古早味焢肉飯</string>
+            <string name="food2_info">精選白肉及瘦肉比例均衡之豬肉塊，以特製滷汁熬製而成，搭配四角油豆腐、滷
                 白菜、新鮮季節綠色青菜以及招牌滷蛋。</string>
 
-        <string name="rice3">臺鐵鲭魚圓木片盒便當</string>
-            <string name="rice3_info">內容物為香Q白米飯、上選南方澳鯖魚、美味滷蛋、季節蔬菜2種、海帶卷2個。</string>
+        <string name="food3">臺鐵鲭魚圓木片盒便當</string>
+            <string name="food3_info">內容物為香Q白米飯、上選南方澳鯖魚、美味滷蛋、季節蔬菜2種、海帶卷2個。</string>
 
-        <string name="rice4">臺鐵‧北海道特色便當</string>
-            <string name="rice4_info">內容採用兩地盛產之食材，主打北海道常用食材鮭魚、帆立貝及牛蒡絲、海帶卷
+        <string name="food4">臺鐵‧北海道特色便當</string>
+            <string name="food4_info">內容採用兩地盛產之食材，主打北海道常用食材鮭魚、帆立貝及牛蒡絲、海帶卷
                 等日本風味小菜，另臺灣特色食材為臺鐵便當古早味的香滷排骨、滷蛋及國產蔬菜，讓消費者一次就能體驗日
                 本與臺灣鐵路便當2種不同的風味。</string>
 
@@ -44,40 +44,41 @@
             <string name="drink5_info">雪碧是由檸檬蘇打、香精組成而不含咖啡因的軟性飲料，透明的飲料顏色以及清新的口感帶
                 給人清涼解渴的暢快口感。</string>
 
-    <string name="snacks_tab">零食</string>
-        <string name="snacks1">台中太陽餅</string>
-            <string name="snacks1_info">台中太陽堂傳統太陽餅，遠近馳名，以獨家祕方特製的純麥芽，加上純手工製
+    <string name="snack_tab">零食</string>
+        <string name="snack1">台中太陽餅</string>
+            <string name="snack1_info">台中太陽堂傳統太陽餅，遠近馳名，以獨家祕方特製的純麥芽，加上純手工製
                 作，一口咬下，皮薄、酥香、餡軟，唇齒留香，讓你回味無窮。</string>
 
-        <string name="snacks2">樂事洋芋片‧美國經典原味</string>
-            <string name="snacks2_info">堅持選用優質新鮮馬鈴薯，馬鈴薯黃金比例切片，輕薄香脆。商品成份：馬鈴薯、棕櫚油
+        <string name="snack2">樂事洋芋片‧美國經典原味</string>
+            <string name="snack2_info">堅持選用優質新鮮馬鈴薯，馬鈴薯黃金比例切片，輕薄香脆。商品成份：馬鈴薯、棕櫚油
                 、食鹽、味精、調味劑。</string>
 
-        <string name="snacks3">樂事洋芋片‧九州岩燒海苔</string>
-            <string name="snacks3_info">堅持選用優質新鮮馬鈴薯，馬鈴薯黃金比例切片，輕薄香脆。商品成分：馬鈴
+        <string name="snack3">樂事洋芋片‧九州岩燒海苔</string>
+            <string name="snack3_info">堅持選用優質新鮮馬鈴薯，馬鈴薯黃金比例切片，輕薄香脆。商品成分：馬鈴
                 薯、植物油、糖、食鹽、味精、醬油粉、海苔細片、海鮮調味粉、香辛料。</string>
 
-        <string name="snacks4">北海鱈魚香絲</string>
-            <string name="snacks4_info">「北海鱈魚香絲」是屬於水產加工調味乾製品類，它主要是由冷凍魚漿製造而
+        <string name="snack4">北海鱈魚香絲</string>
+            <string name="snack4_info">「北海鱈魚香絲」是屬於水產加工調味乾製品類，它主要是由冷凍魚漿製造而
                 成的，再添加其他的食品添加物，使原料魚漿最終成為具有鮮味的鱈魚香絲休閒食品。</string>
 
-    <string name="others_tab">其他</string>
-        <string name="others1">模型‧臺鐵EMU800</string>
+    <string name="other_tab">其他</string>
+        <string name="other1">模型‧臺鐵EMU800</string>
             <string name="other1_info">臺鐵EMU800型電聯車，為因應西部幹線捷運化政策及近年來中短途旅運量大幅
                 成長，在現有車輛數已不敷使用情況下，購置的新一批電聯車。</string>
     
-        <string name="others2">模型‧臺鐵普悠瑪號</string>
+        <string name="other2">模型‧臺鐵普悠瑪號</string>
             <string name="other2_info">普悠瑪號TEMU2000型是台鐵自日本引進的第二款傾斜式列車，採用鋁合金車體
                 ，標準編組是一組八輛車, 每列車有376個座位，車身塗裝以紅色系設計，以白色為底色, 車窗下方有兩道紅
                 色線，並在車頭兩側印上書寫體的台鐵英文縮寫TRA字樣。</string>
 
-        <string name="others3">模型‧阿里山小火車</string>
+        <string name="other3">模型‧阿里山小火車</string>
             <string name="other3_info">阿里山林鐵通車後，陸續LIMA廠引進了8輛18噸級的蒸汽機車、12輛28噸級的
                 蒸汽機車，這些全都同樣是直立式汽缸及傘形齒輪的設計，這些型式的蒸汽機車又稱為Shay式蒸汽機車。</string>
 
-        <string name="others4">撲克牌</string>
+        <string name="other4">撲克牌</string>
             <string name="other4_info">台灣製造，獨特印刷耐磨清晰，牌面觸感平順不刮手，家庭親子、公司團體，
                 年節聚會必備。</string>
 
     <string name="amount">數量</string>
+
 </resources>
