@@ -30,10 +30,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:clickable="true"
-        android:src="@drawable/menu_buy"
         android:layout_marginBottom="10dp"
         android:layout_marginRight="20dp"
-        android:alpha="100" />
+        android:clickable="true"
+        android:src="@drawable/menu_buy" />
 
 </RelativeLayout>

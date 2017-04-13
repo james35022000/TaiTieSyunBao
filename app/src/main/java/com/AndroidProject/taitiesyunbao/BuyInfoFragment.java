@@ -2,6 +2,7 @@ package com.AndroidProject.taitiesyunbao;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,6 +24,7 @@ public class BuyInfoFragment extends Fragment {
 
     private ImageView back_imageView, fore_imageView;
     private RecyclerView recyclerView;
+    private FloatingActionButton floatingActionButton;
 
     @Override
     public void onAttach(Context context) {
@@ -37,6 +39,7 @@ public class BuyInfoFragment extends Fragment {
         back_imageView = (ImageView) view.findViewById(R.id.back_imageView);
         fore_imageView = (ImageView) view.findViewById(R.id.fore_imageView);
         recyclerView = (RecyclerView) view.findViewById(R.id.buy_recyclerView);
+        floatingActionButton = (FloatingActionButton) getParentFragment().getView().findViewById(R.id.menu_floatingActionButton);
         return view;
     }
 
@@ -55,12 +58,12 @@ public class BuyInfoFragment extends Fragment {
         back_imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MenuFragment menuFragment = new MenuFragment();
-                FragmentManager fragmentManager = getChildFragmentManager();
+                FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction()
                                .setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_left)
-                               .replace(R.id.buy_info_fragment, menuFragment)
+                               .remove(fragmentManager.findFragmentById(R.id.menu_fragment))
                                .commit();
+                floatingActionButton.setVisibility(View.VISIBLE);
 
             }
         });

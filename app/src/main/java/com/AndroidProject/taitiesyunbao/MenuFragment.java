@@ -1,5 +1,6 @@
 package com.AndroidProject.taitiesyunbao;
 
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -73,6 +74,8 @@ public class MenuFragment extends Fragment {
         initPage();
         // Initialize OnTabSelectedListener and FloatingActionButton OnClickListener.
         initListener();
+
+        floatingActionButton.getBackground().setAlpha(150);
     }
 
     @Override
@@ -136,7 +139,7 @@ public class MenuFragment extends Fragment {
                 FragmentManager fragmentManager = getChildFragmentManager();
                 fragmentManager.beginTransaction()
                         .setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right)
-                        .replace(R.id.menu_fragment, buyInfoFragment)
+                        .add(R.id.menu_fragment, buyInfoFragment)
                         .commit();
 
                 floatingActionButton.setVisibility(View.GONE);
@@ -144,5 +147,4 @@ public class MenuFragment extends Fragment {
         });
 
     }
-
 }
