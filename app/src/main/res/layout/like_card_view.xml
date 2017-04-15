@@ -4,20 +4,23 @@
     android:id="@+id/like_cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginTop="5dp"
     android:clickable="false"
     android:foreground="?android:attr/selectableItemBackground"
     android:longClickable="true"
     android:orientation="horizontal"
     card_view:cardBackgroundColor="@android:color/white"
-    card_view:cardCornerRadius="10dp"
     card_view:cardElevation="5dp"
     card_view:cardPreventCornerOverlap="true"
-    card_view:cardUseCompatPadding="true"
-    card_view:contentPadding="3dp">
+    card_view:cardUseCompatPadding="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/cardview_border_color"
+        android:padding="3dp">
 
         <ImageView
             android:id="@+id/pic_imageView"

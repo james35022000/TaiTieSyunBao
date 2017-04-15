@@ -59,7 +59,7 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
             ViewGroup.LayoutParams layoutParams = viewHolder.menu_cardView.getLayoutParams();
             ViewGroup.MarginLayoutParams marginLayoutParams =
                                                 (ViewGroup.MarginLayoutParams) layoutParams;
-            marginLayoutParams.setMargins(0, 0, 0, 190);
+            marginLayoutParams.bottomMargin = 190;
             viewHolder.menu_cardView.setLayoutParams(marginLayoutParams);
         }
     }

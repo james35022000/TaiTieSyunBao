@@ -1,6 +1,5 @@
 package com.AndroidProject.taitiesyunbao;
 
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -26,7 +25,6 @@ import java.util.Vector;
 
 public class MenuFragment extends Fragment {
 
-    private LikeFragment.OnLikeListener likeListener;
     // Store the name (string ID) of tab at the top.
     private int menuTab[] = {R.string.food_tab, R.string.drink_tab,
                                 R.string.snack_tab, R.string.other_tab};
@@ -58,7 +56,6 @@ public class MenuFragment extends Fragment {
 
         // Initialize layout items.
         floatingActionButton = (FloatingActionButton) view.findViewById(R.id.menu_floatingActionButton);
-        likeListener = (LikeFragment.OnLikeListener) getActivity();
         tabLayout = (TabLayout) view.findViewById(R.id.tabs);
         viewPager = (ViewPager) view.findViewById(R.id.pager_menu);
 
@@ -75,7 +72,7 @@ public class MenuFragment extends Fragment {
         // Initialize OnTabSelectedListener and FloatingActionButton OnClickListener.
         initListener();
 
-        floatingActionButton.getBackground().setAlpha(150);
+        //floatingActionButton.getBackground().setAlpha(150);
     }
 
     @Override
@@ -135,11 +132,11 @@ public class MenuFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                BuyInfoFragment buyInfoFragment = new BuyInfoFragment();
+                PurchaseInfoFragment purchaseInfoFragment = new PurchaseInfoFragment();
                 FragmentManager fragmentManager = getChildFragmentManager();
                 fragmentManager.beginTransaction()
                         .setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right)
-                        .add(R.id.menu_fragment, buyInfoFragment)
+                        .add(R.id.menu_fragment, purchaseInfoFragment)
                         .commit();
 
                 floatingActionButton.setVisibility(View.GONE);
