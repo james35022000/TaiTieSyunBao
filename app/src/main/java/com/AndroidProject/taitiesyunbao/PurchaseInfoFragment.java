@@ -20,9 +20,9 @@ import android.widget.ImageView;
 public class PurchaseInfoFragment extends Fragment {
 
     private PurchaseRecyclerViewAdapter adapter;
-
+    // Access buyList from MainActivity.
     private MenuFragment.OnBuyItemListListener buyItemListListener;
-
+    // Declare layout items.
     private ImageView back_imageView, fore_imageView;
     private RecyclerView recyclerView;
     private FloatingActionButton floatingActionButton;
@@ -30,17 +30,21 @@ public class PurchaseInfoFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        // Initialize.
         buyItemListListener = (MenuFragment.OnBuyItemListListener) context;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.buy_info_layout, container, false);
-
+        // Initialize.
         back_imageView = (ImageView) view.findViewById(R.id.back_imageView);
         fore_imageView = (ImageView) view.findViewById(R.id.fore_imageView);
         recyclerView = (RecyclerView) view.findViewById(R.id.buy_recyclerView);
-        floatingActionButton = (FloatingActionButton) getParentFragment().getView().findViewById(R.id.menu_floatingActionButton);
+        floatingActionButton = (FloatingActionButton) getParentFragment()
+                                                .getView()
+                                                .findViewById(R.id.menu_floatingActionButton);
+
         return view;
     }
 
@@ -48,6 +52,7 @@ public class PurchaseInfoFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
