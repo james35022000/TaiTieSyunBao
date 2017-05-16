@@ -24,7 +24,7 @@ public class MenuInfoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu_info);
+        setContentView(R.layout.menu_info_frg);
 
         Intent intent = getIntent();
 

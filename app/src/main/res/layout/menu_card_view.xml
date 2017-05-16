@@ -49,76 +49,86 @@
             android:layout_marginRight="2dp"
             android:scaleType="fitXY" />
 
+        <RelativeLayout
+            android:id="@+id/UI_relativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/pic_imageView">
+
+            <ImageView
+                android:id="@+id/minus_imageView"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_toLeftOf="@+id/amount_textView"
+                android:clickable="true"
+                android:src="@drawable/minus_icon" />
+
+            <ImageView
+                android:id="@+id/like_imageView"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="false"
+                android:layout_marginRight="10dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/like_item_selector" />
+
+            <ImageView
+                android:id="@+id/plus_imageView"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="false"
+                android:layout_marginTop="5dp"
+                android:layout_toLeftOf="@+id/like_imageView"
+                android:clickable="true"
+                android:src="@drawable/add_icon" />
+
+            <TextView
+                android:id="@+id/amount"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_centerVertical="false"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toLeftOf="@+id/minus_imageView"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="@string/amount"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/amount_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_centerVertical="false"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toLeftOf="@+id/plus_imageView"
+                android:gravity="center"
+                android:text="0" />
+
+            <ImageView
+                android:id="@+id/info_imageView"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="10dp"
+                android:clickable="true"
+                card_view:srcCompat="@drawable/info_icon" />
+        </RelativeLayout>
+
         <TextView
-            android:id="@+id/amount"
+            android:id="@+id/info_textView"
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_below="@+id/pic_imageView"
-            android:layout_centerVertical="false"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
-            android:clickable="true"
-            android:gravity="center"
-            android:text="@string/amount"
-            android:textSize="15sp" />
-
-        <ImageView
-            android:id="@+id/minus_imageView"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_below="@+id/pic_imageView"
-            android:layout_marginTop="5dp"
-            android:layout_toRightOf="@+id/amount"
-            android:clickable="true"
-            android:src="@drawable/minus_icon" />
-
-        <TextView
-            android:id="@+id/amount_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_below="@+id/pic_imageView"
-            android:layout_centerVertical="false"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_toRightOf="@+id/minus_imageView"
-            android:gravity="center"
-            android:text="0" />
-
-        <ImageView
-            android:id="@+id/plus_imageView"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_below="@+id/pic_imageView"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="5dp"
-            android:layout_toRightOf="@id/amount_textView"
-            android:clickable="true"
-            android:src="@drawable/add_icon" />
-
-        <ImageView
-            android:id="@+id/info_imageView"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_below="@+id/pic_imageView"
-            android:layout_marginRight="5dp"
-            android:layout_toLeftOf="@+id/like_imageView"
-            android:clickable="true"
-            card_view:srcCompat="@drawable/info_icon" />
-
-        <ImageView
-            android:id="@+id/like_imageView"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/pic_imageView"
-            android:layout_centerInParent="false"
-            android:layout_marginRight="10dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:src="@drawable/like_item_selector" />
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/UI_relativeLayout"
+            android:text="TextView" />
 
     </RelativeLayout>
 

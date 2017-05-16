@@ -1,7 +1,8 @@
 package com.AndroidProject.taitiesyunbao;
 
+import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
+import android.app.FragmentManager;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -88,7 +89,6 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
         }
     }
 
-
     private void initListener(ViewHolder viewHolder, int index) {
         final int j = index;
         final ViewHolder v = viewHolder;
@@ -96,11 +96,7 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
         viewHolder.info_imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /* Warning:  One bug here because ItemInfo has none serializable object. */
-                /* Solution: Using Fragment instead of Activity to display introduction. */
-                Intent intent = new Intent(context, MenuInfoActivity.class);
-                intent.putExtra("List", list.get(j));
-                context.startActivity(intent);
+
             }
         });
 
