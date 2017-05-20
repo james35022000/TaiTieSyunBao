@@ -7,32 +7,134 @@
     android:background="@color/colorBackground"
     android:orientation="vertical">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/buy_recyclerView"
-        android:scrollbars="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentBottom="true" />
 
+    <android.support.v7.widget.CardView
+        android:id="@+id/buy_cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:longClickable="true"
+        android:orientation="horizontal"
+        app:cardBackgroundColor="@android:color/white"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="5dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true"
+        app:contentPadding="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/cardview_border_color">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                app:srcCompat="@color/colorBuyList" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="7dp"
+                android:text="LIST"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:typeface="monospace" />
+
+            <TextView
+                android:id="@+id/name_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imageView"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:text="商品" />
+
+            <ListView
+                android:id="@+id/name_listView"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/name_textView"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:clickable="false"
+                android:scrollbars="none" />
+
+            <TextView
+                android:id="@+id/amount_textView"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imageView"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_toLeftOf="@+id/price_textView"
+                android:text="數量" />
+
+            <ListView
+                android:id="@+id/amount_listView"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/amount_textView"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_toLeftOf="@+id/price_listView"
+                android:scrollbars="none" />
+
+            <TextView
+                android:id="@+id/price_textView"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/imageView"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="5dp"
+                android:text="金額" />
+
+            <ListView
+                android:id="@+id/price_listView"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/price_textView"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="5dp"
+                android:scrollbars="none" />
+
+
+        </RelativeLayout>
+
+
+    </android.support.v7.widget.CardView>
 
     <ImageView
         android:id="@+id/back_imageView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="60dp"
         android:clickable="true"
         android:scaleType="fitXY"
-        app:srcCompat="@drawable/back_icon" />
+        app:srcCompat="@drawable/purchase_back_icon" />
 
     <ImageView
-        android:id="@+id/fore_imageView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:id="@+id/next_imageView"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="false"
         android:layout_alignParentRight="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="60dp"
         android:clickable="true"
         android:scaleType="fitXY"
-        app:srcCompat="@drawable/fore_icon" />
+        app:srcCompat="@drawable/purchase_next_icon" />
 </RelativeLayout>

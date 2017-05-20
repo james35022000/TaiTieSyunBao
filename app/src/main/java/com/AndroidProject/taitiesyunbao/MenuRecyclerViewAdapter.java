@@ -4,8 +4,11 @@ import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.app.FragmentManager;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,12 +49,14 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int index) {
 
-
         viewHolder.pic_imageView.setImageResource(list.get(index).getImageID());
         viewHolder.name_textView.setText(list.get(index).getName());
         viewHolder.price_textView.setText(list.get(index).getPrice() + "元");
         viewHolder.amount_textView.setText(String.valueOf(list.get(index).getAmount()));
         viewHolder.info_textView.setText(list.get(index).getIntroduction());
+        //viewHolder.info_textView.measure(0, 0);
+        //viewHolder.info_Height.setText(Integer.toString(viewHolder.info_textView.getMeasuredHeight()));
+        viewHolder.info_textView.setVisibility(View.GONE);
 
         setAmount(viewHolder, index);
         setLikeState(viewHolder, index);
@@ -77,7 +82,7 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public CardView menu_cardView;
         public ImageView pic_imageView, like_imageView, info_imageView, plus_imageView, minus_imageView;
-        public TextView name_textView, price_textView, amount_textView, info_textView;
+        public TextView name_textView, price_textView, amount_textView, info_textView, info_Height;
         public ViewHolder(View view) {
             super(view);
             pic_imageView = (ImageView) view.findViewById(R.id.pic_imageView);
@@ -90,6 +95,7 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
             price_textView = (TextView) view.findViewById(R.id.price_textView);
             amount_textView = (TextView) view.findViewById(R.id.amount_textView);
             info_textView = (TextView) view.findViewById(R.id.info_textView);
+            info_Height = (TextView) view.findViewById(R.id.info_Height);
         }
     }
 
@@ -101,30 +107,31 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
             @Override
             public void onClick(final View view) {
                 //ValueAnimator valueAnimator;
+                //int origHeight = view.getHeight();
                 if(v.info_imageView.isSelected()) {
                     v.info_imageView.setSelected(false);
-                    /*valueAnimator = ValueAnimator.ofInt(view.getHeight(),
-                                            view.getHeight() - v.info_textView.getHeight());*/
+                    //valueAnimator = ValueAnimator.ofInt(origHeight,
+                    //                        origHeight - Integer.parseInt(v.info_Height.getText().toString()));
                     v.info_textView.setVisibility(View.GONE);
+                    //Log.i("Height", v.info_Height.getText().toString());
                 }
                 else {
                     v.info_imageView.setSelected(true);
                     v.info_textView.setVisibility(View.VISIBLE);
-                   /* valueAnimator = ValueAnimator.ofInt(view.getHeight(),
-                                            view.getHeight() + v.info_textView.getHeight());*/
+                    //valueAnimator = ValueAnimator.ofInt(origHeight,
+                    //                        origHeight + Integer.parseInt(v.info_Height.getText().toString()));
+                    //Log.i("Height", v.info_Height.getText().toString());
                 }
-                /*valueAnimator.setDuration(500);
-                valueAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
-                valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                    public void onAnimationUpdate(ValueAnimator animation) {
-                        Integer value = (Integer) animation.getAnimatedValue();
-                        view.getLayoutParams().height = value.intValue();
-                        view.requestLayout();
-                    }
-                });
-
-
-                valueAnimator.start();*/
+                //valueAnimator.setDuration(500);
+                //valueAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+                //valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                //    public void onAnimationUpdate(ValueAnimator animation) {
+                //        Integer value = (Integer) animation.getAnimatedValue();
+                //        view.getLayoutParams().height = value.intValue();
+                //        view.requestLayout();
+                //    }
+                //});
+                //valueAnimator.start();
             }
         });
 
