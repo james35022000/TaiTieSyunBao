@@ -1,5 +1,6 @@
 package com.AndroidProject.taitiesyunbao;
 
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.app.FragmentManager;
@@ -8,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,6 +51,7 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
         viewHolder.name_textView.setText(list.get(index).getName());
         viewHolder.price_textView.setText(list.get(index).getPrice() + "元");
         viewHolder.amount_textView.setText(String.valueOf(list.get(index).getAmount()));
+        viewHolder.info_textView.setText(list.get(index).getIntroduction());
 
         setAmount(viewHolder, index);
         setLikeState(viewHolder, index);
@@ -74,7 +77,7 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public CardView menu_cardView;
         public ImageView pic_imageView, like_imageView, info_imageView, plus_imageView, minus_imageView;
-        public TextView name_textView, price_textView, amount_textView;
+        public TextView name_textView, price_textView, amount_textView, info_textView;
         public ViewHolder(View view) {
             super(view);
             pic_imageView = (ImageView) view.findViewById(R.id.pic_imageView);
@@ -86,6 +89,7 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
             name_textView = (TextView) view.findViewById(R.id.name_textView);
             price_textView = (TextView) view.findViewById(R.id.price_textView);
             amount_textView = (TextView) view.findViewById(R.id.amount_textView);
+            info_textView = (TextView) view.findViewById(R.id.info_textView);
         }
     }
 
@@ -95,8 +99,32 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
 
         viewHolder.info_imageView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(final View view) {
+                //ValueAnimator valueAnimator;
+                if(v.info_imageView.isSelected()) {
+                    v.info_imageView.setSelected(false);
+                    /*valueAnimator = ValueAnimator.ofInt(view.getHeight(),
+                                            view.getHeight() - v.info_textView.getHeight());*/
+                    v.info_textView.setVisibility(View.GONE);
+                }
+                else {
+                    v.info_imageView.setSelected(true);
+                    v.info_textView.setVisibility(View.VISIBLE);
+                   /* valueAnimator = ValueAnimator.ofInt(view.getHeight(),
+                                            view.getHeight() + v.info_textView.getHeight());*/
+                }
+                /*valueAnimator.setDuration(500);
+                valueAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+                valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                    public void onAnimationUpdate(ValueAnimator animation) {
+                        Integer value = (Integer) animation.getAnimatedValue();
+                        view.getLayoutParams().height = value.intValue();
+                        view.requestLayout();
+                    }
+                });
 
+
+                valueAnimator.start();*/
             }
         });
 

@@ -68,7 +68,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:clickable="true"
-            android:src="@drawable/info_icon" />
+            android:src="@drawable/menu_info_selector" />
 
 
     </RelativeLayout>
