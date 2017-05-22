@@ -52,7 +52,11 @@ public class PurchaseInfoArrayAdapter extends ArrayAdapter<BuyInfo> {
             amount_textView.setText(Integer.toString(mBuyInfo.getAmount()));
             price_textView.setText(Integer.toString(mBuyInfo.getPrice() * mBuyInfo.getAmount()));
         }
-
         return view;
+    }
+
+    @Override
+    public int getCount() {
+        return this.buyInfo.size();
     }
 }
