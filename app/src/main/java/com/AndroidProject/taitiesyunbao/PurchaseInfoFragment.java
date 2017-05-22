@@ -29,10 +29,10 @@ public class PurchaseInfoFragment extends Fragment {
     private MenuFragment.OnBuyItemListListener buyItemListListener;
     // Declare layout items.
     private ImageView back_imageView, next_imageView;
-    private ListView name_listView, price_listView, amount_listView;
+    private ListView list_listView;
     private FloatingActionButton floatingActionButton;
 
-    private ArrayAdapter<String> name_arrayAdapter, price_arrayAdapter, amount_arrayAdapter;
+    private PurchaseInfoArrayAdapter buyList_arrayAdapter;
 
     @Override
     public void onAttach(Context context) {
@@ -47,9 +47,7 @@ public class PurchaseInfoFragment extends Fragment {
         // Initialize.
         back_imageView = (ImageView) view.findViewById(R.id.back_imageView);
         next_imageView = (ImageView) view.findViewById(R.id.next_imageView);
-        name_listView = (ListView) view.findViewById(R.id.name_listView);
-        price_listView = (ListView) view.findViewById(R.id.price_listView);
-        amount_listView = (ListView) view.findViewById(R.id.amount_listView);
+        list_listView = (ListView) view.findViewById(R.id.list_listView);
         floatingActionButton = (FloatingActionButton) getParentFragment()
                                                     .getView()
                                                     .findViewById(R.id.menu_floatingActionButton);
@@ -62,20 +60,15 @@ public class PurchaseInfoFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         Vector<ItemInfo> buyList = buyItemListListener.getBuyList();
 
-        name_arrayAdapter = new ArrayAdapter(getActivity(), R.layout.listview_text_layout, new ArrayList<String>());
-        amount_arrayAdapter = new ArrayAdapter(getActivity(), R.layout.listview_text_layout, new ArrayList<String>());
-        price_arrayAdapter = new ArrayAdapter(getActivity(), R.layout.listview_text_layout, new ArrayList<String>());
+        buyList_arrayAdapter = new PurchaseInfoArrayAdapter(getActivity(),
+                            R.layout.listview_text_layout, new Vector<BuyInfo>());
 
         for(int i = 0; i < buyList.size(); i++) {
-            name_arrayAdapter.add(buyList.get(i).getName());
-            amount_arrayAdapter.add(Integer.toString(buyList.get(i).getAmount()));
-            price_arrayAdapter.add(Integer.toString(buyList.get(i).getPrice() *
-                                                            buyList.get(i).getAmount()));
+            buyList_arrayAdapter.add(new BuyInfo(buyList.get(i).getName(),
+                            buyList.get(i).getAmount(), buyList.get(i).getPrice()));
         }
 
-        name_listView.setAdapter(name_arrayAdapter);
-        amount_listView.setAdapter(amount_arrayAdapter);
-        price_listView.setAdapter(price_arrayAdapter);
+        list_listView.setAdapter(buyList_arrayAdapter);
 
         back_imageView.setOnClickListener(new View.OnClickListener() {
             @Override

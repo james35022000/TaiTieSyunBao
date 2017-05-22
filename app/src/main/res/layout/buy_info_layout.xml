@@ -54,17 +54,6 @@
                 android:layout_marginTop="5dp"
                 android:text="商品" />
 
-            <ListView
-                android:id="@+id/name_listView"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/name_textView"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="5dp"
-                android:clickable="false"
-                android:scrollbars="none" />
-
             <TextView
                 android:id="@+id/amount_textView"
                 android:layout_width="80dp"
@@ -74,17 +63,6 @@
                 android:layout_marginTop="5dp"
                 android:layout_toLeftOf="@+id/price_textView"
                 android:text="數量" />
-
-            <ListView
-                android:id="@+id/amount_listView"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/amount_textView"
-                android:layout_marginBottom="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_toLeftOf="@+id/price_listView"
-                android:scrollbars="none" />
 
             <TextView
                 android:id="@+id/price_textView"
@@ -97,15 +75,14 @@
                 android:text="金額" />
 
             <ListView
-                android:id="@+id/price_listView"
-                android:layout_width="80dp"
+                android:id="@+id/list_listView"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_below="@+id/price_textView"
-                android:layout_marginBottom="10dp"
+                android:layout_below="@+id/name_textView"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginTop="5dp"
-                android:scrollbars="none" />
+                android:layout_marginTop="10dp" />
 
 
         </RelativeLayout>
