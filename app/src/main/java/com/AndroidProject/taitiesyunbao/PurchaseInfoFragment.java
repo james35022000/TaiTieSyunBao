@@ -12,9 +12,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.TranslateAnimation;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -30,9 +36,10 @@ public class PurchaseInfoFragment extends Fragment {
     // Access buyList from MainActivity.
     private MenuFragment.OnBuyItemListListener buyItemListListener;
     // Declare layout items.
-    private ImageView back_imageView, next_imageView;
+    private ImageView back_imageView, next_imageView, enjoyit_imageView;
     private ListView list_listView;
     private TextView total_textView;
+    private CardView seat_cardView, list_cardView;
     private FloatingActionButton floatingActionButton;
 
     private PurchaseInfoArrayAdapter buyList_arrayAdapter;
@@ -50,8 +57,11 @@ public class PurchaseInfoFragment extends Fragment {
         // Initialize.
         back_imageView = (ImageView) view.findViewById(R.id.back_imageView);
         next_imageView = (ImageView) view.findViewById(R.id.next_imageView);
+        enjoyit_imageView = (ImageView) view.findViewById(R.id.enjoyit_imageView);
         list_listView = (ListView) view.findViewById(R.id.list_listView);
         total_textView = (TextView) view.findViewById(R.id.total_textView);
+        seat_cardView = (CardView) view.findViewById(R.id.seat_cardView);
+        list_cardView = (CardView) view.findViewById(R.id.list_cardView);
         floatingActionButton = (FloatingActionButton) getParentFragment()
                                                     .getView()
                                                     .findViewById(R.id.menu_floatingActionButton);
@@ -100,6 +110,72 @@ public class PurchaseInfoFragment extends Fragment {
         next_imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /*
+                * Check if information complete.
+                * */
+
+                AnimationSet animationSet = new AnimationSet(true);
+                AlphaAnimation appear_alphaAnimation = new AlphaAnimation(0, 1);
+                Animation translateAnimation = new TranslateAnimation(
+                                                    Animation.ABSOLUTE, 0f,
+                                                    Animation.ABSOLUTE, 0f,
+                                                    Animation.ABSOLUTE, 0f,
+                                                    Animation.ABSOLUTE,
+                                                    enjoyit_imageView.getHeight() +
+                                                    ((RelativeLayout.LayoutParams)enjoyit_imageView
+                                                        .getLayoutParams())
+                                                            .topMargin
+                                                    );
+                appear_alphaAnimation.setDuration(500);
+                appear_alphaAnimation.setAnimationListener(new TranslateAnimation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) { }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) { }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation)
+                    {
+                        enjoyit_imageView.setImageAlpha(1);
+                    }
+                });
+                translateAnimation.setDuration(500);
+                translateAnimation.setAnimationListener(new TranslateAnimation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) { }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) { }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation)
+                    {
+                        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
+                                RelativeLayout.LayoutParams.MATCH_PARENT,
+                                RelativeLayout.LayoutParams.WRAP_CONTENT);
+                        layoutParams.setMargins(
+                                ((RelativeLayout.LayoutParams)list_cardView.getLayoutParams())
+                                        .leftMargin,
+                                enjoyit_imageView.getHeight() +
+                                ((RelativeLayout.LayoutParams)enjoyit_imageView.getLayoutParams())
+                                        .topMargin,
+                                ((RelativeLayout.LayoutParams)list_cardView.getLayoutParams())
+                                        .rightMargin, 0);
+                        list_cardView.setLayoutParams(layoutParams);
+                    }
+                });
+                seat_cardView.setVisibility(View.GONE);
+                back_imageView.setVisibility(View.GONE);
+                next_imageView.setVisibility(View.GONE);
+
+                animationSet.addAnimation(translateAnimation);
+                list_cardView.startAnimation(animationSet);
+
+                animationSet = new AnimationSet(true);
+                animationSet.addAnimation(appear_alphaAnimation);
+                enjoyit_imageView.setVisibility(View.VISIBLE);
+                enjoyit_imageView.startAnimation(animationSet);
 
             }
         });
