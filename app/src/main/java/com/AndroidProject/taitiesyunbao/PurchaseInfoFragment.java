@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
+import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
@@ -115,7 +116,8 @@ public class PurchaseInfoFragment extends Fragment {
                 * */
 
                 AnimationSet animationSet = new AnimationSet(true);
-                AlphaAnimation appear_alphaAnimation = new AlphaAnimation(0, 1);
+                AlphaAnimation appear_alphaAnimation = new AlphaAnimation(0, 1),
+                                    blank_Animation2 = new AlphaAnimation(1, 1);
                 Animation translateAnimation = new TranslateAnimation(
                                                     Animation.ABSOLUTE, 0f,
                                                     Animation.ABSOLUTE, 0f,
@@ -126,20 +128,38 @@ public class PurchaseInfoFragment extends Fragment {
                                                         .getLayoutParams())
                                                             .topMargin
                                                     );
-                appear_alphaAnimation.setDuration(500);
-                appear_alphaAnimation.setAnimationListener(new TranslateAnimation.AnimationListener() {
+                blank_Animation2.setDuration(1);
+                blank_Animation2.setAnimationListener(new Animation.AnimationListener() {
                     @Override
-                    public void onAnimationStart(Animation animation) { }
+                    public void onAnimationStart(Animation animation) {
+                        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
+                                RelativeLayout.LayoutParams.MATCH_PARENT,
+                                RelativeLayout.LayoutParams.WRAP_CONTENT);
+                        /*layoutParams.setMargins(
+                                ((RelativeLayout.LayoutParams)list_cardView.getLayoutParams())
+                                        .leftMargin,
+                                enjoyit_imageView.getHeight() +
+                                        ((RelativeLayout.LayoutParams)enjoyit_imageView.getLayoutParams())
+                                                .topMargin,
+                                ((RelativeLayout.LayoutParams)list_cardView.getLayoutParams())
+                                        .rightMargin, 0);*/
+                        layoutParams.addRule(RelativeLayout.BELOW, R.id.enjoyit_imageView);
+                        list_cardView.setLayoutParams(layoutParams);
+                    }
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+
+                    }
 
                     @Override
-                    public void onAnimationRepeat(Animation animation) { }
+                    public void onAnimationRepeat(Animation animation) {
 
-                    @Override
-                    public void onAnimationEnd(Animation animation)
-                    {
-                        enjoyit_imageView.setImageAlpha(1);
                     }
                 });
+
+                appear_alphaAnimation.setDuration(1000);
+                appear_alphaAnimation.setStartOffset(500);
+
                 translateAnimation.setDuration(500);
                 translateAnimation.setAnimationListener(new TranslateAnimation.AnimationListener() {
                     @Override
@@ -151,20 +171,21 @@ public class PurchaseInfoFragment extends Fragment {
                     @Override
                     public void onAnimationEnd(Animation animation)
                     {
-                        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-                                RelativeLayout.LayoutParams.MATCH_PARENT,
-                                RelativeLayout.LayoutParams.WRAP_CONTENT);
-                        layoutParams.setMargins(
-                                ((RelativeLayout.LayoutParams)list_cardView.getLayoutParams())
-                                        .leftMargin,
+                        list_cardView.clearAnimation();
+                        RelativeLayout.LayoutParams layoutParams =
+                                (RelativeLayout.LayoutParams)list_cardView.getLayoutParams();
+                        /*layoutParams.setMargins(
+                                layoutParams.leftMargin,
                                 enjoyit_imageView.getHeight() +
                                 ((RelativeLayout.LayoutParams)enjoyit_imageView.getLayoutParams())
                                         .topMargin,
-                                ((RelativeLayout.LayoutParams)list_cardView.getLayoutParams())
-                                        .rightMargin, 0);
+                                layoutParams.rightMargin,
+                                0);*/
+                        layoutParams.addRule(RelativeLayout.BELOW, R.id.enjoyit_imageView);
                         list_cardView.setLayoutParams(layoutParams);
                     }
                 });
+
                 seat_cardView.setVisibility(View.GONE);
                 back_imageView.setVisibility(View.GONE);
                 next_imageView.setVisibility(View.GONE);
