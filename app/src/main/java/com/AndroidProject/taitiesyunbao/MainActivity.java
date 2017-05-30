@@ -208,7 +208,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     @Override
     public int isLikeItemExist(ItemInfo ItemInfo) {
         for(int i = 0; i < likeList.size(); i++) {
-            if(likeList.get(i).getImageID() == ItemInfo.getImageID()) {
+            if(likeList.get(i).getId() == ItemInfo.getId()) {
                 return i;
             }
         }
@@ -272,7 +272,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     public int isBuyItemExist(ItemInfo ItemInfo) {
         for(int i = 0; i < buyList.size(); i++) {
             // Using Image ID to check whether they are equal or not.
-            if(buyList.get(i).getImageID() == ItemInfo.getImageID()) {
+            if(buyList.get(i).getId() == ItemInfo.getId()) {
                 return i;
             }
         }

@@ -41,7 +41,7 @@ public class LikeRecyclerViewAdapter extends RecyclerView.Adapter<LikeRecyclerVi
         initListener(viewHolder, index);
         setLikeState(viewHolder, index);
 
-        viewHolder.pic_imageView.setImageResource(list.get(index).getImageID());
+        new GetImage(viewHolder.pic_imageView).execute(list.get(index).getImgurID());
         viewHolder.name_textView.setText(list.get(index).getName());
         viewHolder.price_textView.setText(list.get(index).getPrice() + "元");
 

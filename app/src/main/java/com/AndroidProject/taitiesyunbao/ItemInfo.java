@@ -1,9 +1,16 @@
 package com.AndroidProject.taitiesyunbao;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 /**
  * Items' information structure.
@@ -14,29 +21,36 @@ import java.io.Serializable;
 public class ItemInfo implements Serializable {
     /*Not serializable */private Context context;
 
-    private int img_drawableID;
-    private int name_StringID;
+    //private int img_drawableID;
+    private int id;
+    private String imgurID;
+    //private int name_StringID;
+    private String name;
     private int price;
-    private int info_StringID;
+    //private int info_StringID;
+    private String info;
     private int maxAmount;
     private int amount;
     private boolean like;
 
     // Constructor
-    public ItemInfo(Context context, int img_drawableID, int name_StringID, int price,
-                        int info_StringID, int maxAmount) {
+    // public ItemInfo(Context context, int img_drawableID, int name_StringID, int price,
+    //                    int info_StringID, int maxAmount) {
+    public ItemInfo(Context context, String id, String imgurID, String name, String price
+                    , String maxAmount, String info) {
         this.context = context;
 
-
-        this.img_drawableID = img_drawableID;
-        this.name_StringID = name_StringID;
-        this.price = price;
-        this.info_StringID = info_StringID;
+        this.id = Integer.valueOf(id);
+        this.imgurID = imgurID;
+        this.name = name;
+        //this.img_drawableID = img_drawableID;
+        //this.name_StringID = name_StringID;
+        this.price = Integer.parseInt(price);
+        //this.info_StringID = info_StringID;
         this.amount = 0;
         this.like = false;
-        // Limit max amount to 5;
-        maxAmount = maxAmount > 5? 5:maxAmount;
-        this.maxAmount = maxAmount;
+        this.maxAmount = Integer.parseInt(maxAmount);
+        this.info = info;
     }
 
     public void setAmount(int amount) {
@@ -47,16 +61,24 @@ public class ItemInfo implements Serializable {
         return amount;
     }
 
-    public int getImageID() {
-        return img_drawableID;
+    //public int getImageID() {
+    //    return img_drawableID;
+    //}
+
+    //public Drawable getImage() {
+    //    return context.getDrawable(img_drawableID);
+    //}
+
+    public String getImgurID() {
+        return imgurID;
     }
 
-    public Drawable getImage() {
-        return context.getDrawable(img_drawableID);
-    }
+    //public String getName() {
+    //    return context.getResources().getString(name_StringID);
+    //}
 
     public String getName() {
-        return context.getResources().getString(name_StringID);
+        return name;
     }
 
     public int getMaxAmount() {
@@ -67,8 +89,16 @@ public class ItemInfo implements Serializable {
         return price;
     }
 
-    public String getIntroduction() {
-        return context.getResources().getString(info_StringID);
+    //public String getIntroduction() {
+    //    return context.getResources().getString(info_StringID);
+    //}
+
+    public String getInfo() {
+        return info;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void setLikeState(boolean state) {

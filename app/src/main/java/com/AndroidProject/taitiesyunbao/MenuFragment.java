@@ -98,10 +98,29 @@ public class MenuFragment extends Fragment {
 
 
     private void initPage() {
-        kindList.add(new FoodMenuFragment());
-        kindList.add(new DrinkMenuFragment());
-        kindList.add(new SnackMenuFragment());
-        kindList.add(new OtherMenuFragment());
+        Bundle arg = new Bundle();
+        GoodsMenuFragment goodsMenuFragment = new GoodsMenuFragment();
+        arg.putString("Kind", "FOOD");
+        goodsMenuFragment.setArguments(arg);
+        kindList.add(goodsMenuFragment);
+
+        arg = new Bundle();
+        goodsMenuFragment = new GoodsMenuFragment();
+        arg.putString("Kind", "DRINK");
+        goodsMenuFragment.setArguments(arg);
+        kindList.add(goodsMenuFragment);
+
+        arg = new Bundle();
+        goodsMenuFragment = new GoodsMenuFragment();
+        arg.putString("Kind", "SNACK");
+        goodsMenuFragment.setArguments(arg);
+        kindList.add(goodsMenuFragment);
+
+        arg = new Bundle();
+        goodsMenuFragment = new GoodsMenuFragment();
+        arg.putString("Kind", "OTHER");
+        goodsMenuFragment.setArguments(arg);
+        kindList.add(goodsMenuFragment);
 
         viewPager.setAdapter(new MenuPagerAdapter(getChildFragmentManager(), kindList));
 

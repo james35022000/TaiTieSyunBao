@@ -37,9 +37,9 @@ public class MenuInfoActivity extends AppCompatActivity {
 
         ItemInfo = (ItemInfo) intent.getSerializableExtra("List");
 
-        img_cardView.setImageDrawable(ItemInfo.getImage());
+        new GetImage(img_cardView).execute(ItemInfo.getImgurID());
         price_cardView.setText(ItemInfo.getPrice() + "元");
-        info_cardView.setText(ItemInfo.getIntroduction());
+        info_cardView.setText(ItemInfo.getInfo());
         toolbar_title.setText(ItemInfo.getName());
         toolbar.setNavigationIcon(R.drawable.close_icon);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
