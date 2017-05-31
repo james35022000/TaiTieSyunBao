@@ -5,11 +5,17 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.design.widget.TabLayout;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.TranslateAnimation;
+import android.widget.RelativeLayout;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -36,6 +42,8 @@ public class MenuFragment extends Fragment {
     private FloatingActionButton floatingActionButton;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+
+    private float initialY;
 
     /**
      * Interface to communicate with MainActivity, and also, it can use in other Fragment.
@@ -93,6 +101,8 @@ public class MenuFragment extends Fragment {
         for(int i = 0; i < menuTab.length; i++) {
             tabLayout.addTab(tabLayout.newTab().setText(getResources().getString(menuTab[i])));
         }
+        tabLayout.bringToFront();
+        initialY = tabLayout.getY();
     }
 
 
@@ -102,28 +112,31 @@ public class MenuFragment extends Fragment {
         GoodsMenuFragment goodsMenuFragment = new GoodsMenuFragment();
         arg.putString("Kind", "FOOD");
         goodsMenuFragment.setArguments(arg);
+        goodsMenuFragment.setTabLayout(tabLayout);
         kindList.add(goodsMenuFragment);
 
         arg = new Bundle();
         goodsMenuFragment = new GoodsMenuFragment();
         arg.putString("Kind", "DRINK");
         goodsMenuFragment.setArguments(arg);
+        goodsMenuFragment.setTabLayout(tabLayout);
         kindList.add(goodsMenuFragment);
 
         arg = new Bundle();
         goodsMenuFragment = new GoodsMenuFragment();
         arg.putString("Kind", "SNACK");
         goodsMenuFragment.setArguments(arg);
+        goodsMenuFragment.setTabLayout(tabLayout);
         kindList.add(goodsMenuFragment);
 
         arg = new Bundle();
         goodsMenuFragment = new GoodsMenuFragment();
         arg.putString("Kind", "OTHER");
         goodsMenuFragment.setArguments(arg);
+        goodsMenuFragment.setTabLayout(tabLayout);
         kindList.add(goodsMenuFragment);
 
         viewPager.setAdapter(new MenuPagerAdapter(getChildFragmentManager(), kindList));
-
     }
 
     private void initListener() {
@@ -132,8 +145,34 @@ public class MenuFragment extends Fragment {
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             // Set viewPager(content) when selecting a tab at the top.
             @Override
-            public void onTabSelected(TabLayout.Tab tab) {
+            public void onTabSelected(final TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
+                Animation animation = new TranslateAnimation(
+                                        Animation.ABSOLUTE, 0f,
+                                        Animation.ABSOLUTE, 0f,
+                                        Animation.ABSOLUTE, -(initialY - tabLayout.getY()),
+                                        Animation.ABSOLUTE, 0f
+                                        );
+                AnimationSet animationSet = new AnimationSet(true);
+                animation.setDuration(500);
+                animation.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        tabLayout.setY(initialY);
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+                animationSet.addAnimation(animation);
+                tabLayout.startAnimation(animationSet);
             }
 
             @Override

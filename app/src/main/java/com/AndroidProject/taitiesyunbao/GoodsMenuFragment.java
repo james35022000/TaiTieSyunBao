@@ -2,13 +2,18 @@ package com.AndroidProject.taitiesyunbao;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.TranslateAnimation;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -41,6 +46,11 @@ public class GoodsMenuFragment extends Fragment  {
 
     private String Kind;
 
+    private TabLayout tabLayout;
+    private float initialY, tabHeight;
+
+    private SwipeRefreshLayout swipeRefreshLayout;
+
     // Initialize Interface so that I can communicate with MainActivity.
     @Override
     public void onAttach(Context context){
@@ -55,6 +65,7 @@ public class GoodsMenuFragment extends Fragment  {
         View view = inflater.inflate(R.layout.menu_good_layout, container, false);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.good_recyclerView);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefresh);
 
         return view;
     }
@@ -63,14 +74,16 @@ public class GoodsMenuFragment extends Fragment  {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        Kind = getArguments().getString("Kind");
+        goodList = new ArrayList<>();
+        swipeRefreshLayout.setProgressViewOffset(false, (int)tabHeight, (int)tabHeight + 100);
+
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
 
-        Kind = getArguments().getString("Kind");
-        goodList = new ArrayList<>();
-
+        initListener();
         getGoodsList();
 
     }
@@ -106,12 +119,57 @@ public class GoodsMenuFragment extends Fragment  {
                 }
                 // Set adapter to display content.
                 adapter = new MenuRecyclerViewAdapter(getActivity(), goodList, likeListener,
-                        buyItemListListener);
+                        buyItemListListener, tabHeight);
                 recyclerView.setAdapter(adapter);
+                swipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {  }
+        });
+    }
+
+    public void setTabLayout(TabLayout tabLayout) {
+        this.tabLayout = tabLayout;
+        this.initialY = tabLayout.getY();
+        this.tabLayout.measure(0, 0);
+        this.tabHeight = tabLayout.getMeasuredHeight();
+    }
+
+    private void initListener() {
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if(dy > 0) {
+                    if(recyclerView.getScrollState() == 2)
+                        tabLayout.setY(initialY - tabHeight);
+                    else if (tabLayout.getY() - dy >= initialY - tabHeight)
+                        tabLayout.setY(tabLayout.getY() - dy);
+                }
+                else if(dy < 0) {
+                    if(recyclerView.getScrollState() == 2)
+                        tabLayout.setY(initialY);
+                    else if (tabLayout.getY() - dy <= initialY)
+                        tabLayout.setY(tabLayout.getY() - dy);
+                }
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if(!recyclerView.canScrollVertically(-1))
+                    tabLayout.setY(initialY);
+            }
+        });
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                goodList = new ArrayList<>();
+                recyclerView.setAdapter(null);
+                getGoodsList();
+            }
         });
     }
 }

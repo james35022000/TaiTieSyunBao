@@ -7,6 +7,7 @@ import android.app.FragmentManager;
 import android.content.res.Resources;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.support.design.widget.TabLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -30,13 +31,17 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
     private List<ItemInfo> list;
     private LikeFragment.OnLikeListener likeListener;
     private MenuFragment.OnBuyItemListListener buyItemListListener;
+    private float tabHeight;
 
     public MenuRecyclerViewAdapter(Context context, List<ItemInfo> list
-            , LikeFragment.OnLikeListener likeListener, MenuFragment.OnBuyItemListListener buyItemListListener) {
+            , LikeFragment.OnLikeListener likeListener
+            , MenuFragment.OnBuyItemListListener buyItemListListener
+            , float tabHeight) {
         this.context = context;
         this.list = list;
         this.likeListener = likeListener;
         this.buyItemListListener = buyItemListListener;
+        this.tabHeight = tabHeight;
     }
 
 
@@ -51,7 +56,7 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
     public void onBindViewHolder(ViewHolder viewHolder, int index) {
 
         viewHolder.pic_imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.white));
-        new GetImage(viewHolder.pic_imageView).execute(list.get(index).getImgurID());
+        new GetImage(context, viewHolder.pic_imageView).execute(list.get(index).getImgurID());
         viewHolder.name_textView.setText(list.get(index).getName());
         viewHolder.price_textView.setText(list.get(index).getPrice() + "元");
         viewHolder.amount_textView.setText(String.valueOf(list.get(index).getAmount()));
@@ -64,6 +69,14 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
         setLikeState(viewHolder, index);
 
         initListener(viewHolder, index);
+
+        if(index == 0) {
+            ViewGroup.LayoutParams layoutParams = viewHolder.menu_cardView.getLayoutParams();
+            ViewGroup.MarginLayoutParams marginLayoutParams =
+                    (ViewGroup.MarginLayoutParams) layoutParams;
+            marginLayoutParams.topMargin = (int)tabHeight;
+            viewHolder.menu_cardView.setLayoutParams(marginLayoutParams);
+        }
 
         // Set MarginBottom of the last card in order not to cover the Like bottom.
         if(index == list.size()-1) {

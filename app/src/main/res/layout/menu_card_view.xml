@@ -60,10 +60,11 @@
 
             <ImageView
                 android:id="@+id/minus_imageView"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginTop="5dp"
-                android:layout_toLeftOf="@+id/amount_textView"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_alignTop="@+id/amount"
+                android:layout_marginTop="1dp"
+                android:layout_toStartOf="@+id/amount_textView"
                 android:clickable="true"
                 android:src="@drawable/minus_icon" />
 
@@ -81,10 +82,10 @@
 
             <ImageView
                 android:id="@+id/plus_imageView"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
                 android:layout_centerVertical="false"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="6dp"
                 android:layout_toLeftOf="@+id/like_imageView"
                 android:clickable="true"
                 android:src="@drawable/add_icon" />

@@ -1,5 +1,7 @@
 package com.AndroidProject.taitiesyunbao;
 
+import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
@@ -11,13 +13,20 @@ import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.Vector;
 
 public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener,
-    TabHost.OnTabChangeListener, LikeFragment.OnLikeListener, MenuFragment.OnBuyItemListListener {
+    TabHost.OnTabChangeListener, LikeFragment.OnLikeListener, MenuFragment.OnBuyItemListListener,
+    GetImage.ImageCache {
 
     public Vector<ItemInfo> likeList, buyList;
+    public Map<String, Bitmap> Cache;
+
     // Store Bottom tab image ID.
     private int tabImage[] = {R.drawable.main_tab_selector, R.drawable.menu_tab_selector,
                                 R.drawable.like_tab_selector, R.drawable.sug_tab_selector};
@@ -277,5 +286,18 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
             }
         }
         return -1;
+    }
+
+    @Override
+    public Bitmap GetImage(String imgurID) {
+        if (Cache == null) return null;
+        if (Cache.containsKey(imgurID)) return Cache.get(imgurID);
+        return null;
+    }
+
+    @Override
+    public void SetImage(String imgurID, Bitmap bitmap) {
+        if(Cache == null) Cache = new HashMap<>();
+        Cache.put(imgurID, bitmap);
     }
 }
