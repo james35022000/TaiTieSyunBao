@@ -22,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.concurrent.RunnableFuture;
 
 /**
  * Display goods' information using RecyclerView and CardView.
@@ -77,6 +78,12 @@ public class GoodsMenuFragment extends Fragment  {
         Kind = getArguments().getString("Kind");
         goodList = new ArrayList<>();
         swipeRefreshLayout.setProgressViewOffset(false, (int)tabHeight, (int)tabHeight + 100);
+        swipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                swipeRefreshLayout.setRefreshing(true);
+            }
+        });
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -108,13 +115,15 @@ public class GoodsMenuFragment extends Fragment  {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
                     if(ds.child("Kind").getValue().toString().equals(Kind)) {
-                        goodList.add(new ItemInfo(context,
+                        goodList.add(new ItemInfo(
                                 ds.child("ID").getValue().toString(),
                                 ds.child("ImgurID").getValue().toString(),
                                 ds.child("Name").getValue().toString(),
                                 ds.child("Price").getValue().toString(),
                                 ds.child("Amount").getValue().toString(),
-                                ds.child("Info").getValue().toString()));
+                                ds.child("Info").getValue().toString(),
+                                likeListener.isLikeItemExist(new ItemInfo(
+                                        ds.child("ID").getValue().toString())) != -1));
                     }
                 }
                 // Set adapter to display content.

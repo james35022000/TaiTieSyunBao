@@ -5,26 +5,19 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.ShareCompat;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
-import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
-import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.Vector;
 
 /**
@@ -113,7 +106,15 @@ public class PurchaseInfoFragment extends Fragment {
             public void onClick(View v) {
                 /*
                 * Check if information complete.
+                * Not yet
                 * */
+
+                if(list_listView.getHeight() > 230) {
+                    ViewGroup.LayoutParams params = list_listView.getLayoutParams();
+                    params.height = 230;
+                    list_listView.setLayoutParams(params);
+                    list_listView.requestLayout();
+                }
 
                 AnimationSet animationSet = new AnimationSet(true);
                 AlphaAnimation appear_alphaAnimation = new AlphaAnimation(0, 1);
@@ -144,14 +145,14 @@ public class PurchaseInfoFragment extends Fragment {
                     {
                         list_cardView.clearAnimation();
                         RelativeLayout.LayoutParams layoutParams =
-                                (RelativeLayout.LayoutParams)list_cardView.getLayoutParams();
-                        /*layoutParams.setMargins(
-                                layoutParams.leftMargin,
-                                enjoyit_imageView.getHeight() +
-                                ((RelativeLayout.LayoutParams)enjoyit_imageView.getLayoutParams())
-                                        .topMargin,
-                                layoutParams.rightMargin,
-                                0);*/
+                        (RelativeLayout.LayoutParams)list_cardView.getLayoutParams();
+                        //layoutParams.setMargins(
+                        //        layoutParams.leftMargin,
+                        //        enjoyit_imageView.getHeight() +
+                        //                ((RelativeLayout.LayoutParams)enjoyit_imageView.getLayoutParams())
+                        //                        .topMargin,
+                        //        layoutParams.rightMargin,
+                        //        0);
                         layoutParams.addRule(RelativeLayout.BELOW, R.id.enjoyit_imageView);
                         list_cardView.setLayoutParams(layoutParams);
                     }

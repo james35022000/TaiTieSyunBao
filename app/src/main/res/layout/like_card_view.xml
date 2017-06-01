@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
-    android:layout_marginTop="5dp"
+    android:layout_marginTop="3dp"
     android:clickable="false"
     android:foreground="?android:attr/selectableItemBackground"
     android:longClickable="true"
@@ -22,53 +22,71 @@
         android:background="@drawable/cardview_border_color"
         android:padding="3dp">
 
-        <ImageView
-            android:id="@+id/pic_imageView"
-            android:layout_width="100dp"
-            android:layout_height="80dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
-            android:scaleType="fitXY" />
+        <RelativeLayout
+            android:id="@+id/UI_relativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/pic_imageView"
+                android:layout_width="100dp"
+                android:layout_height="80dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:scaleType="fitXY" />
+
+            <ImageView
+                android:id="@+id/info_imageView"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:clickable="true"
+                android:src="@drawable/menu_info_selector" />
+
+            <ImageView
+                android:id="@+id/like_imageView"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="false"
+                android:layout_gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/like_item_selector" />
+
+            <TextView
+                android:id="@+id/price_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/name_textView"
+                android:layout_toRightOf="@+id/pic_imageView"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/name_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/pic_imageView"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
 
         <TextView
-            android:id="@+id/name_textView"
-            android:layout_width="wrap_content"
+            android:id="@+id/info_textView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/pic_imageView"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/price_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/name_textView"
-            android:layout_toRightOf="@+id/pic_imageView"
-            android:textSize="13sp" />
-
-        <ImageView
-            android:id="@+id/like_imageView"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerInParent="false"
-            android:layout_gravity="center"
-            android:clickable="true"
-            android:focusable="true"
-            android:src="@drawable/like_item_selector" />
-
-        <ImageView
-            android:id="@+id/info_imageView"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:clickable="true"
-            android:src="@drawable/menu_info_selector" />
+            android:layout_alignParentBottom="false"
+            android:layout_alignParentTop="false"
+            android:layout_below="@+id/UI_relativeLayout"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="5dp" />
 
 
     </RelativeLayout>

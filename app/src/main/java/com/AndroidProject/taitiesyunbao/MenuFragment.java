@@ -5,7 +5,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +13,7 @@ import android.support.design.widget.TabLayout;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
-import android.widget.RelativeLayout;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -44,6 +42,7 @@ public class MenuFragment extends Fragment {
     private ViewPager viewPager;
 
     private float initialY;
+    private boolean purchaseInfoFragmentExist = false;
 
     /**
      * Interface to communicate with MainActivity, and also, it can use in other Fragment.
@@ -73,6 +72,16 @@ public class MenuFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        if(purchaseInfoFragmentExist) {
+            FragmentManager fragmentManager = getChildFragmentManager();
+            fragmentManager.beginTransaction()
+                    .hide(fragmentManager.findFragmentById(R.id.menu_fragment))
+                    .commit();
+            floatingActionButton.setVisibility(View.VISIBLE);
+            purchaseInfoFragmentExist = false;
+        }
+
         // Initialize TopTab.
         initTab();
         // Initialize content.
@@ -89,7 +98,9 @@ public class MenuFragment extends Fragment {
     }
 
     @Override
-    public void onDestroy() { super.onDestroy(); }
+    public void onDestroy() {
+        super.onDestroy();
+    }
 
     @Override
     public void onDestroyView() {
@@ -189,14 +200,13 @@ public class MenuFragment extends Fragment {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                purchaseInfoFragmentExist = true;
                 PurchaseInfoFragment purchaseInfoFragment = new PurchaseInfoFragment();
                 FragmentManager fragmentManager = getChildFragmentManager();
                 fragmentManager.beginTransaction()
                         .setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right)
                         .add(R.id.menu_fragment, purchaseInfoFragment)
                         .commit();
-
                 floatingActionButton.setVisibility(View.GONE);
             }
         });

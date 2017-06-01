@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.Vector;
 
 /**
  * Created by JCChen on 2017/4/10.
@@ -18,7 +20,7 @@ import java.util.List;
 
 public class LikeRecyclerViewAdapter extends RecyclerView.Adapter<LikeRecyclerViewAdapter.ViewHolder> {
     private Context context;
-    private List<ItemInfo> list;
+    private Vector<ItemInfo> list;
     private LikeFragment.OnLikeListener likeListener;
 
 
@@ -38,12 +40,15 @@ public class LikeRecyclerViewAdapter extends RecyclerView.Adapter<LikeRecyclerVi
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int index) {
 
+        viewHolder.info_textView.setVisibility(View.GONE);
+
         initListener(viewHolder, index);
         setLikeState(viewHolder, index);
 
         new GetImage(context, viewHolder.pic_imageView).execute(list.get(index).getImgurID());
         viewHolder.name_textView.setText(list.get(index).getName());
         viewHolder.price_textView.setText(list.get(index).getPrice() + "元");
+        viewHolder.info_textView.setText(list.get(index).getInfo());
 
     }
 
@@ -55,7 +60,7 @@ public class LikeRecyclerViewAdapter extends RecyclerView.Adapter<LikeRecyclerVi
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public CardView like_cardView;
         public ImageView pic_imageView, like_imageView, info_imageView;
-        public TextView name_textView, price_textView;
+        public TextView name_textView, price_textView, info_textView;
         public ViewHolder(View view) {
             super(view);
             like_cardView = (CardView) view.findViewById(R.id.like_cardView);
@@ -64,6 +69,7 @@ public class LikeRecyclerViewAdapter extends RecyclerView.Adapter<LikeRecyclerVi
             info_imageView =(ImageView) view.findViewById(R.id.info_imageView);
             name_textView = (TextView) view.findViewById(R.id.name_textView);
             price_textView = (TextView) view.findViewById(R.id.price_textView);
+            info_textView = (TextView) view.findViewById(R.id.info_textView);
         }
     }
 
@@ -72,10 +78,15 @@ public class LikeRecyclerViewAdapter extends RecyclerView.Adapter<LikeRecyclerVi
         final ViewHolder v = viewHolder;
         viewHolder.info_imageView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, MenuInfoActivity.class);
-                intent.putExtra("List", list.get(j));
-                context.startActivity(intent);
+            public void onClick(View view) {
+                if(v.info_imageView.isSelected()) {
+                    v.info_imageView.setSelected(false);
+                    v.info_textView.setVisibility(View.GONE);
+                }
+                else {
+                    v.info_imageView.setSelected(true);
+                    v.info_textView.setVisibility(View.VISIBLE);
+                }
             }
         });
 
@@ -84,9 +95,11 @@ public class LikeRecyclerViewAdapter extends RecyclerView.Adapter<LikeRecyclerVi
             public void onClick(View view) {
                 if (v.like_imageView.isSelected()) {
                     v.like_imageView.setSelected(false);
+                    list.get(j).setLikeState(false);
                     likeListener.delLikeList(list.get(j));
                 } else {
                     v.like_imageView.setSelected(true);
+                    list.get(j).setLikeState(true);
                     likeListener.addLikeList(list.get(j));
                 }
             }

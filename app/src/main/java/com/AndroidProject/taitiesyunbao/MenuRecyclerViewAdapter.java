@@ -1,20 +1,11 @@
 package com.AndroidProject.taitiesyunbao;
 
-import android.animation.ValueAnimator;
-import android.app.Activity;
 import android.content.Context;
-import android.app.FragmentManager;
-import android.content.res.Resources;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.support.design.widget.TabLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,10 +47,13 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
     public void onBindViewHolder(ViewHolder viewHolder, int index) {
 
         viewHolder.pic_imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.white));
+        viewHolder.pic_imageView.measure(0, 0);
+        viewHolder.pic_imageView.getLayoutParams().height =
+                viewHolder.pic_imageView.getMeasuredWidth() / 3 * 4;
+        viewHolder.pic_imageView.requestLayout();
         new GetImage(context, viewHolder.pic_imageView).execute(list.get(index).getImgurID());
         viewHolder.name_textView.setText(list.get(index).getName());
         viewHolder.price_textView.setText(list.get(index).getPrice() + "元");
-        viewHolder.amount_textView.setText(String.valueOf(list.get(index).getAmount()));
         viewHolder.info_textView.setText(list.get(index).getInfo());
         //viewHolder.info_textView.measure(0, 0);
         //viewHolder.info_Height.setText(Integer.toString(viewHolder.info_textView.getMeasuredHeight()));
@@ -206,6 +200,9 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
     }
 
     private void setAmount(ViewHolder viewHolder, int index) {
-        viewHolder.amount_textView.setText(String.valueOf(list.get(index).getAmount()));
+        int buyListIndex = buyItemListListener.isBuyItemExist(list.get(index));
+        if(buyListIndex != -1)
+            viewHolder.amount_textView.setText(
+                    String.valueOf(buyItemListListener.getBuyList().get(buyListIndex).getAmount()));
     }
 }

@@ -164,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     @Override
     public Vector<ItemInfo> getLikeList() {
         if(likeList == null)  likeList = new Vector<>();
-        return likeList;
+        return new Vector<>(likeList);
     }
 
     /**
@@ -240,7 +240,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
      */
     @Override
     public Vector<ItemInfo> getBuyList() {
-        return buyList;
+        return new Vector<>(buyList);
     }
 
     /**
