@@ -5,7 +5,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +33,7 @@ public class MenuFragment extends Fragment {
                                 R.string.snack_tab, R.string.other_tab};
 
     // Store each kind of goods' fragment in order to MenuPagerAdapter to initialize pager.
-    private List<Fragment> kindList = new ArrayList<>();
+    private List<Fragment> kindList;
 
     // Layout initial.
     private FloatingActionButton floatingActionButton;
@@ -109,7 +108,7 @@ public class MenuFragment extends Fragment {
 
 
     private void initTab() {
-        for(int i = 0; i < menuTab.length; i++) {
+        for (int i = 0; i < menuTab.length; i++) {
             tabLayout.addTab(tabLayout.newTab().setText(getResources().getString(menuTab[i])));
         }
         tabLayout.bringToFront();
@@ -119,6 +118,7 @@ public class MenuFragment extends Fragment {
 
 
     private void initPage() {
+        kindList = new ArrayList<>();
         Bundle arg = new Bundle();
         GoodsMenuFragment goodsMenuFragment = new GoodsMenuFragment();
         arg.putString("Kind", "FOOD");

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
@@ -33,6 +34,7 @@ public class GetImage extends AsyncTask<String, Void, Bitmap> {
         this.imageView = imageView;
         this.imageCache = (ImageCache) context;
     }
+
     protected Bitmap doInBackground(String... params) {
         String imgurID = params[0];
         Bitmap bitmap = imageCache.GetImage(imgurID);
@@ -46,7 +48,7 @@ public class GetImage extends AsyncTask<String, Void, Bitmap> {
             bitmap = BitmapFactory.decodeStream(input);
             imageCache.SetImage(imgurID, bitmap);
         } catch (Exception e) {
-
+            Log.e("Image get error", e.getMessage());
         }
         return bitmap;
     }

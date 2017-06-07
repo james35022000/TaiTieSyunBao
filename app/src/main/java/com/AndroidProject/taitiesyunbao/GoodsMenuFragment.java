@@ -7,22 +7,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.TranslateAnimation;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.concurrent.RunnableFuture;
 
 /**
  * Display goods' information using RecyclerView and CardView.
@@ -30,9 +24,6 @@ import java.util.concurrent.RunnableFuture;
  */
 
 public class GoodsMenuFragment extends Fragment  {
-
-    // MainActivity context.
-    private Context context;
 
     // Each Interface.
     private MenuFragment.OnBuyItemListListener buyItemListListener;
@@ -56,7 +47,6 @@ public class GoodsMenuFragment extends Fragment  {
     @Override
     public void onAttach(Context context){
         super.onAttach(context);
-        this.context = context;
         likeListener = (LikeFragment.OnLikeListener) context;
         buyItemListListener = (MenuFragment.OnBuyItemListListener) context;
     }

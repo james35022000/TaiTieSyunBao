@@ -1,7 +1,6 @@
 package com.AndroidProject.taitiesyunbao;
 
 import android.graphics.Bitmap;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
@@ -13,11 +12,9 @@ import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Vector;
 
 public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener,

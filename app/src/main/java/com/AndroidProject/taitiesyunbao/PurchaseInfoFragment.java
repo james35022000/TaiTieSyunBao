@@ -13,10 +13,15 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Vector;
 
@@ -33,10 +38,14 @@ public class PurchaseInfoFragment extends Fragment {
     private ImageView back_imageView, next_imageView, enjoyit_imageView;
     private ListView list_listView;
     private TextView total_textView;
+    private EditText trainnum_editText, carnum_editText, seatnum_editText;
     private CardView seat_cardView, list_cardView;
     private FloatingActionButton floatingActionButton;
 
     private PurchaseInfoArrayAdapter buyList_arrayAdapter;
+    private Vector<ItemInfo> buyList;
+
+    private DatabaseReference databaseReference;
 
     @Override
     public void onAttach(Context context) {
@@ -54,6 +63,9 @@ public class PurchaseInfoFragment extends Fragment {
         enjoyit_imageView = (ImageView) view.findViewById(R.id.enjoyit_imageView);
         list_listView = (ListView) view.findViewById(R.id.list_listView);
         total_textView = (TextView) view.findViewById(R.id.total_textView);
+        trainnum_editText = (EditText) view.findViewById(R.id.trainnum_editText);
+        carnum_editText = (EditText) view.findViewById(R.id.carnum_editText);
+        seatnum_editText = (EditText) view.findViewById(R.id.seatnum_editText);
         seat_cardView = (CardView) view.findViewById(R.id.seat_cardView);
         list_cardView = (CardView) view.findViewById(R.id.list_cardView);
         floatingActionButton = (FloatingActionButton) getParentFragment()
@@ -64,9 +76,9 @@ public class PurchaseInfoFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Vector<ItemInfo> buyList = buyItemListListener.getBuyList();
+        buyList = buyItemListListener.getBuyList();
         int total = 0, height = 0;
 
         buyList_arrayAdapter = new PurchaseInfoArrayAdapter(getActivity(),
@@ -104,71 +116,14 @@ public class PurchaseInfoFragment extends Fragment {
         next_imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*
-                * Check if information complete.
-                * Not yet
-                * */
-
-                if(list_listView.getHeight() > 230) {
-                    ViewGroup.LayoutParams params = list_listView.getLayoutParams();
-                    params.height = 230;
-                    list_listView.setLayoutParams(params);
-                    list_listView.requestLayout();
+                if(checkIfComplete()) {
+                    sendOrder();
+                    displayResult();
                 }
-
-                AnimationSet animationSet = new AnimationSet(true);
-                AlphaAnimation appear_alphaAnimation = new AlphaAnimation(0, 1);
-                Animation translateAnimation = new TranslateAnimation(
-                                                    Animation.ABSOLUTE, 0f,
-                                                    Animation.ABSOLUTE, 0f,
-                                                    Animation.ABSOLUTE, 0f,
-                                                    Animation.ABSOLUTE,
-                                                    enjoyit_imageView.getHeight() +
-                                                    ((RelativeLayout.LayoutParams)enjoyit_imageView
-                                                        .getLayoutParams())
-                                                            .topMargin
-                                                    );
-
-                appear_alphaAnimation.setDuration(1000);
-                appear_alphaAnimation.setStartOffset(500);
-
-                translateAnimation.setDuration(500);
-                translateAnimation.setAnimationListener(new TranslateAnimation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) { }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) { }
-
-                    @Override
-                    public void onAnimationEnd(Animation animation)
-                    {
-                        list_cardView.clearAnimation();
-                        RelativeLayout.LayoutParams layoutParams =
-                        (RelativeLayout.LayoutParams)list_cardView.getLayoutParams();
-                        //layoutParams.setMargins(
-                        //        layoutParams.leftMargin,
-                        //        enjoyit_imageView.getHeight() +
-                        //                ((RelativeLayout.LayoutParams)enjoyit_imageView.getLayoutParams())
-                        //                        .topMargin,
-                        //        layoutParams.rightMargin,
-                        //        0);
-                        layoutParams.addRule(RelativeLayout.BELOW, R.id.enjoyit_imageView);
-                        list_cardView.setLayoutParams(layoutParams);
-                    }
-                });
-
-                seat_cardView.setVisibility(View.GONE);
-                back_imageView.setVisibility(View.GONE);
-                next_imageView.setVisibility(View.GONE);
-
-                animationSet.addAnimation(translateAnimation);
-                list_cardView.startAnimation(animationSet);
-
-                animationSet = new AnimationSet(true);
-                animationSet.addAnimation(appear_alphaAnimation);
-                enjoyit_imageView.setVisibility(View.VISIBLE);
-                enjoyit_imageView.startAnimation(animationSet);
+                else {
+                    Toast.makeText(view.getContext(),
+                            "Please complete your info.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -184,5 +139,103 @@ public class PurchaseInfoFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+    }
+
+    private boolean checkIfComplete() {
+        if(buyList.size() == 0 || trainnum_editText.getText().toString().equals("") ||
+                                  carnum_editText.getText().toString().equals("")   ||
+                                  seatnum_editText.getText().toString().equals(""))
+            return false;
+        return true;
+    }
+
+    private void sendOrder() {
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        String key = databaseReference.child("Orders").push().getKey();
+
+        databaseReference.child("Orders").child(key).child("Key")
+                .setValue(key);
+
+        databaseReference.child("Orders").child(key).child("PersonalInfo")
+                .child("TrainNum")
+                .setValue(trainnum_editText.getText().toString());
+        databaseReference.child("Orders").child(key).child("PersonalInfo")
+                .child("CarNum")
+                .setValue(carnum_editText.getText().toString());
+        databaseReference.child("Orders").child(key).child("PersonalInfo")
+                .child("SeatNum")
+                .setValue(seatnum_editText.getText().toString());
+
+        for(int i = 0; i < buyList.size(); i++) {
+            databaseReference.child("Orders").child(key).child("OrderList").child(String.valueOf(i))
+                             .child("ID")
+                             .setValue(buyList.get(i).getId());
+            databaseReference.child("Orders").child(key).child("OrderList").child(String.valueOf(i))
+                             .child("Amount")
+                             .setValue(buyList.get(i).getAmount());
+        }
+    }
+
+    private void displayResult() {
+        if(list_listView.getHeight() > 230) {
+            ViewGroup.LayoutParams params = list_listView.getLayoutParams();
+            params.height = 230;
+            list_listView.setLayoutParams(params);
+            list_listView.requestLayout();
+        }
+
+        AnimationSet animationSet = new AnimationSet(true);
+        AlphaAnimation appear_alphaAnimation = new AlphaAnimation(0, 1);
+        Animation translateAnimation = new TranslateAnimation(
+                Animation.ABSOLUTE, 0f,
+                Animation.ABSOLUTE, 0f,
+                Animation.ABSOLUTE, 0f,
+                Animation.ABSOLUTE,
+                enjoyit_imageView.getHeight() +
+                        ((RelativeLayout.LayoutParams)enjoyit_imageView
+                                .getLayoutParams())
+                                .topMargin
+        );
+
+        appear_alphaAnimation.setDuration(1000);
+        appear_alphaAnimation.setStartOffset(500);
+
+        translateAnimation.setDuration(500);
+        translateAnimation.setAnimationListener(new TranslateAnimation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) { }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) { }
+
+            @Override
+            public void onAnimationEnd(Animation animation)
+            {
+                list_cardView.clearAnimation();
+                RelativeLayout.LayoutParams layoutParams =
+                        (RelativeLayout.LayoutParams)list_cardView.getLayoutParams();
+                //layoutParams.setMargins(
+                //        layoutParams.leftMargin,
+                //        enjoyit_imageView.getHeight() +
+                //                ((RelativeLayout.LayoutParams)enjoyit_imageView.getLayoutParams())
+                //                        .topMargin,
+                //        layoutParams.rightMargin,
+                //        0);
+                layoutParams.addRule(RelativeLayout.BELOW, R.id.enjoyit_imageView);
+                list_cardView.setLayoutParams(layoutParams);
+            }
+        });
+
+        seat_cardView.setVisibility(View.GONE);
+        back_imageView.setVisibility(View.GONE);
+        next_imageView.setVisibility(View.GONE);
+
+        animationSet.addAnimation(translateAnimation);
+        list_cardView.startAnimation(animationSet);
+
+        animationSet = new AnimationSet(true);
+        animationSet.addAnimation(appear_alphaAnimation);
+        enjoyit_imageView.setVisibility(View.VISIBLE);
+        enjoyit_imageView.startAnimation(animationSet);
     }
 }

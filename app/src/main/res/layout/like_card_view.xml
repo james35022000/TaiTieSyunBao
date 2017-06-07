@@ -28,6 +28,58 @@
             android:layout_height="wrap_content">
 
             <ImageView
+                android:id="@+id/plus_imageView"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_alignParentBottom="false"
+                android:layout_below="@+id/price_textView"
+                android:layout_centerVertical="false"
+                android:layout_marginTop="22dp"
+                android:layout_toRightOf="@+id/amount_textView"
+                android:clickable="true"
+                android:src="@drawable/add_icon" />
+
+            <ImageView
+                android:id="@+id/minus_imageView"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_alignParentBottom="false"
+                android:layout_below="@+id/price_textView"
+                android:layout_marginTop="22dp"
+                android:layout_toRightOf="@+id/amount"
+                android:clickable="true"
+                android:src="@drawable/minus_icon" />
+
+            <TextView
+                android:id="@+id/amount"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_alignParentBottom="false"
+                android:layout_below="@+id/price_textView"
+                android:layout_centerVertical="false"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="20dp"
+                android:layout_toRightOf="@+id/pic_imageView"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="@string/amount"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/amount_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_alignParentBottom="false"
+                android:layout_below="@+id/price_textView"
+                android:layout_centerVertical="false"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="20dp"
+                android:layout_toRightOf="@+id/minus_imageView"
+                android:gravity="center"
+                android:text="0" />
+
+            <ImageView
                 android:id="@+id/pic_imageView"
                 android:layout_width="100dp"
                 android:layout_height="80dp"

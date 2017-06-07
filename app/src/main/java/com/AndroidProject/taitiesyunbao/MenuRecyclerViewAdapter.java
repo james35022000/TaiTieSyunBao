@@ -13,7 +13,6 @@ import android.widget.Toast;
 import java.util.List;
 
 /**
- * Warning: One bug in initListener().
  * Created by JCChen on 2017/4/9.
  */
 
@@ -57,7 +56,10 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
         viewHolder.info_textView.setText(list.get(index).getInfo());
         //viewHolder.info_textView.measure(0, 0);
         //viewHolder.info_Height.setText(Integer.toString(viewHolder.info_textView.getMeasuredHeight()));
-        viewHolder.info_textView.setVisibility(View.GONE);
+        if(viewHolder.info_imageView.isSelected())
+            viewHolder.info_textView.setVisibility(View.VISIBLE);
+        else
+            viewHolder.info_textView.setVisibility(View.GONE);
 
         setAmount(viewHolder, index);
         setLikeState(viewHolder, index);

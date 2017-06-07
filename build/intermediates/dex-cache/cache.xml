@@ -11,6 +11,15 @@
         <dex dex="C:\Users\Jack-PC\Documents\GitHub\TrainOrderSystem\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_ef3446531b72e80a62d175c9790e6d96bbf2c812\classes.dex" />
     </item>
     <item
+        is-multidex="false"
+        jar="C:\Users\Jack-PC\.android\build-cache\b2831dd49e682233356aacf74f3e57c21f8cf3fc\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="8f128aeeb7e31271b28a7adb9dac1f3a6ed9f5e7">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TrainOrderSystem\app\build\intermediates\pre-dexed\debug\classes_334ed17340267852b36cb913a40378f8aca7309d.jar" />
+    </item>
+    <item
         is-multidex="true"
         jar="C:\Users\Jack-PC\Documents\GitHub\TrainOrderSystem\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
         jumboMode="true"
@@ -18,6 +27,15 @@
         revision="25.0.0"
         sha1="caff8e51a24901cfc9cd7e1cf83d84f4cb0c103b">
         <dex dex="C:\Users\Jack-PC\Documents\GitHub\TrainOrderSystem\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_86d5bc09d546c0e312ecaa4a13a4d735696825a1\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Jack-PC\.android\build-cache\0a32349d75e70cd669c12e6a12ac590211828352\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="8010ae6ed32828a145b25ec97bc07b7a83c6318f">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TrainOrderSystem\app\build\intermediates\pre-dexed\debug\classes_e742c2ede0bfe31e39780c264c8a6c7711ca3c9d.jar" />
     </item>
 
 </items>

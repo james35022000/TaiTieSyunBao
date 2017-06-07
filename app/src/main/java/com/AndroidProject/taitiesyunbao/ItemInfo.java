@@ -32,6 +32,7 @@ public class ItemInfo {
         this.like = like;
     }
 
+    // Constructor (Using for comparing two ItemInfo)
     public ItemInfo(String id) {
         this.id = Integer.valueOf(id);
     }
