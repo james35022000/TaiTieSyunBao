@@ -1,16 +1,38 @@
 package com.AndroidProject.taitiesyunbao;
 
 import android.graphics.Bitmap;
+import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,7 +66,20 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     // Layout declare.
     private FragmentTabHost mTabHost;
     private MainViewPager viewPager;
-    private ImageView toolbar_icon;
+    private ImageView toolbar_icon, back_imageView, drawerlayout_imageView, signin_imageView;
+    private DrawerLayout drawer_layout;
+    private RelativeLayout right_drawer;
+    private ListView drawer_listView;
+    private TextView userName_textView, signup_textView;
+
+    private Button signin_button, signup_button;
+    private EditText account_editText, password_editText, password_signup_editText,
+                        userName_editText, email_editText, passwordComfirm_editText;
+
+    private AlertDialog alertDialog;
+
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser = null;
 
 
     @Override
@@ -96,6 +131,14 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
      * Initialize toolbar.
      */
     private void initActionBar() {
+        back_imageView = (ImageView) findViewById(R.id.back_imageView);
+        drawerlayout_imageView = (ImageView) findViewById(R.id.drawerlayout_imageView);
+        back_imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Empty now...
+            }
+        });
         toolbar_icon = (ImageView) findViewById(R.id.toolbar_icon);
         Toolbar toolbar = (Toolbar) findViewById(R.id.activity_main_toolbar);
         toolbar_icon.setImageDrawable(getDrawable(toolbarImage[0]));
@@ -107,8 +150,68 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
      * Initialize tab at bottom.
      */
     private void initUI() {
+        right_drawer = (RelativeLayout) findViewById(R.id.right_drawer);
+        drawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        signin_imageView = (ImageView) findViewById(R.id.signin_imageView);
+        drawer_listView = (ListView) findViewById(R.id.drawer_listView);
+        userName_textView = (TextView) findViewById(R.id.userName_textView);
         viewPager = (MainViewPager) findViewById(R.id.pager);
         mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
+
+        drawerlayout_imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(drawer_layout.isDrawerOpen(right_drawer))
+                    drawer_layout.closeDrawer(right_drawer);
+                else
+                    drawer_layout.openDrawer(right_drawer);
+            }
+        });
+
+        signin_imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                View alertDialogView = LayoutInflater.from(MainActivity.this)
+                        .inflate(R.layout.signin_layout, null);
+                signin_button = (Button) alertDialogView.findViewById(R.id.signin_button);
+                account_editText = (EditText) alertDialogView.findViewById(R.id.account_editText);
+                password_editText = (EditText) alertDialogView.findViewById(R.id.password_editText);
+                signup_textView = (TextView) alertDialogView.findViewById(R.id.signup_textView);
+
+                signin_button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(account_editText.getText().toString().equals(""))
+                            return;
+                        if(password_editText.getText().toString().equals(""))
+                            return;
+                        SignIn();
+                    }
+                });
+
+                signup_textView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.cancel();
+                        drawer_layout.closeDrawer(right_drawer);
+                        SignUp();
+                    }
+                });
+
+                alertDialog = new AlertDialog.Builder(MainActivity.this)
+                                             .setView(alertDialogView)
+                                             .show();
+            }
+        });
+
+
+        ListAdapter listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,
+                                                        new String[]{
+                                                                "訂單",
+                                                                "設定",
+                                                                "登出" });
+        drawer_listView.setAdapter(listAdapter);
+
         mTabHost.setup(this, getSupportFragmentManager(), R.id.pager);
         mTabHost.getTabWidget().setDividerDrawable(null);
         mTabHost.setOnTabChangedListener(this);
@@ -120,6 +223,97 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         }
     }
 
+    private void SignIn() {
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseAuth.signInWithEmailAndPassword(account_editText.getText().toString(),
+                password_editText.getText().toString()).addOnCompleteListener(MainActivity.this,
+                        new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    alertDialog.cancel();
+                                    firebaseUser = firebaseAuth.getCurrentUser();
+                                    userName_textView.setText(firebaseUser.getDisplayName());
+                                } else {
+                                    alertDialog.cancel();
+                                    firebaseUser = null;
+                                    Toast.makeText(MainActivity.this, "登入失敗，請確認帳號密碼"
+                                            , Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                });
+    }
+
+    private void SignUp() {
+        View view = LayoutInflater.from(this).inflate(R.layout.signup_layout, null);
+        final AlertDialog signupAlertDialog = new AlertDialog.Builder(this).setView(view).show();
+        signup_button = (Button) view.findViewById(R.id.signup_button);
+        userName_editText = (EditText) view.findViewById(R.id.userName_editText);
+        email_editText = (EditText) view.findViewById(R.id.email_editText);
+        password_signup_editText = (EditText) view.findViewById(R.id.password_signup_editText);
+        passwordComfirm_editText = (EditText) view.findViewById(R.id.passwordComfirm_editText);
+        signup_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!userName_editText.getText().toString().equals("")       ||
+                   !email_editText.getText().toString().equals("")          ||
+                   !password_signup_editText.getText().toString().equals("")) {
+                    if(!passwordComfirm_editText.getText().toString()
+                            .equals(password_signup_editText.getText().toString()))
+                        Toast.makeText(MainActivity.this, "請確認密碼", Toast.LENGTH_SHORT).show();
+                    else {
+                        firebaseAuth = FirebaseAuth.getInstance();
+                        firebaseAuth.createUserWithEmailAndPassword(
+                                email_editText.getText().toString(),
+                                password_signup_editText.getText().toString()).addOnCompleteListener(
+                                MainActivity.this, new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if(task.isSuccessful()) {
+                                            firebaseAuth.signInWithEmailAndPassword(
+                                                email_editText.getText().toString(),
+                                                    password_signup_editText.getText().toString()
+                                            );
+                                            firebaseUser = firebaseAuth.getCurrentUser();
+                                            UpdateUserProfile(userName_editText.getText().toString()
+                                                    , "");
+                                            firebaseUser = null;
+                                            signupAlertDialog.cancel();
+                                            drawer_layout.openDrawer(right_drawer);
+                                            Toast.makeText(MainActivity.this,
+                                                    "創建成功，請登入", Toast.LENGTH_SHORT).show();
+                                        }
+                                        else {
+                                            Toast.makeText(MainActivity.this,
+                                                    "創建失敗", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                }
+                        );
+                    }
+                }
+            }
+        });
+    }
+
+    private void UpdateUserProfile(String displayName, String photoUri) {
+        UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder()
+                .setDisplayName(displayName)
+                .setPhotoUri(Uri.parse(photoUri))
+                .build();
+        firebaseUser.updateProfile(profileChangeRequest).addOnCompleteListener(
+                new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful())
+                    Toast.makeText(MainActivity.this, "使用者資料更新成功", Toast.LENGTH_SHORT)
+                            .show();
+                else
+                    Toast.makeText(MainActivity.this, "使用者資料更新失敗", Toast.LENGTH_SHORT)
+                            .show();
+            }
+        });
+    }
 
     /**
      * Initialize contents of each tab.
