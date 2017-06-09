@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/cardview_border_color"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="20dp"
+        android:text="個人資訊"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <com.AndroidProject.taitiesyunbao.RoundedImageView
+        android:id="@+id/userPic_RoundedImageView"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/textView15"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="10dp"
+        android:clickable="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/account_icon" />
+
+    <ImageView
+        android:id="@+id/updatePic_imageView"
+        android:layout_width="30dp"
+        android:layout_height="10dp"
+        android:layout_below="@+id/textView15"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        app:srcCompat="@drawable/common_google_signin_btn_text_dark_disabled" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/userPic_RoundedImageView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:text="使用者名稱" />
+
+        <TextView
+            android:id="@+id/userName_textView"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/edittext_border_color"
+            android:gravity="center"
+            android:paddingBottom="3dp"
+            android:paddingTop="3dp"
+            android:text="(空)" />
+
+        <Button
+            android:id="@+id/changeName_button"
+            android:layout_width="65dp"
+            android:layout_height="34dp"
+            android:layout_marginBottom="1dp"
+            android:text="更改"
+            android:textSize="10sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"></LinearLayout>
+</RelativeLayout>

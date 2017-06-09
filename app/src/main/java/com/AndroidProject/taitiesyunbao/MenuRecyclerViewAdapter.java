@@ -23,6 +23,13 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
     private MenuFragment.OnBuyItemListListener buyItemListListener;
     private float tabHeight;
 
+    public interface SaveUserData {
+        void storeLikeItem(ItemInfo itemInfo);
+        void removeLikeItem(ItemInfo itemInfo);
+    }
+
+    SaveUserData saveUserData;
+
     public MenuRecyclerViewAdapter(Context context, List<ItemInfo> list
             , LikeFragment.OnLikeListener likeListener
             , MenuFragment.OnBuyItemListListener buyItemListListener
@@ -32,6 +39,7 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
         this.likeListener = likeListener;
         this.buyItemListListener = buyItemListListener;
         this.tabHeight = tabHeight;
+        this.saveUserData = (SaveUserData) context;
     }
 
 
@@ -153,11 +161,13 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
                     v.like_imageView.setSelected(false);
                     list.get(j).setLikeState(false);
                     likeListener.delLikeList(list.get(j));
+                    saveUserData.removeLikeItem(list.get(j));
                 }
                 else {
                     view.setSelected(true);
                     list.get(j).setLikeState(true);
                     likeListener.addLikeList(list.get(j));
+                    saveUserData.storeLikeItem(list.get(j));
                 }
             }
         });

@@ -1,5 +1,6 @@
 package com.AndroidProject.taitiesyunbao;
 
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -32,6 +33,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,7 +47,7 @@ import java.util.Vector;
 
 public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener,
     TabHost.OnTabChangeListener, LikeFragment.OnLikeListener, MenuFragment.OnBuyItemListListener,
-    GetImage.ImageCache {
+    GetImage.ImageCache, MenuRecyclerViewAdapter.SaveUserData {
 
     public Vector<ItemInfo> likeList, buyList;
     public Map<String, Bitmap> Cache;
@@ -66,7 +72,8 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     // Layout declare.
     private FragmentTabHost mTabHost;
     private MainViewPager viewPager;
-    private ImageView toolbar_icon, back_imageView, drawerlayout_imageView, signin_imageView;
+    private ImageView toolbar_icon, back_imageView, drawerlayout_imageView, signin_imageView
+                        , userPic_RoundedImageView;
     private DrawerLayout drawer_layout;
     private RelativeLayout right_drawer;
     private ListView drawer_listView;
@@ -76,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     private EditText account_editText, password_editText, password_signup_editText,
                         userName_editText, email_editText, passwordComfirm_editText;
 
-    private AlertDialog alertDialog;
+    private AlertDialog alertDialog, alertDialog1;
 
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser = null;
@@ -94,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         initActionBar();
         // Initialize tabs.
         initUI();
+        restoreAccount();
         // Initialize content.
         initPage();
     }
@@ -155,6 +163,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         signin_imageView = (ImageView) findViewById(R.id.signin_imageView);
         drawer_listView = (ListView) findViewById(R.id.drawer_listView);
         userName_textView = (TextView) findViewById(R.id.userName_textView);
+        userPic_RoundedImageView = (RoundedImageView) findViewById(R.id.userPic_RoundedImageView);
         viewPager = (MainViewPager) findViewById(R.id.pager);
         mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
 
@@ -165,6 +174,49 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                     drawer_layout.closeDrawer(right_drawer);
                 else
                     drawer_layout.openDrawer(right_drawer);
+            }
+        });
+
+        userPic_RoundedImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                View alertDialogView = LayoutInflater.from(MainActivity.this)
+                        .inflate(R.layout.update_profile_layout, null);
+                RoundedImageView userPic_RoundedImageView =
+                    (RoundedImageView) alertDialogView.findViewById(R.id.userPic_RoundedImageView);
+                ImageView updatePic_imageView =
+                    (ImageView) alertDialogView.findViewById(R.id.updatePic_imageView);
+                final TextView userName_textView =
+                    (TextView) alertDialogView.findViewById(R.id.userName_textView);
+                Button changeName_button =
+                    (Button) alertDialogView.findViewById(R.id.changeName_button);
+                //userPic_RoundedImageView.setImage
+                userName_textView.setText(firebaseUser.getDisplayName());
+                changeName_button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        View alertDialogView = LayoutInflater.from(MainActivity.this)
+                                .inflate(R.layout.change_name_layout, null);
+                        final EditText changeName_editText =
+                                (EditText) alertDialogView.findViewById(R.id.changeName_editText);
+                        Button changeName_button =
+                                (Button) alertDialogView.findViewById(R.id.changeName_button);
+                        changeName_button.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if(!changeName_editText.getText().toString().equals("")) {
+                                    UpdateUserProfile(changeName_editText.getText().toString(), "");
+                                    userName_textView.setText(firebaseUser.getDisplayName());
+                                }
+                                alertDialog1.cancel();
+                            }
+                        });
+                        alertDialog1 = new AlertDialog.Builder(MainActivity.this)
+                                                     .setView(alertDialogView)
+                                                     .show();
+                    }
+                });
+                new AlertDialog.Builder(MainActivity.this).setView(alertDialogView).show();
             }
         });
 
@@ -185,7 +237,8 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                             return;
                         if(password_editText.getText().toString().equals(""))
                             return;
-                        SignIn();
+                        SignIn(account_editText.getText().toString(),
+                                password_editText.getText().toString());
                     }
                 });
 
@@ -223,19 +276,57 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         }
     }
 
-    private void SignIn() {
+    private void saveAccount(String email, String password) {
+        getSharedPreferences("ACCOUNT", 0).edit()
+                .putString("EMAIL", email)
+                .putString("PASSWORD", password)
+                .apply();
+    }
+
+    private void restoreAccount() {
+        SharedPreferences sharedPreferences = getSharedPreferences("ACCOUNT", 0);
+        String email = sharedPreferences.getString("EMAIL", "");
+        String password = sharedPreferences.getString("PASSWORD", "");
+        if(!email.equals("") && !password.equals(""))
+            SignIn(email, password);
+    }
+
+    private void restoreUserData() {
+        if(firebaseUser != null) {
+            DatabaseReference database = FirebaseDatabase.getInstance().getReference("UserData");
+            database.child(firebaseUser.getUid()).child("LikeItem")
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                                addLikeList(new ItemInfo(ds.getKey()));
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                        }
+                    });
+        }
+    }
+
+    private void SignIn(final String email, final String password) {
         firebaseAuth = FirebaseAuth.getInstance();
-        firebaseAuth.signInWithEmailAndPassword(account_editText.getText().toString(),
-                password_editText.getText().toString()).addOnCompleteListener(MainActivity.this,
-                        new OnCompleteListener<AuthResult>() {
+        firebaseAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    alertDialog.cancel();
+                                    if(alertDialog != null)
+                                        alertDialog.cancel();
                                     firebaseUser = firebaseAuth.getCurrentUser();
                                     userName_textView.setText(firebaseUser.getDisplayName());
+                                    signin_imageView.setVisibility(View.INVISIBLE);
+                                    saveAccount(email, password);
+                                    restoreUserData();
                                 } else {
-                                    alertDialog.cancel();
+                                    if(alertDialog != null)
+                                        alertDialog.cancel();
                                     firebaseUser = null;
                                     Toast.makeText(MainActivity.this, "登入失敗，請確認帳號密碼"
                                             , Toast.LENGTH_SHORT).show();
@@ -296,11 +387,25 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         });
     }
 
+    private void LogOut() {
+        if(firebaseUser != null) {
+            firebaseUser = null;
+            saveAccount("", "");
+            signin_imageView.setVisibility(View.VISIBLE);
+            userName_textView.setText("未登入");
+            //userPic_RoundedImageView.setImageDrawable(R.drawable.);
+
+        }
+    }
+
     private void UpdateUserProfile(String displayName, String photoUri) {
-        UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder()
-                .setDisplayName(displayName)
-                .setPhotoUri(Uri.parse(photoUri))
-                .build();
+        UserProfileChangeRequest.Builder builder = new UserProfileChangeRequest.Builder();
+        UserProfileChangeRequest profileChangeRequest;
+        if(!displayName.equals(""))
+            builder = builder.setDisplayName(displayName);
+        if(!photoUri.equals(""))
+            builder = builder.setPhotoUri(Uri.parse(photoUri));
+        profileChangeRequest = builder.build();
         firebaseUser.updateProfile(profileChangeRequest).addOnCompleteListener(
                 new OnCompleteListener<Void>() {
             @Override
@@ -490,5 +595,29 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     public void SetImage(String imgurID, Bitmap bitmap) {
         if(Cache == null) Cache = new HashMap<>();
         Cache.put(imgurID, bitmap);
+    }
+
+    @Override
+    public void storeLikeItem(ItemInfo itemInfo) {
+        if(firebaseUser != null) {
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+            databaseReference.child("UserData")
+                             .child(firebaseUser.getUid())
+                             .child("LikeItem")
+                             .child(String.valueOf(itemInfo.getId()))
+                             .setValue("NULL");
+        }
+    }
+
+    @Override
+    public void removeLikeItem(ItemInfo itemInfo) {
+        if(firebaseUser != null) {
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+            databaseReference.child("UserData")
+                    .child(firebaseUser.getUid())
+                    .child("LikeItem")
+                    .child(String.valueOf(itemInfo.getId()))
+                    .removeValue();
+        }
     }
 }
