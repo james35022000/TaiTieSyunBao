@@ -51,7 +51,7 @@ import java.util.Vector;
 public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener,
     TabHost.OnTabChangeListener, LikeFragment.OnLikeListener, MenuFragment.OnBuyItemListListener,
     GetImage.ImageCache, MenuRecyclerViewAdapter.SaveUserData, GoodsMenuFragment.OnGoodListListener,
-    SugFragment.FeedBack {
+    SugFragment.FeedBack, PurchaseInfoFragment.GetFireBaseUser {
 
     public Vector<ItemInfo> likeList, buyList, goodList;
     public Map<String, Bitmap> Cache;
@@ -731,5 +731,10 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                 .child(String.valueOf(score))
                 .child(key)
                 .setValue(opinion);
+    }
+
+    @Override
+    public String getUID() {
+        return firebaseUser.getUid();
     }
 }

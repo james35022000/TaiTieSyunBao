@@ -54,12 +54,18 @@ public class PurchaseInfoFragment extends Fragment {
     private Context context;
     private MenuRecyclerViewAdapter.SaveUserData saveUserData;
 
+    public interface GetFireBaseUser {
+        String getUID();
+    }
+
+    GetFireBaseUser getFireBaseUser;
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         // Initialize.
         buyItemListListener = (MenuFragment.OnBuyItemListListener) context;
         saveUserData = (MenuRecyclerViewAdapter.SaveUserData) context;
+        getFireBaseUser = (GetFireBaseUser) context;
         this.context = context;
     }
 
@@ -185,6 +191,8 @@ public class PurchaseInfoFragment extends Fragment {
         databaseReference = FirebaseDatabase.getInstance().getReference();
         String key = databaseReference.child("Orders").push().getKey();
 
+        databaseReference.child("Orders").child(key).child("UID")
+                .setValue(getFireBaseUser.getUID());
         databaseReference.child("Orders").child(key).child("Key")
                 .setValue(key);
 
