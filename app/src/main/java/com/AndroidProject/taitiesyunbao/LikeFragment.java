@@ -19,9 +19,10 @@ public class LikeFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private LikeRecyclerViewAdapter adapter;
+    private MenuRecyclerViewAdapter.SaveUserData saveUserData;
+    private MenuFragment.OnBuyItemListListener buyItemListListener;
 
     public interface OnLikeListener {
-
         Vector<ItemInfo> getLikeList();
         void setLikeList(Vector<ItemInfo> list);
         void addLikeList(ItemInfo ItemInfo);
@@ -36,6 +37,8 @@ public class LikeFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         likeListener = (OnLikeListener) context;
+        saveUserData = (MenuRecyclerViewAdapter.SaveUserData) context;
+        buyItemListListener = (MenuFragment.OnBuyItemListListener) context;
     }
 
     @Override
@@ -55,7 +58,8 @@ public class LikeFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
         if(adapter == null) {
-            adapter = new LikeRecyclerViewAdapter(getActivity(), likeListener);
+            adapter = new LikeRecyclerViewAdapter(getActivity(), likeListener, saveUserData,
+                                                            buyItemListListener);
         }
 
         recyclerView.setAdapter(adapter);
@@ -79,7 +83,8 @@ public class LikeFragment extends Fragment {
         super.setUserVisibleHint(isVisibleToUser);
 
         if(isVisibleToUser && (recyclerView != null)) {
-            adapter = new LikeRecyclerViewAdapter(getActivity(), likeListener);
+            adapter = new LikeRecyclerViewAdapter(getActivity(), likeListener, saveUserData,
+                                                        buyItemListListener);
             recyclerView.setAdapter(adapter);
         }
     }

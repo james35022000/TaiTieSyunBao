@@ -17,6 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 /**
  * Display goods' information using RecyclerView and CardView.
@@ -28,13 +29,14 @@ public class GoodsMenuFragment extends Fragment  {
     // Each Interface.
     private MenuFragment.OnBuyItemListListener buyItemListListener;
     private LikeFragment.OnLikeListener likeListener;
+    private OnGoodListListener goodListListener;
 
     // Using RecyclerView as a container to replace ListView.
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
 
     // Store foods information.
-    public ArrayList<ItemInfo> goodList;
+    public Vector<ItemInfo> goodList;
 
     private String Kind;
 
@@ -43,12 +45,19 @@ public class GoodsMenuFragment extends Fragment  {
 
     private SwipeRefreshLayout swipeRefreshLayout;
 
+    public interface OnGoodListListener {
+        void setGoodList();
+        Vector<ItemInfo> getGoodList();
+        int isGoodExist(ItemInfo itemInfo);
+    }
+
     // Initialize Interface so that I can communicate with MainActivity.
     @Override
     public void onAttach(Context context){
         super.onAttach(context);
         likeListener = (LikeFragment.OnLikeListener) context;
         buyItemListListener = (MenuFragment.OnBuyItemListListener) context;
+        goodListListener = (OnGoodListListener) context;
     }
 
     @Override
@@ -66,7 +75,6 @@ public class GoodsMenuFragment extends Fragment  {
         super.onViewCreated(view, savedInstanceState);
 
         Kind = getArguments().getString("Kind");
-        goodList = new ArrayList<>();
         swipeRefreshLayout.setProgressViewOffset(false, (int)tabHeight, (int)tabHeight + 100);
         swipeRefreshLayout.post(new Runnable() {
             @Override
@@ -81,7 +89,7 @@ public class GoodsMenuFragment extends Fragment  {
         recyclerView.setHasFixedSize(true);
 
         initListener();
-        getGoodsList();
+        displayGoods();
 
     }
 
@@ -98,26 +106,35 @@ public class GoodsMenuFragment extends Fragment  {
         super.onDestroyView();
     }
 
-    private void getGoodsList() {
+    private void displayGoods() {
+        goodList = new Vector<>();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         database.getReference("Goods").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
                     if(ds.child("Kind").getValue().toString().equals(Kind)) {
-                        goodList.add(new ItemInfo(
+                        ItemInfo itemInfo = new ItemInfo(
                                 ds.child("ID").getValue().toString(),
+                                ds.child("Kind").getValue().toString(),
                                 ds.child("ImgurID").getValue().toString(),
                                 ds.child("Name").getValue().toString(),
                                 ds.child("Price").getValue().toString(),
                                 ds.child("Amount").getValue().toString(),
                                 ds.child("Info").getValue().toString(),
-                                likeListener.isLikeItemExist(new ItemInfo(
-                                        ds.child("ID").getValue().toString())) != -1));
+                                likeListener.isLikeItemExist(
+                                        new ItemInfo(ds.child("ID").getValue().toString())) != -1);
+                        goodList.add(itemInfo);
+                    }
+                }
+                ArrayList<ItemInfo> goods = new ArrayList<>();
+                for(int i = 0; i < goodList.size(); i++) {
+                    if(goodList.get(i).getKind().equals(Kind)) {
+                        goods.add(goodList.get(i));
                     }
                 }
                 // Set adapter to display content.
-                adapter = new MenuRecyclerViewAdapter(getActivity(), goodList, likeListener,
+                adapter = new MenuRecyclerViewAdapter(getActivity(), goods, likeListener,
                         buyItemListListener, tabHeight);
                 recyclerView.setAdapter(adapter);
                 swipeRefreshLayout.setRefreshing(false);
@@ -165,9 +182,9 @@ public class GoodsMenuFragment extends Fragment  {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                goodList = new ArrayList<>();
                 recyclerView.setAdapter(null);
-                getGoodsList();
+                displayGoods();
+                goodListListener.setGoodList();
             }
         });
     }

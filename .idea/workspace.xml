@@ -41,118 +41,43 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/MainActivity.java">
+      <file leaf-file-name="PurchaseInfoFragment.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/PurchaseInfoFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6721">
-              <caret line="366" column="46" selection-start-line="366" selection-start-column="46" selection-end-line="366" selection-end-column="46" />
+            <state relative-caret-position="467">
+              <caret line="121" column="32" selection-start-line="121" selection-start-column="32" selection-end-line="121" selection-end-column="32" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#6853#9410#0" expanded="true" />
-                <element signature="e#7833#9292#0" expanded="true" />
-                <element signature="e#8472#9027#0" expanded="true" />
-                <element signature="e#9026#9027#0" expanded="true" />
-                <element signature="e#9291#9292#0" expanded="true" />
-                <element signature="e#9409#9410#0" expanded="true" />
-                <element signature="e#13782#14966#0" expanded="true" />
-                <element signature="e#14965#14966#0" expanded="true" />
+                <element signature="e#3746#6156#0" expanded="true" />
+                <element signature="e#4771#6084#0" expanded="true" />
+                <element signature="e#6083#6084#0" expanded="true" />
+                <element signature="e#6155#6156#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GoodsMenuFragment.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/GoodsMenuFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="691">
-              <caret line="127" column="11" selection-start-line="101" selection-start-column="8" selection-end-line="127" selection-end-column="11" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MenuRecyclerViewAdapter.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/MenuRecyclerViewAdapter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="258">
-              <caret line="162" column="58" selection-start-line="162" selection-start-column="58" selection-end-line="162" selection-end-column="58" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MenuFragment.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/MenuFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="432">
-              <caret line="54" column="32" selection-start-line="54" selection-start-column="24" selection-end-line="54" selection-end-column="32" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="change_name_layout.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/change_name_layout.xml">
-          <provider editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
+      <file leaf-file-name="modify_amount_layout.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/modify_amount_layout.xml">
           <provider selected="true" editor-type-id="android-designer2">
             <state />
           </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="signin_layout.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/signin_layout.xml">
           <provider editor-type-id="text-editor">
-            <state relative-caret-position="2988">
-              <caret line="83" column="4" selection-start-line="83" selection-start-column="4" selection-end-line="83" selection-end-column="4" />
+            <state relative-caret-position="36">
+              <caret line="1" column="74" selection-start-line="1" selection-start-column="74" selection-end-line="1" selection-end-column="74" />
               <folding />
             </state>
           </provider>
-          <provider selected="true" editor-type-id="android-designer2">
-            <state />
-          </provider>
         </entry>
       </file>
-      <file leaf-file-name="activity_main.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
+      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="89" column="61" selection-start-line="89" selection-start-column="37" selection-end-line="89" selection-end-column="61" />
-              <folding />
+            <state relative-caret-position="596">
+              <caret line="649" column="41" selection-start-line="649" selection-start-column="41" selection-end-line="649" selection-end-column="41" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
-          </provider>
-          <provider editor-type-id="android-designer2">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="update_profile_layout.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/update_profile_layout.xml">
-          <provider editor-type-id="text-editor">
-            <state relative-caret-position="624">
-              <caret line="28" column="47" selection-start-line="28" selection-start-column="47" selection-end-line="28" selection-end-column="47" />
-              <folding />
-            </state>
-          </provider>
-          <provider selected="true" editor-type-id="android-designer2">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="signup_layout.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/signup_layout.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
-              <caret line="4" column="56" selection-start-line="4" selection-start-column="56" selection-end-line="4" selection-end-column="56" />
-              <folding />
-            </state>
-          </provider>
-          <provider editor-type-id="android-designer2">
-            <state />
           </provider>
         </entry>
       </file>
@@ -164,8 +89,8 @@
         <option value="valueResourceFile" />
         <option value="resourceFile" />
         <option value="Class" />
-        <option value="layoutResourceFile_vertical" />
         <option value="layoutResourceFile" />
+        <option value="layoutResourceFile_vertical" />
       </list>
     </option>
   </component>
@@ -2069,12 +1994,9 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/SugFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/CardStruct.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/DrinkMenuFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/SnackMenuFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/BuyRecyclerViewAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/LikeFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/OtherMenuFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/anim/enter_from_left.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/anim/exit_to_left.xml" />
@@ -2101,16 +2023,9 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/menu_frg_layout.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/menu_good_layout.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/menu_card_view.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/sug_frg_layout.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/buy_info_layout.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/GetImage.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/ItemInfo.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/LikeRecyclerViewAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/MenuFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/GoodsMenuFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/like_card_view.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/PurchaseInfoFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/RoundedImageView.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/signin_layout.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/SignUpFragment.java" />
@@ -2118,8 +2033,18 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/signup_layout.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/change_name_layout.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/update_profile_layout.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/MenuRecyclerViewAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/GoodsMenuFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/ItemInfo.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/buy_info_layout.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/sug_frg_layout.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/SugFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/LikeFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/MenuRecyclerViewAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/like_card_view.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/LikeRecyclerViewAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/modify_amount_layout.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/PurchaseInfoFragment.java" />
       </list>
     </option>
   </component>
@@ -2154,10 +2079,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="Scratches" />
       <pane id="PackagesPane" />
-      <pane id="ProjectPane" />
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -2242,6 +2165,8 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="ProjectPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -2676,7 +2601,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/5-1.jpg" />
     <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/P3290710-1.jpg" />
     <entry file="file://$PROJECT_DIR$/app/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
@@ -2752,16 +2676,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/sug_frg_layout.xml">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="3708">
-          <caret line="105" column="40" selection-start-line="105" selection-start-column="40" selection-end-line="105" selection-end-column="40" />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/BuyInfo.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
@@ -2773,13 +2687,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1692">
           <caret line="47" column="55" selection-start-line="47" selection-start-column="55" selection-end-line="47" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/LikeRecyclerViewAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="610">
-          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -2824,20 +2731,12 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/buy_finished_layout.xml">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-        </state>
-      </provider>
       <provider selected="true" editor-type-id="android-designer2">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/LikeFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="213">
-          <caret line="15" column="3" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="3" />
-          <folding />
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -2857,53 +2756,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/like_card_view.xml">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="4680">
-          <caret line="130" column="8" selection-start-line="130" selection-start-column="8" selection-end-line="130" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/RoundedImageView.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="612">
           <caret line="51" column="24" selection-start-line="51" selection-start-column="16" selection-end-line="51" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/menu_card_view.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="576">
           <caret line="19" column="44" selection-start-line="19" selection-start-column="44" selection-end-line="20" selection-end-column="60" />
           <folding />
         </state>
       </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/buy_item_card_view.xml">
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
       <provider editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/SugFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1302">
-          <caret line="48" column="33" selection-start-line="48" selection-start-column="33" selection-end-line="48" selection-end-column="33" />
         </state>
       </provider>
     </entry>
@@ -2911,98 +2789,73 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="396">
           <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/menu_good_layout.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
           <caret line="10" column="47" selection-start-line="10" selection-start-column="47" selection-end-line="10" selection-end-column="47" />
           <folding />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/menu_frg_layout.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/menu_frg_layout.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="720">
           <caret line="20" column="35" selection-start-line="20" selection-start-column="25" selection-end-line="20" selection-end-column="35" />
           <folding />
         </state>
       </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/buy_info_layout.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="10" column="44" selection-start-line="10" selection-start-column="44" selection-end-line="11" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/signup_layout.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="144">
           <caret line="4" column="56" selection-start-line="4" selection-start-column="56" selection-end-line="4" selection-end-column="56" />
           <folding />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/signin_layout.xml">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="2988">
-          <caret line="83" column="4" selection-start-line="83" selection-start-column="4" selection-end-line="83" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
+        <state relative-caret-position="3204">
           <caret line="89" column="61" selection-start-line="89" selection-start-column="37" selection-end-line="89" selection-end-column="61" />
           <folding />
         </state>
       </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/change_name_layout.xml">
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
       <provider editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/update_profile_layout.xml">
       <provider selected="true" editor-type-id="android-designer2">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/update_profile_layout.xml">
       <provider editor-type-id="text-editor">
-        <state relative-caret-position="624">
+        <state relative-caret-position="1008">
           <caret line="28" column="47" selection-start-line="28" selection-start-column="47" selection-end-line="28" selection-end-column="47" />
           <folding />
         </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/PurchaseInfoArrayAdapter.java">
@@ -3013,60 +2866,145 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/PurchaseInfoFragment.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/ItemInfo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2337">
-          <caret line="85" column="0" selection-start-line="85" selection-start-column="0" selection-end-line="85" selection-end-column="0" />
+        <state relative-caret-position="366">
+          <caret line="22" column="38" selection-start-line="22" selection-start-column="29" selection-end-line="22" selection-end-column="38" />
+          <folding>
+            <element signature="e#1795#1796#0" expanded="true" />
+            <element signature="e#1822#1823#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/buy_info_layout.xml">
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="10" column="44" selection-start-line="10" selection-start-column="44" selection-end-line="11" selection-end-column="51" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/MenuFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="54" column="32" selection-start-line="54" selection-start-column="24" selection-end-line="54" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/MenuRecyclerViewAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="258">
-          <caret line="162" column="58" selection-start-line="162" selection-start-column="58" selection-end-line="162" selection-end-column="58" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/ItemInfo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="26" column="45" selection-start-line="26" selection-start-column="45" selection-end-line="26" selection-end-column="45" />
+        <state relative-caret-position="504">
+          <caret line="114" column="36" selection-start-line="114" selection-start-column="36" selection-end-line="114" selection-end-column="36" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/GoodsMenuFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="691">
-          <caret line="127" column="11" selection-start-line="101" selection-start-column="8" selection-end-line="127" selection-end-column="11" />
+        <state relative-caret-position="690">
+          <caret line="186" column="47" selection-start-line="186" selection-start-column="47" selection-end-line="186" selection-end-column="47" />
+          <folding>
+            <element signature="e#2665#2815#0" expanded="true" />
+            <element signature="e#2814#2815#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/sug_frg_layout.xml">
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="3708">
+          <caret line="117" column="44" selection-start-line="117" selection-start-column="44" selection-end-line="117" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/SugFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="186">
+          <caret line="43" column="32" selection-start-line="43" selection-start-column="32" selection-end-line="43" selection-end-column="32" />
+          <folding>
+            <element signature="e#4140#4573#0" expanded="true" />
+            <element signature="e#4572#4573#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/LikeFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="654">
+          <caret line="80" column="13" selection-start-line="80" selection-start-column="13" selection-end-line="80" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/MenuRecyclerViewAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-498">
+          <caret line="195" column="74" selection-start-line="195" selection-start-column="74" selection-end-line="195" selection-end-column="74" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/LikeRecyclerViewAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="165" column="46" selection-start-line="165" selection-start-column="46" selection-end-line="165" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/like_card_view.xml">
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="4500">
+          <caret line="128" column="8" selection-start-line="128" selection-start-column="8" selection-end-line="128" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/signin_layout.xml">
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="2988">
+          <caret line="83" column="4" selection-start-line="83" selection-start-column="4" selection-end-line="83" selection-end-column="4" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6721">
-          <caret line="366" column="46" selection-start-line="366" selection-start-column="46" selection-end-line="366" selection-end-column="46" />
+        <state relative-caret-position="596">
+          <caret line="649" column="41" selection-start-line="649" selection-start-column="41" selection-end-line="649" selection-end-column="41" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#6853#9410#0" expanded="true" />
-            <element signature="e#7833#9292#0" expanded="true" />
-            <element signature="e#8472#9027#0" expanded="true" />
-            <element signature="e#9026#9027#0" expanded="true" />
-            <element signature="e#9291#9292#0" expanded="true" />
-            <element signature="e#9409#9410#0" expanded="true" />
-            <element signature="e#13782#14966#0" expanded="true" />
-            <element signature="e#14965#14966#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/modify_amount_layout.xml">
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="36">
+          <caret line="1" column="74" selection-start-line="1" selection-start-column="74" selection-end-line="1" selection-end-column="74" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/AndroidProject/taitiesyunbao/PurchaseInfoFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="467">
+          <caret line="121" column="32" selection-start-line="121" selection-start-column="32" selection-end-line="121" selection-end-column="32" />
+          <folding>
+            <element signature="e#3746#6156#0" expanded="true" />
+            <element signature="e#4771#6084#0" expanded="true" />
+            <element signature="e#6083#6084#0" expanded="true" />
+            <element signature="e#6155#6156#0" expanded="true" />
           </folding>
         </state>
       </provider>

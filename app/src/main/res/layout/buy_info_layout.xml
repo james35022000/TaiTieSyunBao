@@ -190,6 +190,7 @@
                     android:layout_marginTop="5dp"
                     android:background="@drawable/edittext_border_color"
                     android:ems="10"
+                    android:gravity="center"
                     android:inputType="textCapCharacters"
                     android:paddingLeft="5dp"
                     android:textSize="15dp" />
@@ -224,6 +225,7 @@
                     android:layout_toRightOf="@+id/textView5"
                     android:background="@drawable/edittext_border_color"
                     android:ems="5"
+                    android:gravity="center"
                     android:inputType="number"
                     android:paddingLeft="5dp"
                     android:textSize="15dp" />
@@ -249,6 +251,7 @@
                     android:layout_marginRight="20dp"
                     android:background="@drawable/edittext_border_color"
                     android:ems="5"
+                    android:gravity="center"
                     android:inputType="number"
                     android:paddingLeft="5dp"
                     android:textSize="15dp" />

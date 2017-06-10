@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,8 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -24,6 +27,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Vector;
+import java.util.zip.Inflater;
 
 /**
  * Show purchase information.
@@ -46,12 +50,17 @@ public class PurchaseInfoFragment extends Fragment {
     private Vector<ItemInfo> buyList;
 
     private DatabaseReference databaseReference;
+    private AlertDialog alertDialog;
+    private Context context;
+    private MenuRecyclerViewAdapter.SaveUserData saveUserData;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         // Initialize.
         buyItemListListener = (MenuFragment.OnBuyItemListListener) context;
+        saveUserData = (MenuRecyclerViewAdapter.SaveUserData) context;
+        this.context = context;
     }
 
     @Override
@@ -76,30 +85,52 @@ public class PurchaseInfoFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(final View view, Bundle savedInstanceState) {
+    public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         buyList = buyItemListListener.getBuyList();
-        int total = 0, height = 0;
 
-        buyList_arrayAdapter = new PurchaseInfoArrayAdapter(getActivity(),
-                            R.layout.listview_text_layout, new Vector<BuyInfo>());
+        displayBuyList();
 
-        for(int i = 0; i < buyList.size(); i++) {
-            buyList_arrayAdapter.add(new BuyInfo(buyList.get(i).getName(),
-                    buyList.get(i).getAmount(), buyList.get(i).getPrice()));
-            total += buyList.get(i).getAmount()*buyList.get(i).getPrice();
-            View v = buyList_arrayAdapter.getView(i, null, list_listView);
-            v.measure(0, 0);
-            height += v.getMeasuredHeight();
-        }
-
-        list_listView.setAdapter(buyList_arrayAdapter);
-        ViewGroup.LayoutParams params = list_listView.getLayoutParams();
-        params.height = height + (list_listView.getDividerHeight() *
-                                        (buyList_arrayAdapter.getCount() - 1));
-        list_listView.setLayoutParams(params);
-
-        total_textView.setText(Integer.toString(total));
+        list_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                View modifyAmountView = LayoutInflater.from(context)
+                        .inflate(R.layout.modify_amount_layout, null);
+                AlertDialog.Builder builder = new AlertDialog.Builder(context)
+                        .setView(modifyAmountView);
+                TextView goodName_textView = (TextView)
+                        modifyAmountView.findViewById(R.id.goodName_textView);
+                final EditText amount_editText = (EditText)
+                        modifyAmountView.findViewById(R.id.amount_editText);
+                Button confirm_button = (Button) modifyAmountView.findViewById(R.id.confirm_button);
+                goodName_textView.setText(buyList.get(position).getName());
+                amount_editText.setText(String.valueOf(buyList.get(position).getAmount()));
+                confirm_button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(amount_editText.getText().toString().equals(""))
+                            Toast.makeText(context, "請輸入數量", Toast.LENGTH_SHORT).show();
+                        else if(Integer.valueOf(amount_editText.getText().toString()) >
+                                buyList.get(position).getMaxAmount())
+                            Toast.makeText(context, "剩餘數量為" +
+                                    String.valueOf(buyList.get(position).getMaxAmount()) +
+                                            "，請重新輸入",
+                                    Toast.LENGTH_SHORT).show();
+                        else {
+                            if(Integer.valueOf(amount_editText.getText().toString()) == 0)
+                                buyList.remove(position);
+                            else
+                                buyList.get(position).setAmount(
+                                        Integer.valueOf(amount_editText.getText().toString()));
+                            saveUserData.storeItem(buyList.get(position));
+                            alertDialog.cancel();
+                            displayBuyList();
+                        }
+                    }
+                });
+                alertDialog = builder.show();
+            }
+        });
 
         back_imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,6 +150,7 @@ public class PurchaseInfoFragment extends Fragment {
                 if(checkIfComplete()) {
                     sendOrder();
                     displayResult();
+                    list_listView.setOnItemClickListener(null);
                 }
                 else {
                     Toast.makeText(view.getContext(),
@@ -237,5 +269,29 @@ public class PurchaseInfoFragment extends Fragment {
         animationSet.addAnimation(appear_alphaAnimation);
         enjoyit_imageView.setVisibility(View.VISIBLE);
         enjoyit_imageView.startAnimation(animationSet);
+    }
+
+    private void displayBuyList() {
+        int total = 0, height = 0;
+
+        buyList_arrayAdapter = new PurchaseInfoArrayAdapter(getActivity(),
+                R.layout.listview_text_layout, new Vector<BuyInfo>());
+
+        for(int i = 0; i < buyList.size(); i++) {
+            buyList_arrayAdapter.add(new BuyInfo(buyList.get(i).getName(),
+                    buyList.get(i).getAmount(), buyList.get(i).getPrice()));
+            total += buyList.get(i).getAmount()*buyList.get(i).getPrice();
+            View v = buyList_arrayAdapter.getView(i, null, list_listView);
+            v.measure(0, 0);
+            height += v.getMeasuredHeight();
+        }
+
+        list_listView.setAdapter(buyList_arrayAdapter);
+        ViewGroup.LayoutParams params = list_listView.getLayoutParams();
+        params.height = height + (list_listView.getDividerHeight() *
+                (buyList_arrayAdapter.getCount() - 1));
+        list_listView.setLayoutParams(params);
+
+        total_textView.setText(Integer.toString(total));
     }
 }

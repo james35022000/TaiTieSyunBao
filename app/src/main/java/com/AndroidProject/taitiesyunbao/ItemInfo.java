@@ -16,12 +16,14 @@ public class ItemInfo {
     private int maxAmount;
     private int amount;
     private boolean like;
+    private String Kind;
 
     // Constructor
-    public ItemInfo(String id, String imgurID, String name, String price
+    public ItemInfo(String id, String Kind, String imgurID, String name, String price
                     , String maxAmount, String info, boolean like) {
 
         this.id = Integer.valueOf(id);
+        this.Kind = Kind;
         this.imgurID = imgurID;
         this.name = name;
         this.price = Integer.parseInt(price);
@@ -35,6 +37,11 @@ public class ItemInfo {
     // Constructor (Using for comparing two ItemInfo)
     public ItemInfo(String id) {
         this.id = Integer.valueOf(id);
+    }
+
+    public ItemInfo(String id, int amount) {
+        this.id = Integer.valueOf(id);
+        this.amount = amount;
     }
 
     public void setAmount(int amount) {
@@ -75,5 +82,9 @@ public class ItemInfo {
 
     public boolean getLikeState() {
         return like;
+    }
+
+    public String getKind() {
+        return Kind;
     }
 }

@@ -24,8 +24,8 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
     private float tabHeight;
 
     public interface SaveUserData {
-        void storeLikeItem(ItemInfo itemInfo);
-        void removeLikeItem(ItemInfo itemInfo);
+        void storeItem(ItemInfo itemInfo);
+        void removeItem(ItemInfo itemInfo);
     }
 
     SaveUserData saveUserData;
@@ -161,13 +161,13 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
                     v.like_imageView.setSelected(false);
                     list.get(j).setLikeState(false);
                     likeListener.delLikeList(list.get(j));
-                    saveUserData.removeLikeItem(list.get(j));
+                    saveUserData.removeItem(list.get(j));
                 }
                 else {
                     view.setSelected(true);
                     list.get(j).setLikeState(true);
                     likeListener.addLikeList(list.get(j));
-                    saveUserData.storeLikeItem(list.get(j));
+                    saveUserData.storeItem(list.get(j));
                 }
             }
         });
@@ -180,6 +180,7 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
                     v.amount_textView.setText(String.valueOf(amount + 1));
                     list.get(j).setAmount(amount + 1);
                     buyItemListListener.addBuyList(list.get(j));
+                    saveUserData.storeItem(list.get(j));
                 }
                 else {
                     Toast.makeText(context, "已達到最大數量", Toast.LENGTH_SHORT).show();
@@ -195,6 +196,10 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
                     v.amount_textView.setText(String.valueOf(amount - 1));
                     list.get(j).setAmount(amount - 1);
                     buyItemListListener.addBuyList(list.get(j));
+                    if(amount == 1)
+                        saveUserData.removeItem(list.get(j));
+                    else
+                        saveUserData.storeItem(list.get(j));
                 }
             }
         });
@@ -213,8 +218,10 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
 
     private void setAmount(ViewHolder viewHolder, int index) {
         int buyListIndex = buyItemListListener.isBuyItemExist(list.get(index));
-        if(buyListIndex != -1)
-            viewHolder.amount_textView.setText(
-                    String.valueOf(buyItemListListener.getBuyList().get(buyListIndex).getAmount()));
+        if(buyListIndex != -1) {
+            int amount = buyItemListListener.getBuyList().get(buyListIndex).getAmount();
+            viewHolder.amount_textView.setText(String.valueOf(amount));
+            list.get(index).setAmount(amount);
+        }
     }
 }

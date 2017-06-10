@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Vector;
 
@@ -19,12 +20,18 @@ public class LikeRecyclerViewAdapter extends RecyclerView.Adapter<LikeRecyclerVi
     private Context context;
     private Vector<ItemInfo> list;
     private LikeFragment.OnLikeListener likeListener;
+    private MenuRecyclerViewAdapter.SaveUserData saveUserData;
+    private MenuFragment.OnBuyItemListListener buyItemListListener;
 
 
-    public LikeRecyclerViewAdapter(Context context, LikeFragment.OnLikeListener likeListener) {
+    public LikeRecyclerViewAdapter(Context context, LikeFragment.OnLikeListener likeListener,
+                                        MenuRecyclerViewAdapter.SaveUserData saveUserData,
+                                   MenuFragment.OnBuyItemListListener buyItemListListener) {
         this.context = context;
         this.likeListener = likeListener;
         this.list = likeListener.getLikeList();
+        this.saveUserData = saveUserData;
+        this.buyItemListListener = buyItemListListener;
     }
 
     @Override
@@ -41,6 +48,7 @@ public class LikeRecyclerViewAdapter extends RecyclerView.Adapter<LikeRecyclerVi
 
         initListener(viewHolder, index);
         setLikeState(viewHolder, index);
+        setAmount(viewHolder, index);
 
         new GetImage(context, viewHolder.pic_imageView).execute(list.get(index).getImgurID());
         viewHolder.name_textView.setText(list.get(index).getName());
@@ -56,17 +64,21 @@ public class LikeRecyclerViewAdapter extends RecyclerView.Adapter<LikeRecyclerVi
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public CardView like_cardView;
-        public ImageView pic_imageView, like_imageView, info_imageView;
-        public TextView name_textView, price_textView, info_textView;
+        public ImageView pic_imageView, like_imageView, info_imageView, minus_imageView
+                            , plus_imageView;
+        public TextView name_textView, price_textView, info_textView, amount_textView;
         public ViewHolder(View view) {
             super(view);
             like_cardView = (CardView) view.findViewById(R.id.like_cardView);
             pic_imageView = (ImageView) view.findViewById(R.id.pic_imageView);
             like_imageView = (ImageView) view.findViewById(R.id.like_imageView);
-            info_imageView =(ImageView) view.findViewById(R.id.info_imageView);
+            info_imageView = (ImageView) view.findViewById(R.id.info_imageView);
+            minus_imageView = (ImageView) view.findViewById(R.id.minus_imageView);
+            plus_imageView = (ImageView) view.findViewById(R.id.plus_imageView);
             name_textView = (TextView) view.findViewById(R.id.name_textView);
             price_textView = (TextView) view.findViewById(R.id.price_textView);
             info_textView = (TextView) view.findViewById(R.id.info_textView);
+            amount_textView = (TextView) view.findViewById(R.id.amount_textView);
         }
     }
 
@@ -94,10 +106,44 @@ public class LikeRecyclerViewAdapter extends RecyclerView.Adapter<LikeRecyclerVi
                     v.like_imageView.setSelected(false);
                     list.get(j).setLikeState(false);
                     likeListener.delLikeList(list.get(j));
+                    saveUserData.removeItem(list.get(j));
                 } else {
                     v.like_imageView.setSelected(true);
                     list.get(j).setLikeState(true);
                     likeListener.addLikeList(list.get(j));
+                    saveUserData.storeItem(list.get(j));
+                }
+            }
+        });
+
+        viewHolder.plus_imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int amount = list.get(j).getAmount();
+                if(amount < list.get(j).getMaxAmount()) {
+                    v.amount_textView.setText(String.valueOf(amount + 1));
+                    list.get(j).setAmount(amount + 1);
+                    buyItemListListener.addBuyList(list.get(j));
+                    saveUserData.storeItem(list.get(j));
+                }
+                else {
+                    Toast.makeText(context, "已達到最大數量", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        viewHolder.minus_imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int amount = list.get(j).getAmount();
+                if(amount > 0) {
+                    v.amount_textView.setText(String.valueOf(amount - 1));
+                    list.get(j).setAmount(amount - 1);
+                    buyItemListListener.addBuyList(list.get(j));
+                    if(amount == 1)
+                        saveUserData.removeItem(list.get(j));
+                    else
+                        saveUserData.storeItem(list.get(j));
                 }
             }
         });
@@ -109,6 +155,15 @@ public class LikeRecyclerViewAdapter extends RecyclerView.Adapter<LikeRecyclerVi
         }
         else {
             viewHolder.like_imageView.setSelected(false);
+        }
+    }
+
+    private void setAmount(ViewHolder viewHolder, int index) {
+        int i = buyItemListListener.isBuyItemExist(list.get(index));
+        if(i != -1) {
+            int amount = buyItemListListener.getBuyList().get(i).getAmount();
+            viewHolder.amount_textView.setText(String.valueOf(amount));
+            list.get(index).setAmount(amount);
         }
     }
 }

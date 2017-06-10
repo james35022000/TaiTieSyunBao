@@ -1,5 +1,6 @@
 package com.AndroidProject.taitiesyunbao;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -10,12 +11,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -47,9 +50,10 @@ import java.util.Vector;
 
 public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener,
     TabHost.OnTabChangeListener, LikeFragment.OnLikeListener, MenuFragment.OnBuyItemListListener,
-    GetImage.ImageCache, MenuRecyclerViewAdapter.SaveUserData {
+    GetImage.ImageCache, MenuRecyclerViewAdapter.SaveUserData, GoodsMenuFragment.OnGoodListListener,
+    SugFragment.FeedBack {
 
-    public Vector<ItemInfo> likeList, buyList;
+    public Vector<ItemInfo> likeList, buyList, goodList;
     public Map<String, Bitmap> Cache;
 
     // Store Bottom tab image ID.
@@ -89,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     private FirebaseUser firebaseUser = null;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         // Initialize tabs.
         initUI();
         restoreAccount();
+        setGoodList();
         // Initialize content.
         initPage();
     }
@@ -166,6 +172,17 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         userPic_RoundedImageView = (RoundedImageView) findViewById(R.id.userPic_RoundedImageView);
         viewPager = (MainViewPager) findViewById(R.id.pager);
         mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
+
+        drawer_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch(drawer_listView.getItemAtPosition(position).toString()) {
+                    case "登出":
+                        LogOut();
+                        break;
+                }
+            }
+        });
 
         drawerlayout_imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -307,6 +324,20 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                         public void onCancelled(DatabaseError databaseError) {
                         }
                     });
+            database.child(firebaseUser.getUid()).child("BuyItem")
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                                addBuyList(new ItemInfo(ds.getKey(),
+                                        Integer.valueOf(ds.getValue().toString())));
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                        }
+                    });
         }
     }
 
@@ -314,24 +345,24 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    if(alertDialog != null)
-                                        alertDialog.cancel();
-                                    firebaseUser = firebaseAuth.getCurrentUser();
-                                    userName_textView.setText(firebaseUser.getDisplayName());
-                                    signin_imageView.setVisibility(View.INVISIBLE);
-                                    saveAccount(email, password);
-                                    restoreUserData();
-                                } else {
-                                    if(alertDialog != null)
-                                        alertDialog.cancel();
-                                    firebaseUser = null;
-                                    Toast.makeText(MainActivity.this, "登入失敗，請確認帳號密碼"
-                                            , Toast.LENGTH_SHORT).show();
-                                }
-                            }
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            if (alertDialog != null)
+                                alertDialog.cancel();
+                            firebaseUser = firebaseAuth.getCurrentUser();
+                            userName_textView.setText(firebaseUser.getDisplayName());
+                            signin_imageView.setVisibility(View.INVISIBLE);
+                            saveAccount(email, password);
+                            restoreUserData();
+                        } else {
+                            if (alertDialog != null)
+                                alertDialog.cancel();
+                            firebaseUser = null;
+                            Toast.makeText(MainActivity.this, "登入失敗，請確認帳號密碼"
+                                    , Toast.LENGTH_SHORT).show();
+                        }
+                    }
                 });
     }
 
@@ -346,10 +377,10 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         signup_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!userName_editText.getText().toString().equals("")       ||
-                   !email_editText.getText().toString().equals("")          ||
-                   !password_signup_editText.getText().toString().equals("")) {
-                    if(!passwordComfirm_editText.getText().toString()
+                if (!userName_editText.getText().toString().equals("") ||
+                        !email_editText.getText().toString().equals("") ||
+                        !password_signup_editText.getText().toString().equals("")) {
+                    if (!passwordComfirm_editText.getText().toString()
                             .equals(password_signup_editText.getText().toString()))
                         Toast.makeText(MainActivity.this, "請確認密碼", Toast.LENGTH_SHORT).show();
                     else {
@@ -360,9 +391,9 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                                 MainActivity.this, new OnCompleteListener<AuthResult>() {
                                     @Override
                                     public void onComplete(@NonNull Task<AuthResult> task) {
-                                        if(task.isSuccessful()) {
+                                        if (task.isSuccessful()) {
                                             firebaseAuth.signInWithEmailAndPassword(
-                                                email_editText.getText().toString(),
+                                                    email_editText.getText().toString(),
                                                     password_signup_editText.getText().toString()
                                             );
                                             firebaseUser = firebaseAuth.getCurrentUser();
@@ -373,8 +404,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                                             drawer_layout.openDrawer(right_drawer);
                                             Toast.makeText(MainActivity.this,
                                                     "創建成功，請登入", Toast.LENGTH_SHORT).show();
-                                        }
-                                        else {
+                                        } else {
                                             Toast.makeText(MainActivity.this,
                                                     "創建失敗", Toast.LENGTH_SHORT).show();
                                         }
@@ -393,8 +423,10 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
             saveAccount("", "");
             signin_imageView.setVisibility(View.VISIBLE);
             userName_textView.setText("未登入");
+            setLikeList(new Vector<ItemInfo>());
+            setBuyList(new Vector<ItemInfo>());
             //userPic_RoundedImageView.setImageDrawable(R.drawable.);
-
+            Toast.makeText(this, "登出成功", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -483,9 +515,13 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     @Override
     public void addLikeList(ItemInfo ItemInfo) {
         if(likeList == null)  likeList = new Vector<>();
-        if(isLikeItemExist(ItemInfo) == -1) {
+        int index = isLikeItemExist(ItemInfo);
+        if(index == -1) {
             likeList.add(ItemInfo);
         }
+        //else {
+        //    likeList.set(index, ItemInfo);
+        //}
     }
 
     /**
@@ -598,26 +634,102 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     }
 
     @Override
-    public void storeLikeItem(ItemInfo itemInfo) {
+    public void storeItem(ItemInfo itemInfo) {
         if(firebaseUser != null) {
             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-            databaseReference.child("UserData")
-                             .child(firebaseUser.getUid())
-                             .child("LikeItem")
-                             .child(String.valueOf(itemInfo.getId()))
-                             .setValue("NULL");
+            if(itemInfo.getLikeState()) {
+                databaseReference.child("UserData")
+                        .child(firebaseUser.getUid())
+                        .child("LikeItem")
+                        .child(String.valueOf(itemInfo.getId()))
+                        .setValue("NULL");
+            }
+            if(itemInfo.getAmount() > 0) {
+                databaseReference.child("UserData")
+                        .child(firebaseUser.getUid())
+                        .child("BuyItem")
+                        .child(String.valueOf(itemInfo.getId()))
+                        .setValue(String.valueOf(itemInfo.getAmount()));
+            }
         }
     }
 
     @Override
-    public void removeLikeItem(ItemInfo itemInfo) {
+    public void removeItem(ItemInfo itemInfo) {
         if(firebaseUser != null) {
             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-            databaseReference.child("UserData")
-                    .child(firebaseUser.getUid())
-                    .child("LikeItem")
-                    .child(String.valueOf(itemInfo.getId()))
-                    .removeValue();
+            if(!itemInfo.getLikeState()) {
+                databaseReference.child("UserData")
+                        .child(firebaseUser.getUid())
+                        .child("LikeItem")
+                        .child(String.valueOf(itemInfo.getId()))
+                        .removeValue();
+            }
+            if(itemInfo.getAmount() == 0) {
+                databaseReference.child("UserData")
+                        .child(firebaseUser.getUid())
+                        .child("BuyItem")
+                        .child(String.valueOf(itemInfo.getId()))
+                        .removeValue();
+            }
         }
+    }
+
+    @Override
+    public void setGoodList() {
+        goodList = new Vector<>();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        database.getReference("Goods").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    ItemInfo itemInfo = new ItemInfo(
+                            ds.child("ID").getValue().toString(),
+                            ds.child("Kind").getValue().toString(),
+                            ds.child("ImgurID").getValue().toString(),
+                            ds.child("Name").getValue().toString(),
+                            ds.child("Price").getValue().toString(),
+                            ds.child("Amount").getValue().toString(),
+                            ds.child("Info").getValue().toString(),
+                            isLikeItemExist(
+                                    new ItemInfo(ds.child("ID").getValue().toString())) != -1);
+                    int index1 = isLikeItemExist(itemInfo), index2 = isBuyItemExist(itemInfo);
+                    if(index1 != -1)
+                        likeList.set(index1, itemInfo);
+                    if(index2 != -1) {
+                        itemInfo.setAmount(buyList.get(index2).getAmount());
+                        buyList.set(index2, itemInfo);
+                    }
+                    goodList.add(itemInfo);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {  }
+        });
+    }
+
+    @Override
+    public Vector<ItemInfo> getGoodList() {
+        return new Vector<>(goodList);
+    }
+
+    @Override
+    public int isGoodExist(ItemInfo itemInfo) {
+        for(int i = 0; i < goodList.size(); i++) {
+            if(goodList.get(i).getId() == itemInfo.getId())
+                return i;
+        }
+        return -1;
+    }
+
+    @Override
+    public void sendFeedBack(int score, String opinion) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        String key = databaseReference.push().getKey();
+        databaseReference.child("FeedBack")
+                .child(String.valueOf(score))
+                .child(key)
+                .setValue(opinion);
     }
 }

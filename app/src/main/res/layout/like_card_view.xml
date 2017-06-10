@@ -69,12 +69,10 @@
                 android:id="@+id/amount_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
-                android:layout_alignParentBottom="false"
-                android:layout_below="@+id/price_textView"
-                android:layout_centerVertical="false"
+                android:layout_alignBottom="@+id/plus_imageView"
+                android:layout_centerHorizontal="false"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:layout_marginTop="20dp"
                 android:layout_toRightOf="@+id/minus_imageView"
                 android:gravity="center"
                 android:text="0" />
@@ -135,7 +133,7 @@
             android:layout_alignParentBottom="false"
             android:layout_alignParentTop="false"
             android:layout_below="@+id/UI_relativeLayout"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="8dp"
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
             android:layout_marginTop="5dp" />
