@@ -27,7 +27,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Vector;
-import java.util.zip.Inflater;
 
 /**
  * Show purchase information.
@@ -39,7 +38,7 @@ public class PurchaseInfoFragment extends Fragment {
     // Access buyList from MainActivity.
     private MenuFragment.OnBuyItemListListener buyItemListListener;
     // Declare layout items.
-    private ImageView back_imageView, next_imageView, enjoyit_imageView;
+    private ImageView back_imageView, next_imageView, enjoyit_imageView, ok_imageView;
     private ListView list_listView;
     private TextView total_textView;
     private EditText trainnum_editText, carnum_editText, seatnum_editText;
@@ -76,6 +75,7 @@ public class PurchaseInfoFragment extends Fragment {
         back_imageView = (ImageView) view.findViewById(R.id.back_imageView);
         next_imageView = (ImageView) view.findViewById(R.id.next_imageView);
         enjoyit_imageView = (ImageView) view.findViewById(R.id.enjoyit_imageView);
+        ok_imageView = (ImageView) view.findViewById(R.id.ok_imageView);
         list_listView = (ListView) view.findViewById(R.id.list_listView);
         total_textView = (TextView) view.findViewById(R.id.total_textView);
         trainnum_editText = (EditText) view.findViewById(R.id.trainnum_editText);
@@ -165,6 +165,18 @@ public class PurchaseInfoFragment extends Fragment {
                     Toast.makeText(view.getContext(),
                             "Please complete your info.", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        ok_imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction()
+                        .setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_left)
+                        .remove(fragmentManager.findFragmentById(R.id.menu_fragment))
+                        .commit();
+                floatingActionButton.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -280,6 +292,29 @@ public class PurchaseInfoFragment extends Fragment {
         animationSet.addAnimation(appear_alphaAnimation);
         enjoyit_imageView.setVisibility(View.VISIBLE);
         enjoyit_imageView.startAnimation(animationSet);
+
+        appear_alphaAnimation = new AlphaAnimation(0, 1);
+        appear_alphaAnimation.setStartOffset(1500);
+        appear_alphaAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                ok_imageView.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        animationSet = new AnimationSet(true);
+        animationSet.addAnimation(appear_alphaAnimation);
+        ok_imageView.startAnimation(animationSet);
+
     }
 
     private void displayBuyList() {

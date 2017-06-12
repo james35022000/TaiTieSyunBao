@@ -40,6 +40,15 @@
             android:layout_marginLeft="10dp"
             android:textSize="15sp" />
 
+        <com.AndroidProject.taitiesyunbao.RoundedImageView
+            android:id="@+id/soldout_imageView"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/price_textView"
+            android:visibility="invisible"
+            card_view:srcCompat="@drawable/common_google_signin_btn_icon_dark_disabled" />
+
         <ImageView
             android:id="@+id/pic_imageView"
             android:layout_width="match_parent"

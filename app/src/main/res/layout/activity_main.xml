@@ -111,15 +111,15 @@
 
                 <ImageView
                     android:id="@+id/signin_imageView"
-                    android:layout_width="100dp"
-                    android:layout_height="30dp"
+                    android:layout_width="80dp"
+                    android:layout_height="25dp"
                     android:layout_below="@+id/userName_textView"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="7dp"
                     android:scaleType="fitXY"
                     android:layout_toRightOf="@+id/userPic_RoundedImageView"
                     android:clickable="true"
-                    app:srcCompat="@drawable/common_google_signin_btn_icon_light" />
+                    app:srcCompat="@drawable/login_icon" />
 
                 <ImageView
                     android:id="@+id/splitLine_imageView"
@@ -127,7 +127,7 @@
                     android:layout_height="2dp"
                     android:layout_below="@+id/userPic_RoundedImageView"
                     android:layout_marginTop="20dp"
-                    app:srcCompat="@android:color/black" />
+                    app:srcCompat="@color/colorPrimary" />
 
                 <ListView
                     android:id="@+id/drawer_listView"

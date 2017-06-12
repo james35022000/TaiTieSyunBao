@@ -58,6 +58,9 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
         viewHolder.pic_imageView.getLayoutParams().height =
                 viewHolder.pic_imageView.getMeasuredWidth() / 3 * 4;
         viewHolder.pic_imageView.requestLayout();
+        if(list.get(index).getMaxAmount() == 0)
+            viewHolder.soldout_imageView.setVisibility(View.VISIBLE);
+        viewHolder.soldout_imageView.bringToFront();
         new GetImage(context, viewHolder.pic_imageView).execute(list.get(index).getImgurID());
         viewHolder.name_textView.setText(list.get(index).getName());
         viewHolder.price_textView.setText(list.get(index).getPrice() + "元");
@@ -100,7 +103,9 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public CardView menu_cardView;
-        public ImageView pic_imageView, like_imageView, info_imageView, plus_imageView, minus_imageView;
+        public ImageView pic_imageView, like_imageView, info_imageView, plus_imageView,
+                            minus_imageView;
+        public RoundedImageView soldout_imageView;
         public TextView name_textView, price_textView, amount_textView, info_textView, info_Height;
         public ViewHolder(View view) {
             super(view);
@@ -110,6 +115,7 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
             info_imageView = (ImageView) view.findViewById(R.id.info_imageView);
             plus_imageView = (ImageView) view.findViewById(R.id.plus_imageView);
             minus_imageView = (ImageView) view.findViewById(R.id.minus_imageView);
+            soldout_imageView = (RoundedImageView) view.findViewById(R.id.soldout_imageView);
             name_textView = (TextView) view.findViewById(R.id.name_textView);
             price_textView = (TextView) view.findViewById(R.id.price_textView);
             amount_textView = (TextView) view.findViewById(R.id.amount_textView);
