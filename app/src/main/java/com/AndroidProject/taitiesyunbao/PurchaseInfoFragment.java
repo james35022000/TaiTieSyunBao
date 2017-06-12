@@ -120,15 +120,17 @@ public class PurchaseInfoFragment extends Fragment {
                                 buyList.get(position).getMaxAmount())
                             Toast.makeText(context, "剩餘數量為" +
                                     String.valueOf(buyList.get(position).getMaxAmount()) +
-                                            "，請重新輸入",
-                                    Toast.LENGTH_SHORT).show();
+                                            "，請重新輸入", Toast.LENGTH_SHORT).show();
                         else {
-                            if(Integer.valueOf(amount_editText.getText().toString()) == 0)
+                            if(Integer.valueOf(amount_editText.getText().toString()) == 0) {
+                                saveUserData.removeItem(buyList.get(position));
                                 buyList.remove(position);
-                            else
+                            }
+                            else {
                                 buyList.get(position).setAmount(
                                         Integer.valueOf(amount_editText.getText().toString()));
-                            saveUserData.storeItem(buyList.get(position));
+                                saveUserData.storeItem(buyList.get(position));
+                            }
                             alertDialog.cancel();
                             displayBuyList();
                         }
@@ -155,6 +157,7 @@ public class PurchaseInfoFragment extends Fragment {
             public void onClick(View v) {
                 if(checkIfComplete()) {
                     sendOrder();
+                    clearBuyList();
                     displayResult();
                     list_listView.setOnItemClickListener(null);
                 }
@@ -301,5 +304,9 @@ public class PurchaseInfoFragment extends Fragment {
         list_listView.setLayoutParams(params);
 
         total_textView.setText(Integer.toString(total));
+    }
+
+    private void clearBuyList() {
+        buyItemListListener.setBuyList(new Vector<ItemInfo>());
     }
 }
