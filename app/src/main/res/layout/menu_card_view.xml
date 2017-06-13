@@ -46,8 +46,11 @@
             android:layout_height="40dp"
             android:layout_alignParentEnd="true"
             android:layout_below="@+id/price_textView"
-            android:visibility="invisible"
-            card_view:srcCompat="@drawable/common_google_signin_btn_icon_dark_disabled" />
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/sold_out_icon"
+            android:visibility="invisible" />
 
         <ImageView
             android:id="@+id/pic_imageView"

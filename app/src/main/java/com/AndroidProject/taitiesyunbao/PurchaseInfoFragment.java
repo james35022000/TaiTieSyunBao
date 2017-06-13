@@ -342,6 +342,11 @@ public class PurchaseInfoFragment extends Fragment {
     }
 
     private void clearBuyList() {
-        buyItemListListener.setBuyList(new Vector<ItemInfo>());
+        for (ItemInfo itemInfo : buyList) {
+            buyItemListListener.delBuyList(itemInfo);
+            itemInfo.setAmount(0);
+            saveUserData.removeItem(itemInfo);
+        }
+        buyList = new Vector<>();
     }
 }

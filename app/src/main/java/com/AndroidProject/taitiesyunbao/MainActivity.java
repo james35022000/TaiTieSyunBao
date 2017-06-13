@@ -222,8 +222,8 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                             @Override
                             public void onClick(View v) {
                                 if(!changeName_editText.getText().toString().equals("")) {
-                                    UpdateUserProfile(changeName_editText.getText().toString(), "");
-                                    userName_textView.setText(firebaseUser.getDisplayName());
+                                    UpdateUserProfile(userName_textView,
+                                            changeName_editText.getText().toString(), "");
                                 }
                                 alertDialog1.cancel();
                             }
@@ -397,8 +397,8 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                                                     password_signup_editText.getText().toString()
                                             );
                                             firebaseUser = firebaseAuth.getCurrentUser();
-                                            UpdateUserProfile(userName_editText.getText().toString()
-                                                    , "");
+                                            UpdateUserProfile(null,
+                                                    userName_editText.getText().toString(), "");
                                             firebaseUser = null;
                                             signupAlertDialog.cancel();
                                             drawer_layout.openDrawer(right_drawer);
@@ -430,7 +430,8 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         }
     }
 
-    private void UpdateUserProfile(String displayName, String photoUri) {
+    private void UpdateUserProfile(final TextView userName_textView,
+                                   final String displayName, String photoUri) {
         UserProfileChangeRequest.Builder builder = new UserProfileChangeRequest.Builder();
         UserProfileChangeRequest profileChangeRequest;
         if(!displayName.equals(""))
@@ -442,9 +443,12 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                 new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful())
+                if(task.isSuccessful()) {
                     Toast.makeText(MainActivity.this, "使用者資料更新成功", Toast.LENGTH_SHORT)
                             .show();
+                    if(userName_textView != null)
+                        userName_textView.setText(displayName);
+                }
                 else
                     Toast.makeText(MainActivity.this, "使用者資料更新失敗", Toast.LENGTH_SHORT)
                             .show();
