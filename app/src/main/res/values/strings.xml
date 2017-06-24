@@ -1,15 +1,8 @@
 <resources>
     <string name="app_name">台鐵尋飽</string>
-    <string name="main_tab_name">首頁</string>
-    <string name="menu_tab_name">餐點</string>
-    <string name="like_tab_name">喜歡</string>
-    <string name="sug_tab_name">建議</string>
-
-    <string name="food_tab">便當</string>
-    <string name="drink_tab">飲料</string>
-    <string name="snack_tab">零食</string>
-    <string name="other_tab">其他</string>
-
-    <string name="amount">數量</string>
-
+    <string name="not_login">未登入</string>
+    <string name="bottom_tab_1">首頁</string>
+    <string name="bottom_tab_2">餐廳</string>
+    <string name="bottom_tab_3">最愛</string>
+    <string name="bottom_tab_4">建議</string>
 </resources>

@@ -3,21 +3,345 @@
 
     <item
         is-multidex="true"
-        jar="C:\Users\Jack-PC\Documents\GitHub\TrainOrderSystem\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jar="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao_Refactor\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
         jumboMode="true"
         optimize="true"
-        revision="25.0.0"
-        sha1="4f99941697a07844997adb31824b8eef1aa30c91">
-        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TrainOrderSystem\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_ef3446531b72e80a62d175c9790e6d96bbf2c812\classes.dex" />
+        revision="25.0.2"
+        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao_Refactor\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_78ab508940f9f7ce03fa7510e6e261a362b25865\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\Jack-PC\Documents\GitHub\TrainOrderSystem\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jar="C:\Users\Jack-PC\.android\build-cache\1734972d879a8d1dbbb70da6f97d5941c3b5eb0b\output\jars\classes.jar"
         jumboMode="true"
         optimize="true"
-        revision="25.0.0"
-        sha1="caff8e51a24901cfc9cd7e1cf83d84f4cb0c103b">
-        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TrainOrderSystem\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_86d5bc09d546c0e312ecaa4a13a4d735696825a1\classes.dex" />
+        revision="25.0.2"
+        sha1="052f5f840f21174a3ecf6544130194e2652cbb73">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao_Refactor\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_486e93ff2a5674423f66372e3ccfe056bc86d5d0\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Jack-PC\.android\build-cache\804f6ffea0cf6cd5cc8181cc07cd226b8d3b9ca4\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="da27a32db6af8954ee8061537c7d476fcb1df46f">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao_Refactor\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_4fe5207c10f04717266b6251e14d4f627ef7831a\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Jack-PC\.android\build-cache\de89e0fe8637b850e745065ee3f5c3c904c68d79\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="6addaba208e21c6da776d0ca75b6b23a6ccd5499">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao_Refactor\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_1ab9ec293c3168734cbd1485138a015b441963c5\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Jack-PC\.android\build-cache\91ee956c3b41c82b4b59030b1f786445e25d4916\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="09cf6aa1390f95157e8295d02be7868f568825fc">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao_Refactor\app\build\intermediates\pre-dexed\debug\classes_794f59b14e50a7b66954970835f2931a3ee73e6a.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Jack-PC\.android\build-cache\bd97d95ab8378048fd5d79826a8786958331cffd\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="150252b33b00274cc868578ade018fda0d43a3eb">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao_Refactor\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_9358db0913080c3112bd562a2c2af478e64a0984\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Jack-PC\.android\build-cache\de89e0fe8637b850e745065ee3f5c3c904c68d79\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="6addaba208e21c6da776d0ca75b6b23a6ccd5499">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao_Refactor\app\build\intermediates\pre-dexed\debug\classes_1ab9ec293c3168734cbd1485138a015b441963c5.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Jack-PC\.android\build-cache\30e5f005b4681d7004bbe1a43d763c3b233244d3\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="eb0d830e3eabb9deb9ec44869cf7ac7ea1ad794c">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao_Refactor\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_670a310fe77256c95525d29a0a5f5e629a2e6ceb\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Jack-PC\.android\build-cache\09604831854458933c766a0ca65a4f433e2cdfba\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="25438f55fc6d906a0e72f30b21487541430ede43">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao_Refactor\app\build\intermediates\pre-dexed\debug\classes_5535c149ddc5cd91109caed54a2919801717c73a.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Jack-PC\.android\build-cache\09604831854458933c766a0ca65a4f433e2cdfba\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="25438f55fc6d906a0e72f30b21487541430ede43">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao_Refactor\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_5535c149ddc5cd91109caed54a2919801717c73a\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Jack-PC\.android\build-cache\30e5f005b4681d7004bbe1a43d763c3b233244d3\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="eb0d830e3eabb9deb9ec44869cf7ac7ea1ad794c">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao_Refactor\app\build\intermediates\pre-dexed\debug\classes_670a310fe77256c95525d29a0a5f5e629a2e6ceb.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Jack-PC\.android\build-cache\f96541d5e6f0b21a03b597679aff83cf945d260a\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="4a26a1154d053ab11aaf4c3967c42a4d66390991">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao_Refactor\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_0820fde022acd1826189b0bf929337013fda623e\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Jack-PC\.android\build-cache\1ed8ce1c32bd1fe58527778387312d7268e5e24d\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="6116e0e7069de7fc259aac8e08b84f32c2038231">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao_Refactor\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_9216921fb1f642b57c93640b605202319c6dc1d8\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Jack-PC\.android\build-cache\a95256966964955bbdfbe1c11a7a5d321a21968c\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="433f4d6aa5f21f19552afe0e6c5eff0fedba73ad">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao_Refactor\app\build\intermediates\pre-dexed\debug\classes_fca553597b1f6437249ff63e8bfc11330d0fa01e.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Jack-PC\.android\build-cache\91ee956c3b41c82b4b59030b1f786445e25d4916\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="09cf6aa1390f95157e8295d02be7868f568825fc">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao_Refactor\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_794f59b14e50a7b66954970835f2931a3ee73e6a\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Jack-PC\.android\build-cache\21f573cee3518d74d867e939e63fc44757f09edc\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="dd39827d2067497e60e21da48a7926000b6d4b0c">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao_Refactor\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_28057c2da920aa795993825c936e211acdafecfb\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Jack-PC\.android\build-cache\21f573cee3518d74d867e939e63fc44757f09edc\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="dd39827d2067497e60e21da48a7926000b6d4b0c">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao_Refactor\app\build\intermediates\pre-dexed\debug\classes_28057c2da920aa795993825c936e211acdafecfb.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Jack-PC\.android\build-cache\1ed8ce1c32bd1fe58527778387312d7268e5e24d\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="6116e0e7069de7fc259aac8e08b84f32c2038231">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao_Refactor\app\build\intermediates\pre-dexed\debug\classes_9216921fb1f642b57c93640b605202319c6dc1d8.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Jack-PC\.android\build-cache\a95256966964955bbdfbe1c11a7a5d321a21968c\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="433f4d6aa5f21f19552afe0e6c5eff0fedba73ad">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao_Refactor\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_fca553597b1f6437249ff63e8bfc11330d0fa01e\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Jack-PC\.android\build-cache\62efa08e0621282010bf60ea713d110ce7c9c136\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="8f128aeeb7e31271b28a7adb9dac1f3a6ed9f5e7">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao_Refactor\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_62aed9145ec5ec0ea35dab5f6bca0f7b1a5f3c1c\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao_Refactor\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="9144ec0b25c900943bc0c658be8fa871ef9dd9b5">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao_Refactor\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_e748111963065351aadb9d58d172bc00ef1128d3\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Jack-PC\.android\build-cache\9e54f65db5cd59db9cf7a1e51128d7fe26ff20b3\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="ffc15e965a9e8c28f24455eedd4cac215c45d1fc">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao_Refactor\app\build\intermediates\pre-dexed\debug\classes_ba804b6a9e055d1867e75c6ce0c8c910ea7c098b.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Jack-PC\.android\build-cache\84b922f48a9b2443de95f6b4d27972dcfbb8044d\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="486371f97baad8e607f332f20fee1d3dd00a731a">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao_Refactor\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_f381c9d0a1b21608e2c1c35da55c23a4b159302e\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Jack-PC\.android\build-cache\9e54f65db5cd59db9cf7a1e51128d7fe26ff20b3\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="ffc15e965a9e8c28f24455eedd4cac215c45d1fc">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao_Refactor\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_ba804b6a9e055d1867e75c6ce0c8c910ea7c098b\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Jack-PC\.android\build-cache\84b922f48a9b2443de95f6b4d27972dcfbb8044d\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="486371f97baad8e607f332f20fee1d3dd00a731a">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao_Refactor\app\build\intermediates\pre-dexed\debug\classes_f381c9d0a1b21608e2c1c35da55c23a4b159302e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Jack-PC\.android\build-cache\62efa08e0621282010bf60ea713d110ce7c9c136\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="8f128aeeb7e31271b28a7adb9dac1f3a6ed9f5e7">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao_Refactor\app\build\intermediates\pre-dexed\debug\classes_62aed9145ec5ec0ea35dab5f6bca0f7b1a5f3c1c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Jack-PC\.android\build-cache\9435d67cbf75bd8cb376d2a4efac431124294323\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="9cca2818594cc5348806d6662133491e7ea0fa8d">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao_Refactor\app\build\intermediates\pre-dexed\debug\classes_6aba05e9396473323b8f132d7a2657a6781c1fa0.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Jack-PC\.android\build-cache\091dcefcfeec891c28c64a5321b9fba4907c42de\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="47635644d0d5c103c1dd8360549eb9ba3225c7d3">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao_Refactor\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_f879298333b9c45116e6b59da77ae08465621e9f\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Jack-PC\.android\build-cache\9435d67cbf75bd8cb376d2a4efac431124294323\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="9cca2818594cc5348806d6662133491e7ea0fa8d">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao_Refactor\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_6aba05e9396473323b8f132d7a2657a6781c1fa0\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Jack-PC\.android\build-cache\c0c9233404e6a0e586cd4fc916cbc92af93b6251\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="756f6297eef79784f5e356dcd4f39865028b2bd0">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao_Refactor\app\build\intermediates\pre-dexed\debug\classes_b8d0afdcf5731639017467cf80607b9107c1c61c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Jack-PC\.android\build-cache\78d1d6158f3a3303ca9a8793013a9274b6209132\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="8010ae6ed32828a145b25ec97bc07b7a83c6318f">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao_Refactor\app\build\intermediates\pre-dexed\debug\classes_a0228303210f88e4be7f26120c34fb5f81c6762d.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Jack-PC\.android\build-cache\c0c9233404e6a0e586cd4fc916cbc92af93b6251\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="756f6297eef79784f5e356dcd4f39865028b2bd0">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao_Refactor\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_b8d0afdcf5731639017467cf80607b9107c1c61c\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Jack-PC\.android\build-cache\78d1d6158f3a3303ca9a8793013a9274b6209132\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="8010ae6ed32828a145b25ec97bc07b7a83c6318f">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao_Refactor\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_a0228303210f88e4be7f26120c34fb5f81c6762d\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Jack-PC\.android\build-cache\4d4086ab4523522a2a73a0008217982e18913995\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="45f697922e6f072daa12f8a2995dc77ab03c11da">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao_Refactor\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_1843fd861126bc82e6d39fcac77eabd3746ac5cb\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Jack-PC\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\25.3.1\support-annotations-25.3.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="bf8841d29fa39e077730e7a91222c2ce269fa7c9">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao_Refactor\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-25.3.1_a828347b4c570d6861c661c6f951de695dea2b07\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Jack-PC\.android\build-cache\9161ba56696424809a53f15f3a3fc18ac6cfe1d5\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="efb8cb62d47d157c29d1521daac7eefd4cb881ee">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao_Refactor\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_954d6c90fe4031d689871f6088544f04b08466f7\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Jack-PC\.android\build-cache\3d165505dbf0bc98f0224c6ff581cf0fa46a2e91\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="6ef31f1555bb4cc513ec8d52711365a8b89f3600">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao_Refactor\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_4b32e5facfc8e0e67ec797725ab07261e7c543e2\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Jack-PC\.android\build-cache\33166b6c3806fa6c28d26057eeb10e26a1a805d5\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao_Refactor\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_1ddf0fd9488588bb70a2b38c61347dfdf62352d9\classes.dex" />
     </item>
 
 </items>

@@ -1,27 +1,35 @@
 {
   "project_info": {
-    "project_number": "668072389356",
-    "firebase_url": "https://taitiesyunbao.firebaseio.com",
-    "project_id": "taitiesyunbao",
-    "storage_bucket": "taitiesyunbao.appspot.com"
+    "project_number": "946550676055",
+    "firebase_url": "https://taitiesyunbao-d1296.firebaseio.com",
+    "project_id": "taitiesyunbao-d1296",
+    "storage_bucket": "taitiesyunbao-d1296.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:668072389356:android:f206babac561cfd6",
+        "mobilesdk_app_id": "1:946550676055:android:bd4e55efa66672a8",
         "android_client_info": {
-          "package_name": "com.AndroidProject.taitiesyunbao"
+          "package_name": "jcchen.taitiesyunbao"
         }
       },
       "oauth_client": [
         {
-          "client_id": "668072389356-kqaes17914vgj92s708fsjrss29lh9qe.apps.googleusercontent.com",
+          "client_id": "946550676055-le1g0bc418s7nnasm79judr8ql280arg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "jcchen.taitiesyunbao",
+            "certificate_hash": "d9f25d4c90396ff32e2a7bf1a16eddabfe74e6f9"
+          }
+        },
+        {
+          "client_id": "946550676055-s0isp69r6ao14uu9pemdr3vhgftupf43.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDI3tHeaEMRHzprOFFwZBrwUUFYhk-rtYg"
+          "current_key": "AIzaSyDgupcN5q5hL1_6GZt2YT5yVjpl5Sb0wvg"
         }
       ],
       "services": {
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "946550676055-s0isp69r6ao14uu9pemdr3vhgftupf43.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
