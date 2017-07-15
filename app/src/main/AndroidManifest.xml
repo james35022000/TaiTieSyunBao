@@ -1,6 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-
     package="jcchen.taitiesyunbao">
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -17,6 +18,8 @@
             </intent-filter>
         </activity>
 
+
     </application>
+
 
 </manifest>

@@ -1,6 +1,7 @@
 package jcchen.taitiesyunbao;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -13,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
 
+import java.util.Vector;
 
 /**
  * Created by JCChen on 2017/6/24.
@@ -34,9 +36,10 @@ public class MainActivity extends AppCompatActivity {
 
     private BottomTabInfo bottomTabInfos[] = {
             new BottomTabInfo(R.drawable.main_tab_selector, R.string.bottom_tab_1, MainFragment.class),
-            new BottomTabInfo(R.drawable.map_tab_selector, R.string.bottom_tab_2, MapFragment.class),
+            new BottomTabInfo(R.drawable.map_tab_selector, R.string.bottom_tab_2, StoreFragment.class),
             new BottomTabInfo(R.drawable.like_tab_selector, R.string.bottom_tab_3, LikeFragment.class),
             new BottomTabInfo(R.drawable.sug_tab_selector, R.string.bottom_tab_4, SugFragment.class) };
+    private Vector<Fragment> fragmentVector;
 
     private ImageView back_imageView, drawer_imageView, toolbar_icon_imageView, signIn_imageView;
     private RelativeLayout right_drawer;
@@ -87,6 +90,15 @@ public class MainActivity extends AppCompatActivity {
         userName_textView = (TextView) findViewById(R.id.userName_textView);
         userPic_roundedImageView = (RoundedImageView) findViewById(R.id.userPic_RoundedImageView);
 
+        drawer_imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(right_drawerLayout.isDrawerOpen(right_drawer))
+                    right_drawerLayout.closeDrawer(right_drawer);
+                else
+                    right_drawerLayout.openDrawer(right_drawer);
+            }
+        });
         signIn_imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,6 +126,12 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        fragmentVector = new Vector<>();
+        fragmentVector.add(new MainFragment());
+        fragmentVector.add(new StoreFragment());
+        fragmentVector.add(new LikeFragment());
+        fragmentVector.add(new SugFragment());
+        fragment_pager.setAdapter(new MainPagerAdapter(getSupportFragmentManager(), fragmentVector));
 
         bottom_tab.setup(this, getSupportFragmentManager(), R.id.fragment_pager);
         bottom_tab.getTabWidget().setDividerDrawable(null);
@@ -126,10 +144,8 @@ public class MainActivity extends AppCompatActivity {
         });
         for(BottomTabInfo tabInfo : bottomTabInfos) {
             bottom_tab.addTab(bottom_tab.newTabSpec(getResources().getString(tabInfo.StringID))
-                                        .setIndicator(getImageView(tabInfo)),
-                                            tabInfo.fragment, null);
+                                    .setIndicator(getImageView(tabInfo)), tabInfo.fragment, null);
         }
-
     }
 
     private View getImageView(BottomTabInfo tabInfo) {
