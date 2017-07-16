@@ -32,7 +32,7 @@ public class GetImage extends AsyncTask<String, Void, Bitmap> {
         String image_url = params[0];
         Bitmap bitmap = null;
         try {
-            URL url = new URL("http://" + image_url);
+            URL url = new URL(image_url);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoInput(true);
             connection.connect();

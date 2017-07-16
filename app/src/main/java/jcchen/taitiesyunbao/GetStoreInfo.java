@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Vector;
 
 /**
@@ -35,6 +36,7 @@ public class GetStoreInfo extends AsyncTask<String, Void, StoreInfo> {
         final String Longitude = params[2];
         final String Station = params[3];
 
+
         JSONObject cacheResponse = null;
         try {
             URL url = new URL("https://www.google.com/maps/search/?api=1&query=" +
@@ -44,24 +46,8 @@ public class GetStoreInfo extends AsyncTask<String, Void, StoreInfo> {
             Address = cacheResponse.getJSONArray("j").getJSONArray(8).getJSONArray(2).getString(0);
             Tel = cacheResponse.getJSONArray("j").getJSONArray(8).getString(7);
             Rate = cacheResponse.getJSONArray("j").getJSONArray(8).getString(3);
-            ImageUrl.add(cacheResponse.getJSONArray("j")
-                    .getJSONArray(8)
-                    .getJSONArray(16)
-                    .getJSONArray(0)
-                    .getJSONArray(2)
-                    .getString(0));
-            ImageUrl.add(cacheResponse.getJSONArray("j")
-                    .getJSONArray(8)
-                    .getJSONArray(16)
-                    .getJSONArray(1)
-                    .getJSONArray(2)
-                    .getString(0));
-            ImageUrl.add(cacheResponse.getJSONArray("j")
-                    .getJSONArray(8)
-                    .getJSONArray(32)
-                    .getJSONArray(0)
-                    .getJSONArray(2)
-                    .getString(0));
+            ImageUrl = getImageUrl(cacheResponse.getJSONArray("j")
+                                        .getJSONArray(8).getJSONArray(0).getString(0));
             return new StoreInfo(ID, Name, Address, Tel, Rate, Info, Latitude, Longitude, null,
                                     Station, Area, ImageUrl);
         } catch (Exception e) {
@@ -76,11 +62,63 @@ public class GetStoreInfo extends AsyncTask<String, Void, StoreInfo> {
         }
     }
 
+    private Vector<String> getImageUrl(String storeID) {
+        Vector<String> ImageUrl = new Vector<>();
+        String response, jsonData = null;
+        BufferedReader reader = null;
+
+        try {
+            storeID = URLEncoder.encode(storeID, "UTF-8");
+            URL url = new URL("https://www.google.com/maps/uv?pb=!1s" + storeID + "&hl=zh-Hant");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestProperty( "User-agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.4 (KHTML, like Gecko) Chrome/22.0.1229.94 Safari/537.4" );
+            connection.setInstanceFollowRedirects(true);
+            connection.setReadTimeout(10 * 1000);
+            connection.connect();
+
+            reader = new BufferedReader(
+                    new InputStreamReader(connection.getInputStream()));
+            StringBuilder stringBuilder = new StringBuilder();
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                stringBuilder.append(line + "\n");
+            }
+            response = stringBuilder.toString();
+            int index = response.indexOf("window.APP_OPTIONS=") + 19;
+            jsonData = "{\"j\":" +
+                    response.substring(index, response.indexOf(";window.JS_VERSION=")) +
+                    "}";
+            JSONObject jsonObject = new JSONObject(jsonData);
+            int len = jsonObject.getJSONArray("j").getJSONArray(7).getJSONArray(0).length();
+            for(int i = 0; i < len; i++) {
+                String imageID = jsonObject.getJSONArray("j").getJSONArray(7)
+                                        .getJSONArray(0).getJSONArray(i).getString(0);
+                if(!jsonObject.getJSONArray("j").getJSONArray(7).getJSONArray(0)
+                        .getJSONArray(i).getJSONArray(6).getString(0).startsWith("//geo"))
+                    ImageUrl.add("http://lh6.googleusercontent.com/" + imageID + "/");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return ImageUrl;
+        }
+    }
+
     private JSONObject getCacheResponse(final URL url) {
         String response, jsonData = null;
         BufferedReader reader = null;
         try {
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestProperty( "User-agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.4 (KHTML, like Gecko) Chrome/22.0.1229.94 Safari/537.4" );
             connection.setInstanceFollowRedirects(true);
             connection.setReadTimeout(10 * 1000);
             connection.connect();

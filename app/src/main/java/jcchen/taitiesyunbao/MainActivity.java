@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private ListView drawer_listView;
     private TextView userName_textView;
     private RoundedImageView userPic_roundedImageView;
-    private ViewPager fragment_pager;
+    private MainViewPager fragment_pager;
     private FragmentTabHost bottom_tab;
 
 
@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Bottom tab & Content
-        fragment_pager = (ViewPager) findViewById(R.id.fragment_pager);
+        fragment_pager = (MainViewPager) findViewById(R.id.fragment_pager);
         bottom_tab = (FragmentTabHost) findViewById(R.id.bottom_tab);
 
         fragment_pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

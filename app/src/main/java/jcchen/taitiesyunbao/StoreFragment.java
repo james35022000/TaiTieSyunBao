@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,7 +70,6 @@ public class StoreFragment extends Fragment {
     }
 
     private void displayStore() {
-        Log.i("Display", "HERE");
         final Vector<StoreInfo> storeList = new Vector<>();
         final RecyclerView.Adapter adapter = new StoreRecyclerViewAdapter(context, storeList);
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Stores");
