@@ -55,6 +55,8 @@ public class StoreInfo {
     }
 
     public String getRate() {
+        if(Rate.equals("null"))
+            Rate = "0";
         return this.Rate;
     }
 

@@ -1,6 +1,8 @@
 package jcchen.taitiesyunbao;
 
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.RecyclerView;
 
 import org.json.JSONObject;
@@ -12,6 +14,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Vector;
+import java.util.concurrent.locks.Lock;
 
 /**
  * Created by Jack-PC on 2017/7/15.
@@ -20,11 +23,16 @@ import java.util.Vector;
 public class GetStoreInfo extends AsyncTask<String, Void, StoreInfo> {
 
     private RecyclerView.Adapter adapter;
+
     private Vector<StoreInfo> storeList;
 
-    public GetStoreInfo(RecyclerView.Adapter adapter, Vector<StoreInfo> storeList) {
+    private Handler handler;
+
+
+    public GetStoreInfo(RecyclerView.Adapter adapter, Vector<StoreInfo> storeList, Handler handler) {
         this.adapter = adapter;
         this.storeList = storeList;
+        this.handler = handler;
     }
 
 
@@ -56,9 +64,12 @@ public class GetStoreInfo extends AsyncTask<String, Void, StoreInfo> {
     }
 
     protected void onPostExecute(StoreInfo storeInfo) {
+        Message msg = new Message();
+        msg.what = 0;
+        handler.sendMessage(msg);
         if(storeInfo != null) {
             storeList.add(storeInfo);
-            adapter.notifyDataSetChanged();
+            adapter.notifyItemChanged(storeList.size() - 1);
         }
     }
 

@@ -2,6 +2,9 @@ package jcchen.taitiesyunbao;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,6 +31,9 @@ public class StoreFragment extends Fragment {
 
     private RecyclerView store_recyclerView;
 
+    private Vector<String> InternetTaskPool;
+
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -51,6 +57,7 @@ public class StoreFragment extends Fragment {
         //alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         //alertDialog.show();
 
+
         displayStore();
     }
 
@@ -73,38 +80,58 @@ public class StoreFragment extends Fragment {
         final Vector<StoreInfo> storeList = new Vector<>();
         final RecyclerView.Adapter adapter = new StoreRecyclerViewAdapter(context, storeList);
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Stores");
-        store_recyclerView.setAdapter(adapter);
-        store_recyclerView.setLayoutManager(new LinearLayoutManager(context));
+
+        final Handler handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                final Handler h = this;
+                if(msg.what == 0) {
+                    if(InternetTaskPool.size() > 0) {
+                        DatabaseReference dr = FirebaseDatabase.getInstance().getReference("Stores");
+                        dr.child(InternetTaskPool.get(0)).addListenerForSingleValueEvent(
+                                new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        new GetStoreInfo(adapter, storeList, h).execute(
+                                                dataSnapshot.child("ID").getValue().toString(),
+                                                dataSnapshot.child("Latitude").getValue().toString(),
+                                                dataSnapshot.child("Longitude").getValue().toString(),
+                                                dataSnapshot.child("Near_Station").getValue().toString());
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+                        InternetTaskPool.remove(0);
+                    }
+                }
+                super.handleMessage(msg);
+            }
+        };
+
+        InternetTaskPool = new Vector<>();
+
         databaseReference.child("Stations").child("二結").addListenerForSingleValueEvent(
                 new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                    DatabaseReference dr = FirebaseDatabase.getInstance().getReference("Stores");
-                    dr.child(ds.getKey().toString()).addListenerForSingleValueEvent(
-                            new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            new GetStoreInfo(adapter, storeList).execute(
-                                    dataSnapshot.child("ID").getValue().toString(),
-                                    dataSnapshot.child("Latitude").getValue().toString(),
-                                    dataSnapshot.child("Longitude").getValue().toString(),
-                                    dataSnapshot.child("Near_Station").getValue().toString());
-                        }
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for(DataSnapshot ds : dataSnapshot.getChildren())
+                            InternetTaskPool.add(ds.getKey().toString());
+                        Message msg = new Message();
+                        msg.what = 0;
+                        handler.sendMessage(msg);
+                    }
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
 
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
+                    }
+                });
+        store_recyclerView.setAdapter(adapter);
+        store_recyclerView.setLayoutManager(new LinearLayoutManager(context));
     }
+
+
 }
