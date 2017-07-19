@@ -96,7 +96,9 @@ public class StoreFragment extends Fragment {
                                                 dataSnapshot.child("ID").getValue().toString(),
                                                 dataSnapshot.child("Latitude").getValue().toString(),
                                                 dataSnapshot.child("Longitude").getValue().toString(),
-                                                dataSnapshot.child("Near_Station").getValue().toString());
+                                                dataSnapshot.child("Near_Station").getValue().toString(),
+                                                dataSnapshot.child("Address_tw").getValue().toString(),
+                                                dataSnapshot.child("Address_en").getValue().toString());
                                     }
 
                                     @Override

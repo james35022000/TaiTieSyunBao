@@ -86,6 +86,15 @@
 
         </android.support.v4.view.ViewPager>
 
+        <LinearLayout
+            android:id="@+id/sliderDots"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/UI_relativeLayout"
+            android:layout_marginBottom="10dp"
+            android:gravity="center_vertical|center_horizontal"
+            android:orientation="horizontal" />
+
         <RelativeLayout
             android:id="@+id/UI_relativeLayout"
             android:layout_width="match_parent"
@@ -109,15 +118,21 @@
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/info_textView"
-            android:layout_width="match_parent"
+            android:id="@+id/address_textView"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="false"
             android:layout_below="@+id/UI_relativeLayout"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="5dp" />
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="3dp" />
+
+        <TextView
+            android:id="@+id/tel_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/address_textView"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="3dp" />
 
     </RelativeLayout>
 

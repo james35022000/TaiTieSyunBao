@@ -1,7 +1,11 @@
 package jcchen.taitiesyunbao;
 
 
+import android.support.v4.content.ContextCompat;
+
 import java.util.Vector;
+
+import static jcchen.taitiesyunbao.Constant.LANGUAGE_EN;
 
 /**
  * Created by JCChen on 2017/7/15.
@@ -10,7 +14,7 @@ import java.util.Vector;
 public class StoreInfo {
     private String ID;
     private String Name;
-    private String Address;
+    private String Address_tw, Address_en;
     private String Tel;
     private String Rate;
     private String Info;
@@ -21,12 +25,13 @@ public class StoreInfo {
     private String Area;
     private Vector<String> ImageUrl;
 
-    public StoreInfo(String ID, String Name, String Address, String Tel, String Rate, String Info,
+    public StoreInfo(String ID, String Name, String Address_tw, String Address_en, String Tel, String Rate, String Info,
                      String Latitude, String Longitude, Vector<String> Types, String Station,
                      String Area, Vector<String> ImageUrl) {
         this.ID = ID;
         this.Name = Name;
-        this.Address = Address;
+        this.Address_tw = Address_tw;
+        this.Address_en = Address_en;
         this.Tel = Tel;
         this.Info = Info;
         this.Latitude = Latitude;
@@ -46,8 +51,11 @@ public class StoreInfo {
         return this.Name;
     }
 
-    public String getAddress() {
-        return this.Address;
+    public String getAddress(final int language) {
+        if(language == LANGUAGE_EN)
+            return this.Address_en;
+        else
+            return this.Address_tw;
     }
 
     public String getTel() {

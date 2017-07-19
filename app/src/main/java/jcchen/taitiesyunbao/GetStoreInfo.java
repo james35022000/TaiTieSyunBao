@@ -37,12 +37,14 @@ public class GetStoreInfo extends AsyncTask<String, Void, StoreInfo> {
 
 
     protected StoreInfo doInBackground(String... params) {
-        String Name, Address, Tel, Rate, Info = "", Area = "";
+        String Name, Tel, Rate, Info = "", Area = "";
         Vector<String> ImageUrl = new Vector<>();
         final String ID = params[0];
         final String Latitude = params[1];
         final String Longitude = params[2];
         final String Station = params[3];
+        final String Address_tw = params[4];
+        final String Address_en = params[5];
 
 
         JSONObject cacheResponse = null;
@@ -51,12 +53,20 @@ public class GetStoreInfo extends AsyncTask<String, Void, StoreInfo> {
                     Latitude + "," + Longitude + "&query_place_id=" + ID + "&hl=zh-TW");
             cacheResponse = getCacheResponse(url);
             Name = cacheResponse.getJSONArray("j").getJSONArray(8).getString(1);
-            Address = cacheResponse.getJSONArray("j").getJSONArray(8).getJSONArray(2).getString(0);
             Tel = cacheResponse.getJSONArray("j").getJSONArray(8).getString(7);
+            try {
+                if (!Tel.equals("null")) {
+                    String[] token = Tel.split(" ");
+                    Tel = "(0" + token[1] + ")" + token[2] + " " + token[3];
+                }
+                else
+                    Tel = "(無)";
+            }
+            catch (Exception e) {  }
             Rate = cacheResponse.getJSONArray("j").getJSONArray(8).getString(3);
             ImageUrl = getImageUrl(cacheResponse.getJSONArray("j")
                                         .getJSONArray(8).getJSONArray(0).getString(0));
-            return new StoreInfo(ID, Name, Address, Tel, Rate, Info, Latitude, Longitude, null,
+            return new StoreInfo(ID, Name, Address_tw, Address_en, Tel, Rate, Info, Latitude, Longitude, null,
                                     Station, Area, ImageUrl);
         } catch (Exception e) {
             return null;
