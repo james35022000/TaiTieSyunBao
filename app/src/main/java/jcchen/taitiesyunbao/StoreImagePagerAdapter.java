@@ -1,13 +1,20 @@
 package jcchen.taitiesyunbao;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.media.Image;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
 import android.widget.ImageView;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.util.Vector;
 
@@ -40,8 +47,19 @@ public class StoreImagePagerAdapter extends PagerAdapter {
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = layoutInflater.inflate(R.layout.store_image_layout, null);
 
-        ImageView pic_imageView = (ImageView) view.findViewById(R.id.pic_imageView);
-        new GetImage(context, pic_imageView).execute(ImageUrl.get(position));
+        final ImageView pic_imageView = (ImageView) view.findViewById(R.id.pic_imageView);
+        final ImageLoader imageLoader = ImageLoader.getInstance();
+        imageLoader.loadImage(ImageUrl.get(position), new SimpleImageLoadingListener() {
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                pic_imageView.setImageBitmap(loadedImage);
+                Animation animation = new AlphaAnimation(0, 1);
+                AnimationSet animationSet = new AnimationSet(true);
+                animation.setDuration(500);
+                animationSet.addAnimation(animation);
+                pic_imageView.startAnimation(animationSet);
+            }
+        });
 
         ViewPager viewPager = (ViewPager) container;
         viewPager.addView(view, 0);

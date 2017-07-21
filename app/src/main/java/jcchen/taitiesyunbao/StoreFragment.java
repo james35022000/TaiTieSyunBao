@@ -58,7 +58,7 @@ public class StoreFragment extends Fragment {
         //alertDialog.show();
 
 
-        displayStore();
+        displayStore(view);
     }
 
     @Override
@@ -76,9 +76,9 @@ public class StoreFragment extends Fragment {
         super.onDestroyView();
     }
 
-    private void displayStore() {
+    private void displayStore(View view) {
         final Vector<StoreInfo> storeList = new Vector<>();
-        final RecyclerView.Adapter adapter = new StoreRecyclerViewAdapter(context, storeList);
+        final RecyclerView.Adapter adapter = new StoreRecyclerViewAdapter(context, storeList, view);
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Stores");
 
         final Handler handler = new Handler() {

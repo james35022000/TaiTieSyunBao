@@ -7,8 +7,17 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="074b2a8a692ce54afadd470f8761d4540ca23b69">
+        sha1="03588eaafcb50c98878c40a3ed1d3e6d7de0cbfe">
         <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_fa0e223d470f5c7556bc6e0a483553f11a71c96b\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Jack-PC\.gradle\caches\modules-2\files-2.1\com.nostra13.universalimageloader\universal-image-loader\1.9.5\442dbfb517b9ab5cb5c6da7ebf8cc28ec5bd0375\universal-image-loader-1.9.5.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="442dbfb517b9ab5cb5c6da7ebf8cc28ec5bd0375">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao\app\build\intermediates\transforms\dex\debug\folders\1000\10\universal-image-loader-1.9.5_698b7f76cca17f6e31814fde67657dfa1cd05a22\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -18,24 +27,6 @@
         revision="25.0.2"
         sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
         <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_c0c8b9bf2d0871bf411ec03f7bd60a47cba0029c\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Jack-PC\.android\build-cache\682badfa6beec8b7f1f5e3848d9acf06424f3a59\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="95519720620b553f63afc789beba9ad582807f7c">
-        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_fe9babe72c53f576659bd4d88b0f6b5cd54aa786\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Jack-PC\.android\build-cache\8c9a7dc1f3013994bb0a3f3a8d0281c4d52a47b2\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="914f5d3e3ace66080e59613708f06d129a222e25">
-        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_56c04a5f8fb6ade009126ee3b3d7c42891dbe538\classes.dex" />
     </item>
 
 </items>
