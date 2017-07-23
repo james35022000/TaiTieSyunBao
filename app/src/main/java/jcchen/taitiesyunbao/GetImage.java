@@ -15,6 +15,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
+ * DEPRECATED!!! Now using Universal-Image-Loader to get image.
  * Created by JCChen on 2017/7/15.
  */
 

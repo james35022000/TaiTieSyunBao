@@ -18,7 +18,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/cardview_border_color">
+        android:background="@drawable/cardview_border_color"
+        android:padding="2dp">
 
         <TextView
             android:id="@+id/name_textView"
@@ -80,9 +81,7 @@
             android:id="@+id/pic_viewPager"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:layout_below="@+id/rate_layout"
-            android:layout_marginLeft="2dp"
-            android:layout_marginRight="2dp"/>
+            android:layout_below="@+id/rate_layout" />
 
         <LinearLayout
             android:id="@+id/sliderDots"
