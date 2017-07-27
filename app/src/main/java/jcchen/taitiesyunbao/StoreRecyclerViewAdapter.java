@@ -3,11 +3,14 @@ package jcchen.taitiesyunbao;
 import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v7.widget.RecyclerView;
@@ -21,9 +24,9 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.util.Map;
 import java.util.Vector;
 
 import static jcchen.taitiesyunbao.Constant.LANGUAGE_TW;
@@ -35,10 +38,12 @@ import static jcchen.taitiesyunbao.Constant.LANGUAGE_TW;
 public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecyclerViewAdapter.ViewHolder> {
     private Context context;
     private Vector<StoreInfo> storeList;
-    private RecyclerView store_recyclerView;
+    private RecyclerView store_recyclerView, comment_recyclerView;
     private ViewPager pic_info_viewPager;
     private FrameLayout store_info_frame;
-    private LinearLayout info_linearLayout;
+    private TextView name_textView, tel_textView, address_textView;
+    private ImageView comment_imageView;
+    private BottomSheetBehavior bottomSheetBehavior;
 
     public StoreRecyclerViewAdapter(Context context, Vector<StoreInfo> storeList, View view) {
         this.context = context;
@@ -46,7 +51,12 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
         this.store_recyclerView = (RecyclerView) view.findViewById(R.id.store_recyclerView);
         this.pic_info_viewPager = (ViewPager) view.findViewById(R.id.pic_info_viewPager);
         this.store_info_frame = (FrameLayout) view.findViewById(R.id.store_info_frame);
-        this.info_linearLayout = (LinearLayout) view.findViewById(R.id.info_linearLayout);
+        this.name_textView = (TextView) view.findViewById(R.id.name_textView);
+        this.tel_textView = (TextView) view.findViewById(R.id.tel_textView);
+        this.address_textView = (TextView) view.findViewById(R.id.address_textView);
+        this.comment_imageView = (ImageView) view.findViewById(R.id.comment_imageView);
+        this.bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.bottom_sheet));
+        this.comment_recyclerView = (RecyclerView) view.findViewById(R.id.comment_recyclerView);
     }
 
 
@@ -60,10 +70,10 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, final int index) {
         viewHolder.name_textView.setText(storeList.get(index).getName());
-        viewHolder.address_textView.setText(context.getResources().getString(R.string.address) +
+        /*viewHolder.address_textView.setText(context.getResources().getString(R.string.address) +
                 " : " + storeList.get(index).getAddress(LANGUAGE_TW));
         viewHolder.tel_textView.setText(context.getResources().getString(R.string.tel) +
-                " : " + storeList.get(index).getTel());
+                " : " + storeList.get(index).getTel());*/
         viewHolder.pic_viewPager.setAdapter(
                 new StoreImagePagerAdapter(context, storeList.get(index).getImageUrl()));
         for (int i = 0; i < 5; i++) {
@@ -78,8 +88,10 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
             @Override
             public void onClick(View view) {
                 setInfoDisplay(viewHolder, index);
+                setCommentView(index);
             }
         });
+
     }
 
     @Override
@@ -100,8 +112,8 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
             super(v);
             store_cardView = (CardView) v.findViewById(R.id.store_cardView);
             name_textView = (TextView) v.findViewById(R.id.name_textView);
-            address_textView = (TextView) v.findViewById(R.id.address_textView);
-            tel_textView = (TextView) v.findViewById(R.id.tel_textView);
+            //address_textView = (TextView) v.findViewById(R.id.address_textView);
+            //tel_textView = (TextView) v.findViewById(R.id.tel_textView);
             pic_viewPager = (ViewPager) v.findViewById(R.id.pic_viewPager);
             info_imageView = (ImageView) v.findViewById(R.id.info_imageView);
             like_imageView = (ImageView) v.findViewById(R.id.like_imageView);
@@ -172,14 +184,61 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
                 LatLng latLng = new LatLng(Double.valueOf(storeList.get(index).getLatitude()),
                         Double.valueOf(storeList.get(index).getLongitude()));
                 googleMap.addMarker(new MarkerOptions()
-                        .position(latLng)
-                        .title(storeList.get(index).getName()));
+                        .position(latLng));
+                        //.title(storeList.get(index).getName()));
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 18));
+                // Disable all gestures on map
                 googleMap.getUiSettings().setAllGesturesEnabled(false);
+                // Disable marker click
+                googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                    @Override
+                    public boolean onMarkerClick(Marker marker) {
+                        return true;
+                    }
+                });
             }
         });
 
-        info_linearLayout.bringToFront();
+        name_textView.setText(storeList.get(index).getName());
+        if(!storeList.get(index).getTel().equals("null"))
+            tel_textView.setText(context.getResources().getString(R.string.tel) + ": " +
+                                        storeList.get(index).getTel());
+        address_textView.setText(context.getResources().getString(R.string.address) + ": " +
+                                    storeList.get(index).getAddress(LANGUAGE_TW));
+
+
+    }
+
+    private void setCommentView(int index) {
+        comment_imageView.setOnTouchListener(new View.OnTouchListener() {
+            int last_y = 0;
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch(motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        last_y = (int) motionEvent.getRawY();
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        int y = (int) motionEvent.getRawY() - last_y;
+                        if(y < 0) {
+                            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                        }
+                        else if(y > 0) {
+                            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+                        }
+                        last_y = (int) motionEvent.getRawY();
+                        break;
+                    }
+                    return false;
+            }
+        });
+
+        Vector<StoreComment> commentList = new Vector<>();
+        RecyclerView.Adapter adapter = new StoreCommentRecyclerViewAdapter(context, commentList);
+        new GetStoreComment(adapter, commentList, storeList.get(index)).execute("0");
+        comment_recyclerView.setAdapter(adapter);
+        comment_recyclerView.setLayoutManager(new LinearLayoutManager(context));
+
     }
 
 }

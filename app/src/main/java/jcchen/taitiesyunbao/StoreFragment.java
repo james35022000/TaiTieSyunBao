@@ -91,13 +91,15 @@ public class StoreFragment extends Fragment {
                                 new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
-                                        new GetStoreInfo(adapter, storeList, h).execute(
-                                                dataSnapshot.child("ID").getValue().toString(),
-                                                dataSnapshot.child("Latitude").getValue().toString(),
-                                                dataSnapshot.child("Longitude").getValue().toString(),
-                                                dataSnapshot.child("Near_Station").getValue().toString(),
-                                                dataSnapshot.child("Address_tw").getValue().toString(),
-                                                dataSnapshot.child("Address_en").getValue().toString());
+                                        final StoreInfo storeInfo = new StoreInfo();
+                                        storeInfo.setID(dataSnapshot.child("ID").getValue().toString());
+                                        storeInfo.setLatitude(dataSnapshot.child("Latitude").getValue().toString());
+                                        storeInfo.setLongitude(dataSnapshot.child("Longitude").getValue().toString());
+                                        storeInfo.setStation(dataSnapshot.child("Near_Station").getValue().toString());
+                                        storeInfo.setAddress(dataSnapshot.child("Address_tw").getValue().toString(),
+                                                             dataSnapshot.child("Address_en").getValue().toString());
+
+                                        new GetStoreInfo(adapter, storeList, storeInfo, h).execute();
                                     }
 
                                     @Override

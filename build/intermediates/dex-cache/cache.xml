@@ -48,6 +48,15 @@
     </item>
     <item
         is-multidex="true"
+        jar="C:\Users\Jack-PC\.android\build-cache\0422935ff38bd42f5069f0f199f5ed0ad0028020\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d4cf6227dd6a2ceff0f7dcf0c324380b7abf2c28">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_7e191b3b64d9f37acf064d20b8d8fa128e6a953e\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="C:\Users\Jack-PC\.android\build-cache\3b73edd6ed17bc4037cce1cc75e45ea4f038cbd2\output\jars\libs\internal_impl-24.0.0.jar"
         jumboMode="true"
         optimize="true"
@@ -72,6 +81,15 @@
         revision="25.0.2"
         sha1="2d5d113b0352ab60946fc44c518cf68fd26cbb79">
         <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_8a3804cd0aa8032bed5cab41065cb48bb25db828\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Jack-PC\.gradle\caches\modules-2\files-2.1\com.loopj.android\android-async-http\1.4.9\386a4339ffe52d5d63e80f9bed8d2b1d1a418249\android-async-http-1.4.9.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="386a4339ffe52d5d63e80f9bed8d2b1d1a418249">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao\app\build\intermediates\transforms\dex\debug\folders\1000\10\android-async-http-1.4.9_4a5499b05fe861b50dcf840585b32113bc2de442\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -147,6 +165,15 @@
     </item>
     <item
         is-multidex="true"
+        jar="C:\Users\Jack-PC\.android\build-cache\41ac9c4a103c8164061073c223a24317adb4d128\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="38789e20ace9ab7dbd00554bd2673ab424478d3b">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_e2d9ac981bf0397366b021b8a27f95ce5afb374b\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="C:\Users\Jack-PC\.android\build-cache\d9349289c4243ed7e165973061375d6ff18be3be\output\jars\classes.jar"
         jumboMode="true"
         optimize="true"
@@ -180,6 +207,15 @@
         revision="25.0.2"
         sha1="92c871a22463a247e8a77a9f3fd231c278788c4a">
         <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_cbe40d6b98f8288af275ce2b4a44ab17b145804c\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Jack-PC\.gradle\caches\modules-2\files-2.1\cz.msebera.android\httpclient\4.3.6\526a9f794eab830eae4f23a62c572878b3f491ab\httpclient-4.3.6.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="526a9f794eab830eae4f23a62c572878b3f491ab">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao\app\build\intermediates\transforms\dex\debug\folders\1000\10\httpclient-4.3.6_1c9d0027af486c227c87b30666f5d3886964f1e8\classes.dex" />
     </item>
     <item
         is-multidex="true"

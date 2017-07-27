@@ -1,6 +1,7 @@
 package jcchen.taitiesyunbao;
 
 
+import android.media.Image;
 import android.support.v4.content.ContextCompat;
 
 import java.util.Vector;
@@ -24,31 +25,24 @@ public class StoreInfo {
     private String Station;
     private String Area;
     private Vector<String> ImageUrl;
+    private String _storeID;
 
-    public StoreInfo(String ID, String Name, String Address_tw, String Address_en, String Tel, String Rate, String Info,
-                     String Latitude, String Longitude, Vector<String> Types, String Station,
-                     String Area, Vector<String> ImageUrl) {
-        this.ID = ID;
-        this.Name = Name;
-        this.Address_tw = Address_tw;
-        this.Address_en = Address_en;
-        this.Tel = Tel;
-        this.Info = Info;
-        this.Latitude = Latitude;
-        this.Longitude = Longitude;
-        this.Types = Types;
-        this.Station = Station;
-        this.Area = Area;
-        this.ImageUrl = ImageUrl;
-        this.Rate = Rate;
-    }
+    public StoreInfo() {}
 
     public String getID() {
         return this.ID;
     }
 
+    public void setID(String ID) {
+        this.ID = ID;
+    }
+
     public String getName() {
         return this.Name;
+    }
+
+    public void setName(String Name) {
+        this.Name = Name;
     }
 
     public String getAddress(final int language) {
@@ -58,8 +52,17 @@ public class StoreInfo {
             return this.Address_tw;
     }
 
+    public void setAddress(String Address_tw, String Address_en) {
+        this.Address_tw = Address_tw;
+        this.Address_en = Address_en;
+    }
+
     public String getTel() {
         return this.Tel;
+    }
+
+    public void setTel(String Tel) {
+        this.Tel = Tel;
     }
 
     public String getRate() {
@@ -68,31 +71,75 @@ public class StoreInfo {
         return this.Rate;
     }
 
+    public void setRate(String Rate) {
+        this.Rate = Rate;
+    }
+
     public String getInfo() {
         return this.Info;
+    }
+
+    public void setInfo(String Info) {
+        this.Info = Info;
     }
 
     public String getLatitude() {
         return this.Latitude;
     }
 
+    public void setLatitude(String Latitude) {
+        this.Latitude = Latitude;
+    }
+
     public String getLongitude() {
         return this.Longitude;
     }
 
+    public void setLongitude(String Longitude) {
+        this.Longitude = Longitude;
+    }
+
     public Vector<String> getTypes() {
-        return this.Types;
+        if(Types == null)
+            this.Types = new Vector<>();
+        return new Vector<>(this.Types);
+    }
+
+    public void setTypes(Vector<String> Types) {
+        this.Types = Types;
     }
 
     public String getStation() {
         return this.Station;
     }
 
+    public void setStation(String Station) {
+        this.Station = Station;
+    }
+
     public String getArea() {
         return this.Area;
     }
 
+    public void setArea(String Area) {
+        this.Area = Area;
+    }
+
     public Vector<String> getImageUrl() {
-        return this.ImageUrl;
+        if(ImageUrl == null)
+            ImageUrl = new Vector<>();
+        return new Vector<>(this.ImageUrl);
+    }
+
+    public void setImageUrl(Vector<String> ImageUrl) {
+        this.ImageUrl = ImageUrl;
+    }
+
+    public String get_storeID() {
+        return this._storeID;
+    }
+
+    public void set_storeID(String _storeID) {
+        this._storeID = _storeID;
     }
 }

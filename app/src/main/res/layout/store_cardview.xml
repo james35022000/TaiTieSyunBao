@@ -130,7 +130,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/UI_relativeLayout"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="3dp" />
+            android:layout_marginTop="3dp"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tel_textView"
@@ -139,7 +140,8 @@
             android:layout_below="@+id/address_textView"
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="3dp" />
+            android:layout_marginTop="3dp"
+            android:visibility="gone" />
 
     </RelativeLayout>
 
