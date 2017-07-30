@@ -1,7 +1,6 @@
 package jcchen.taitiesyunbao;
 
 import android.os.AsyncTask;
-import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 
 import org.json.JSONObject;
@@ -68,6 +67,7 @@ public class GetStoreComment extends AsyncTask<String, Void, JSONObject> {
                 storeComment.setUserName(jsonObject.getJSONArray("j").getJSONArray(0).getJSONArray(i).getJSONArray(0).getString(1));
                 storeComment.setUserPicUrl("http:" + jsonObject.getJSONArray("j").getJSONArray(0).getJSONArray(i).getJSONArray(0).getString(2));
                 storeComment.setRate(jsonObject.getJSONArray("j").getJSONArray(0).getJSONArray(i).getString(4));
+                storeComment.setTime(jsonObject.getJSONArray("j").getJSONArray(0).getJSONArray(i).getString(1));
                 commentList.add(storeComment);
                 adapter.notifyItemChanged(commentList.size() - 1);
             }

@@ -4,9 +4,6 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-
-import com.loopj.android.http.*;
 
 import org.json.JSONObject;
 
@@ -18,7 +15,6 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Vector;
 
-import cz.msebera.android.httpclient.Header;
 
 
 /**
@@ -167,7 +163,7 @@ public class GetStoreInfo extends AsyncTask<Void, Void, StoreInfo> {
             catch (Exception e) {  }
             storeInfo.setRate(cacheResponse.getJSONArray("j").getJSONArray(8).getString(3));
             storeInfo.set_storeID(cacheResponse.getJSONArray("j").getJSONArray(8).getJSONArray(0).getString(0));
-            storeInfo.setImageUrl(getImageUrl(storeInfo.get_storeID()));
+            storeInfo.setImage(getImageUrl(storeInfo.get_storeID()));
             return storeInfo;
         } catch (Exception e) {
             return null;
@@ -182,8 +178,8 @@ public class GetStoreInfo extends AsyncTask<Void, Void, StoreInfo> {
         adapter.notifyItemChanged(storeList.size() - 1);
     }
 
-    private Vector<String> getImageUrl(String storeID) {
-        Vector<String> ImageUrl = new Vector<>();
+    private Vector<ImageAttr> getImageUrl(String storeID) {
+        Vector<ImageAttr> Image = new Vector<>();
         String response, jsonData = null;
         BufferedReader reader = null;
 
@@ -213,9 +209,19 @@ public class GetStoreInfo extends AsyncTask<Void, Void, StoreInfo> {
             for(int i = 0; i < len; i++) {
                 String imageID = jsonObject.getJSONArray("j").getJSONArray(7)
                                         .getJSONArray(0).getJSONArray(i).getString(0);
+                ImageAttr imageAttr = new ImageAttr();
                 if(!jsonObject.getJSONArray("j").getJSONArray(7).getJSONArray(0)
                         .getJSONArray(i).getJSONArray(6).getString(0).startsWith("//geo"))
-                    ImageUrl.add("http://lh6.googleusercontent.com/" + imageID + "/");
+                    imageAttr.setImageUrl("http://lh6.googleusercontent.com/" + imageID + "/");
+                imageAttr.setProvider(jsonObject.getJSONArray("j").getJSONArray(7).getJSONArray(0)
+                        .getJSONArray(i).getJSONArray(18)
+                        .getJSONArray(0).getJSONArray(1)
+                        .getString(1));
+                imageAttr.setOriginalSite(jsonObject.getJSONArray("j").getJSONArray(7)
+                        .getJSONArray(0).getJSONArray(i).getJSONArray(18)
+                        .getJSONArray(0).getJSONArray(1)
+                        .getString(0));
+                Image.add(imageAttr);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -228,7 +234,7 @@ public class GetStoreInfo extends AsyncTask<Void, Void, StoreInfo> {
                     e.printStackTrace();
                 }
             }
-            return ImageUrl;
+            return Image;
         }
     }
 

@@ -83,6 +83,29 @@
             android:layout_height="250dp"
             android:layout_below="@+id/rate_layout" />
 
+        <TextView
+            android:id="@+id/photoby_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/UI_relativeLayout"
+            android:layout_marginBottom="5dp"
+            android:layout_toLeftOf="@+id/attr_textView"
+            android:text="Photo by "
+            android:textColor="@android:color/white"
+            android:textSize="10sp"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/attr_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/UI_relativeLayout"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="10dp"
+            android:textColor="@android:color/white"
+            android:textSize="10sp" />
+
         <LinearLayout
             android:id="@+id/sliderDots"
             android:layout_width="match_parent"
@@ -123,6 +146,17 @@
                 android:clickable="true"
                 card_view:srcCompat="@drawable/menu_info_selector" />
         </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/resource_imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="false"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/UI_relativeLayout"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="5dp"
+            card_view:srcCompat="@drawable/powered_by_google_light" />
 
         <TextView
             android:id="@+id/address_textView"

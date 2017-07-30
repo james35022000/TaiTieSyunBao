@@ -12,6 +12,7 @@ public class StoreComment {
     private String Comment;
     private String Rate;
     private String UserPicUrl;
+    private String Time;
     private Vector<String> ImgUrl;
 
     public StoreComment() {}
@@ -37,7 +38,10 @@ public class StoreComment {
     }
 
     public void setComment(String Comment) {
-        this.Comment = Comment;
+        if(Comment.equals("null"))
+            this.Comment = "";
+        else
+            this.Comment = Comment;
     }
 
     public String getRate() {
@@ -54,6 +58,14 @@ public class StoreComment {
 
     public void setUserPicUrl(String UserPicUrl) {
         this.UserPicUrl = UserPicUrl;
+    }
+
+    public String getTime() {
+        return Time;
+    }
+
+    public void setTime(String Time) {
+        this.Time = Time;
     }
 
     public Vector<String> getImgUrl() {

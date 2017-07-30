@@ -1,22 +1,35 @@
 package jcchen.taitiesyunbao;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.graphics.Point;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.Html;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v7.widget.RecyclerView;
+import android.view.ViewTreeObserver;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -44,6 +57,8 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
     private TextView name_textView, tel_textView, address_textView;
     private ImageView comment_imageView;
     private BottomSheetBehavior bottomSheetBehavior;
+    private NestedScrollView bottom_sheet;
+    private FrameLayout map;
 
     public StoreRecyclerViewAdapter(Context context, Vector<StoreInfo> storeList, View view) {
         this.context = context;
@@ -57,6 +72,8 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
         this.comment_imageView = (ImageView) view.findViewById(R.id.comment_imageView);
         this.bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.bottom_sheet));
         this.comment_recyclerView = (RecyclerView) view.findViewById(R.id.comment_recyclerView);
+        this.bottom_sheet = (NestedScrollView) view.findViewById(R.id.bottom_sheet);
+        this.map = (FrameLayout) view.findViewById(R.id.map);
     }
 
 
@@ -75,12 +92,21 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
         viewHolder.tel_textView.setText(context.getResources().getString(R.string.tel) +
                 " : " + storeList.get(index).getTel());*/
         viewHolder.pic_viewPager.setAdapter(
-                new StoreImagePagerAdapter(context, storeList.get(index).getImageUrl()));
+                new StoreImagePagerAdapter(context, storeList.get(index).getImage()));
         for (int i = 0; i < 5; i++) {
             if (i < Double.valueOf(storeList.get(index).getRate()).intValue())
                 viewHolder.star_imageView[i].setSelected(true);
             else
                 viewHolder.star_imageView[i].setSelected(false);
+        }
+        if(storeList.get(index).getImage().size() > 0) {
+            if (!storeList.get(index).getImage().get(0).getProvider().equals("")) {
+                viewHolder.photoby_textView.setVisibility(View.VISIBLE);
+                viewHolder.attr_textView.setText(Html.fromHtml("<u>" + storeList.get(index).getImage().get(0).getProvider() + "</u>"));
+            } else {
+                viewHolder.photoby_textView.setVisibility(View.INVISIBLE);
+                viewHolder.attr_textView.setText("");
+            }
         }
         setDots(viewHolder, index);
 
@@ -102,7 +128,7 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public CardView store_cardView;
-        public TextView name_textView, address_textView, tel_textView;
+        public TextView name_textView, address_textView, tel_textView, photoby_textView, attr_textView;
         public ViewPager pic_viewPager;
         public ImageView info_imageView, like_imageView;
         public ImageView[] star_imageView = new ImageView[5];
@@ -114,6 +140,8 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
             name_textView = (TextView) v.findViewById(R.id.name_textView);
             //address_textView = (TextView) v.findViewById(R.id.address_textView);
             //tel_textView = (TextView) v.findViewById(R.id.tel_textView);
+            photoby_textView = (TextView) v.findViewById(R.id.photoby_textView);
+            attr_textView = (TextView) v.findViewById(R.id.attr_textView);
             pic_viewPager = (ViewPager) v.findViewById(R.id.pic_viewPager);
             info_imageView = (ImageView) v.findViewById(R.id.info_imageView);
             like_imageView = (ImageView) v.findViewById(R.id.like_imageView);
@@ -126,8 +154,8 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
         }
     }
 
-    private void setDots(ViewHolder viewHolder, int index) {
-        final int imageCount = storeList.get(index).getImageUrl().size();
+    private void setDots(final ViewHolder viewHolder, final int index) {
+        final int imageCount = storeList.get(index).getImage().size();
         viewHolder.sliderDots.removeAllViews();
         if (imageCount > 1) {
             viewHolder.pic_viewPager.clearOnPageChangeListeners();
@@ -150,13 +178,22 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
 
                 @Override
                 public void onPageSelected(int position) {
-                    Log.i("ImageCount", String.valueOf(imageCount));
                     for (int i = 0; i < imageCount; i++) {
                         dots[i].setImageDrawable(ContextCompat.getDrawable(
                                 context, R.drawable.nonactive_dot));
                     }
                     dots[position].setImageDrawable(ContextCompat.getDrawable(
                             context, R.drawable.active_dot));
+                    if(!storeList.get(index).getImage().get(position).getProvider().equals("")) {
+                        viewHolder.attr_textView.setText(Html.fromHtml(
+                                "<u>" + storeList.get(index).getImage()
+                                        .get(position).getProvider() + "</u>"));
+                        viewHolder.photoby_textView.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        viewHolder.attr_textView.setText("");
+                        viewHolder.photoby_textView.setVisibility(View.INVISIBLE);
+                    }
                 }
 
                 @Override
@@ -210,6 +247,114 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
     }
 
     private void setCommentView(int index) {
+        // Set bottom sheet peek height and height.
+        store_info_frame.getViewTreeObserver().addOnGlobalLayoutListener(
+                new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) bottom_sheet.getLayoutParams();
+                params.height = store_info_frame.getHeight();
+                bottom_sheet.setLayoutParams(params);
+                bottomSheetBehavior.setPeekHeight((int)(store_info_frame.getHeight() - (200 * context.getResources().getDisplayMetrics().density)));
+                store_info_frame.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            }
+        });
+
+        // Let comment_recyclerView slide fast.
+        comment_recyclerView.setNestedScrollingEnabled(false);
+
+        // Hide bottom sheet initially.
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+
+        bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            boolean init = false;
+            float address_y, tel_y, name_y;
+            float last_offset = 0;
+            float min_distance;
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                if(newState == BottomSheetBehavior.STATE_COLLAPSED) {
+                    if (!init) {
+                        init = true;
+                        address_y = address_textView.getY();
+                        tel_y = tel_textView.getY();
+                        name_y = name_textView.getY();
+                    } else {
+                        resumeView();
+                    }
+                    min_distance = bottomSheet.getY() - address_y;
+                }
+                else if(newState == BottomSheetBehavior.STATE_HIDDEN) {
+                    if (!init) {
+                        init = true;
+                        address_y = address_textView.getY();
+                        tel_y = tel_textView.getY();
+                        name_y = name_textView.getY();
+                    } else {
+                        resumeView();
+                    }
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+                int pic_height = (int)(200 * context.getResources().getDisplayMetrics().density);
+                if(bottomSheet.getY() < pic_height) {
+                    float alpha;
+                    // address_textView animation.
+                    if (bottomSheet.getY() - address_textView.getY() <= min_distance) {
+                        address_textView.setY(bottomSheet.getY() - min_distance);
+                        alpha = address_textView.getAlpha() - (2 * slideOffset);
+                        address_textView.setAlpha(alpha);
+                    }
+
+                    // tel_textView animation.
+                    if(bottomSheet.getY() - tel_textView.getY() <= min_distance) {
+                        tel_textView.setY(bottomSheet.getY() - min_distance);
+                        alpha = tel_textView.getAlpha() - (0.2f * slideOffset);
+                        tel_textView.setAlpha(alpha);
+                    }
+
+                    //  name_textView animation.
+                    if(bottomSheet.getY() - name_textView.getY() <= min_distance) {
+                        name_textView.setY(bottomSheet.getY() - min_distance);
+                    }
+                }
+                last_offset = slideOffset;
+            }
+
+            private void resumeView() {
+                //  resume address_textView.
+                address_textView.setY(address_y);
+                if ((int)address_textView.getAlpha() <= 0) {
+                    address_textView.setAlpha(0f);
+                    address_textView.animate().alpha(1f).setStartDelay(500).setDuration(500).setListener(
+                            new AnimatorListenerAdapter() {
+                                @Override
+                                public void onAnimationEnd(Animator animation) {
+                                    super.onAnimationEnd(animation);
+                                    address_textView.setAlpha(1f);
+                                }
+                            });
+                }
+
+                //  resume tel_textView.
+                tel_textView.setY(tel_y);
+                if((int)tel_textView.getAlpha() <= 0) {
+                    tel_textView.setAlpha(0f);
+                    tel_textView.animate().alpha(1f).setDuration(500).setListener(
+                            new AnimatorListenerAdapter() {
+                                @Override
+                                public void onAnimationEnd(Animator animation) {
+                                    super.onAnimationEnd(animation);
+                                    tel_textView.setAlpha(1f);
+                                }
+                            });
+                }
+            }
+        });
+
+        // Control bottom sheet by sliding comment_imageView.
         comment_imageView.setOnTouchListener(new View.OnTouchListener() {
             int last_y = 0;
             @Override
@@ -221,7 +366,7 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
                     case MotionEvent.ACTION_MOVE:
                         int y = (int) motionEvent.getRawY() - last_y;
                         if(y < 0) {
-                            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                         }
                         else if(y > 0) {
                             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
@@ -234,6 +379,7 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
         });
 
         Vector<StoreComment> commentList = new Vector<>();
+        commentList.add(null);
         RecyclerView.Adapter adapter = new StoreCommentRecyclerViewAdapter(context, commentList);
         new GetStoreComment(adapter, commentList, storeList.get(index)).execute("0");
         comment_recyclerView.setAdapter(adapter);

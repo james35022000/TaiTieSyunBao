@@ -29,16 +29,16 @@ import java.util.Vector;
 public class StoreImagePagerAdapter extends PagerAdapter {
     private Context context;
     private LayoutInflater layoutInflater;
-    private Vector<String> ImageUrl;
+    private Vector<ImageAttr> Image;
 
-    public StoreImagePagerAdapter(Context context, Vector<String> ImageUrl) {
+    public StoreImagePagerAdapter(Context context, Vector<ImageAttr> Image) {
         this.context = context;
-        this.ImageUrl = ImageUrl;
+        this.Image = Image;
     }
 
     @Override
     public int getCount() {
-        return ImageUrl.size();
+        return Image.size();
     }
 
     @Override
@@ -53,7 +53,7 @@ public class StoreImagePagerAdapter extends PagerAdapter {
 
         final ImageView pic_imageView = (ImageView) view.findViewById(R.id.pic_imageView);
         final ImageLoader imageLoader = ImageLoader.getInstance();
-        imageLoader.loadImage(ImageUrl.get(position), new SimpleImageLoadingListener() {
+        imageLoader.loadImage(Image.get(position).getImageUrl(), new SimpleImageLoadingListener() {
             @Override
             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                 pic_imageView.setImageBitmap(loadedImage);

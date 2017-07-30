@@ -13,6 +13,7 @@ import static jcchen.taitiesyunbao.Constant.LANGUAGE_EN;
  */
 
 public class StoreInfo {
+
     private String ID;
     private String Name;
     private String Address_tw, Address_en;
@@ -24,7 +25,7 @@ public class StoreInfo {
     private Vector<String> Types;
     private String Station;
     private String Area;
-    private Vector<String> ImageUrl;
+    private Vector<ImageAttr> Image;
     private String _storeID;
 
     public StoreInfo() {}
@@ -125,14 +126,14 @@ public class StoreInfo {
         this.Area = Area;
     }
 
-    public Vector<String> getImageUrl() {
-        if(ImageUrl == null)
-            ImageUrl = new Vector<>();
-        return new Vector<>(this.ImageUrl);
+    public Vector<ImageAttr> getImage() {
+        if(this.Image == null)
+            this.Image = new Vector<>();
+        return new Vector<>(this.Image);
     }
 
-    public void setImageUrl(Vector<String> ImageUrl) {
-        this.ImageUrl = ImageUrl;
+    public void setImage(Vector<ImageAttr> Image) {
+        this.Image = Image;
     }
 
     public String get_storeID() {
