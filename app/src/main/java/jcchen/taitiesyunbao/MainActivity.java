@@ -1,13 +1,20 @@
 package jcchen.taitiesyunbao;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -37,18 +44,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private Context context = this;
     private BottomTabInfo bottomTabInfos[] = {
             new BottomTabInfo(R.drawable.main_tab_selector, R.string.bottom_tab_1, MainFragment.class),
             new BottomTabInfo(R.drawable.map_tab_selector, R.string.bottom_tab_2, StoreFragment.class),
             new BottomTabInfo(R.drawable.like_tab_selector, R.string.bottom_tab_3, LikeFragment.class),
             new BottomTabInfo(R.drawable.sug_tab_selector, R.string.bottom_tab_4, SugFragment.class) };
+    public int Toolbar_Image[] = {R.drawable.main_title, R.drawable.menu_title,
+                                   R.drawable.like_title, R.drawable.sug_title};
     private Vector<Fragment> fragmentVector;
 
     private ImageView back_imageView, drawer_imageView, toolbar_icon_imageView, signIn_imageView;
     private RelativeLayout right_drawer;
     private DrawerLayout right_drawerLayout;
     private ListView drawer_listView;
-    private TextView userName_textView;
+    private TextView userName_textView, toolbar_text_textView;
     private RoundedImageView userPic_roundedImageView;
     private MainViewPager fragment_pager;
     private FragmentTabHost bottom_tab;
@@ -85,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
         back_imageView = (ImageView) findViewById(R.id.back_imageView);
         drawer_imageView = (ImageView) findViewById(R.id.drawer_imageView);
         toolbar_icon_imageView = (ImageView) findViewById(R.id.toolbar_icon_imageView);
+        toolbar_text_textView = (TextView) findViewById(R.id.toolbar_text_textView);
+        setTitleImage(ContextCompat.getDrawable(context, Toolbar_Image[0]));
         Toolbar toolbar = (Toolbar) findViewById(R.id.activity_main_toolbar);
         setTitle("");
         setSupportActionBar(toolbar);
@@ -126,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 bottom_tab.setCurrentTab(position);
+                setTitleImage(ContextCompat.getDrawable(context, Toolbar_Image[position]));
             }
 
             @Override
@@ -155,6 +168,54 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void setTitleString(String title) {
+        toolbar_icon_imageView.setAlpha(1.0f);
+        toolbar_icon_imageView.animate().alpha(0.0f).setDuration(500).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                toolbar_icon_imageView.setClickable(false);
+            }
+        }).start();
+        toolbar_text_textView.setAlpha(0);
+        toolbar_text_textView.setText(title);
+        toolbar_text_textView.animate().alpha(1).setDuration(500).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                toolbar_text_textView.setAlpha(1);
+            }
+        }).start();
+    }
+
+    public void setTitleImage(Drawable drawable) {
+        toolbar_icon_imageView.setImageDrawable(drawable);
+        toolbar_icon_imageView.setAlpha(0.0f);
+        toolbar_icon_imageView.animate().alpha(1.0f).setDuration(500).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                super.onAnimationStart(animation);
+                toolbar_icon_imageView.setClickable(true);
+            }
+        }).start();
+
+
+        toolbar_text_textView.setAlpha(1);
+        toolbar_text_textView.animate().alpha(0).setDuration(500).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                toolbar_text_textView.setAlpha(0);
+                toolbar_text_textView.setText("");
+            }
+        }).start();
+    }
+
+    /**
+     *
+     * @param tabInfo
+     * @return
+     */
     private View getImageView(BottomTabInfo tabInfo) {
         View view = getLayoutInflater().inflate(R.layout.tab_content, null);
         ImageView imageView = (ImageView) view.findViewById(R.id.tab_imageView);

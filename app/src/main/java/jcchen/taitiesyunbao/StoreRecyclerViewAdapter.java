@@ -271,29 +271,38 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
             float address_y, tel_y, name_y;
             float last_offset = 0;
             float min_distance;
+            int State;
             @Override
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                if(newState == BottomSheetBehavior.STATE_COLLAPSED) {
-                    if (!init) {
-                        init = true;
-                        address_y = address_textView.getY();
-                        tel_y = tel_textView.getY();
-                        name_y = name_textView.getY();
-                    } else {
-                        resumeView();
-                    }
-                    min_distance = bottomSheet.getY() - address_y;
+                switch(newState) {
+                    case BottomSheetBehavior.STATE_COLLAPSED:
+                        if (!init) {
+                            init = true;
+                            address_y = address_textView.getY();
+                            tel_y = tel_textView.getY();
+                            name_y = name_textView.getY();
+                        }
+                        min_distance = bottomSheet.getY() - address_y;
+                        break;
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        if (!init) {
+                            init = true;
+                            address_y = address_textView.getY();
+                            tel_y = tel_textView.getY();
+                            name_y = name_textView.getY();
+                        }
+                        break;
+                    case BottomSheetBehavior.STATE_EXPANDED:
+                        ((MainActivity) context).setTitleString(name_textView.getText().toString());
+                        break;
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                        if(State == BottomSheetBehavior.STATE_EXPANDED)
+                            ((MainActivity) context).setTitleImage(ContextCompat.getDrawable(
+                                            context, ((MainActivity) context).Toolbar_Image[1]));
+                        break;
                 }
-                else if(newState == BottomSheetBehavior.STATE_HIDDEN) {
-                    if (!init) {
-                        init = true;
-                        address_y = address_textView.getY();
-                        tel_y = tel_textView.getY();
-                        name_y = name_textView.getY();
-                    } else {
-                        resumeView();
-                    }
-                }
+                State = newState;
+
             }
 
             @Override
@@ -301,57 +310,66 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
                 int pic_height = (int)(200 * context.getResources().getDisplayMetrics().density);
                 if(bottomSheet.getY() < pic_height) {
                     float alpha;
-                    // address_textView animation.
-                    if (bottomSheet.getY() - address_textView.getY() <= min_distance) {
-                        address_textView.setY(bottomSheet.getY() - min_distance);
-                        alpha = address_textView.getAlpha() - (2 * slideOffset);
-                        address_textView.setAlpha(alpha);
-                    }
+                    if(last_offset - slideOffset < 0) {  // Slide up
+                        // address_textView animation.
+                        if (bottomSheet.getY() - address_textView.getY() <= min_distance &&
+                                address_textView.getAlpha() > 0) {
+                            alpha = 1 - (3 * slideOffset);
+                            address_textView.setAlpha(alpha);
+                            address_textView.setY(bottomSheet.getY() - min_distance);
+                        }
 
-                    // tel_textView animation.
-                    if(bottomSheet.getY() - tel_textView.getY() <= min_distance) {
-                        tel_textView.setY(bottomSheet.getY() - min_distance);
-                        alpha = tel_textView.getAlpha() - (0.2f * slideOffset);
-                        tel_textView.setAlpha(alpha);
-                    }
+                        // tel_textView animation.
+                        if (bottomSheet.getY() - tel_textView.getY() <= min_distance) {
+                            alpha = 1 - (1.1f * slideOffset);
+                            tel_textView.setAlpha(alpha);
+                            tel_textView.setY(bottomSheet.getY() - min_distance);
+                        }
 
-                    //  name_textView animation.
-                    if(bottomSheet.getY() - name_textView.getY() <= min_distance) {
-                        name_textView.setY(bottomSheet.getY() - min_distance);
+                        //  name_textView animation.
+                        if(bottomSheet.getY() - name_textView.getY() <= 2 * min_distance) {
+                            name_textView.setY(bottomSheet.getY() - 2 * min_distance);
+                        }
+                    }
+                    else {
+                        //  resume address_textView
+                        if(State == BottomSheetBehavior.STATE_SETTLING) {
+                            address_textView.setAlpha(1);
+                            address_textView.setY(address_y);
+                        }
+                        else {
+                            alpha = 1 - (3 * slideOffset);
+                            address_textView.setAlpha(alpha);
+                            address_textView.setY(bottomSheet.getY() - min_distance);
+                        }
+
+                        //  resume tel_textView
+                        if(bottomSheet.getY() < (tel_y + min_distance)) {
+                            alpha = 1 - (1.1f * slideOffset);
+                            tel_textView.setAlpha(alpha);
+                            tel_textView.setY(bottomSheet.getY() - min_distance);
+                        }
+                        else {
+                            tel_textView.setAlpha(1);
+                            tel_textView.setY(tel_y);
+                        }
+
+                        //  resume name_textView
+                        if(bottomSheet.getY() < (name_y + 2 * min_distance))
+                            name_textView.setY(bottomSheet.getY() - 2 * min_distance);
+                        else
+                            name_textView.setY(name_y);
+                    }
+                }
+                else {
+                    if(init) {
+                        address_textView.setAlpha(1);
+                        address_textView.setY(address_y);
                     }
                 }
                 last_offset = slideOffset;
             }
 
-            private void resumeView() {
-                //  resume address_textView.
-                address_textView.setY(address_y);
-                if ((int)address_textView.getAlpha() <= 0) {
-                    address_textView.setAlpha(0f);
-                    address_textView.animate().alpha(1f).setStartDelay(500).setDuration(500).setListener(
-                            new AnimatorListenerAdapter() {
-                                @Override
-                                public void onAnimationEnd(Animator animation) {
-                                    super.onAnimationEnd(animation);
-                                    address_textView.setAlpha(1f);
-                                }
-                            });
-                }
-
-                //  resume tel_textView.
-                tel_textView.setY(tel_y);
-                if((int)tel_textView.getAlpha() <= 0) {
-                    tel_textView.setAlpha(0f);
-                    tel_textView.animate().alpha(1f).setDuration(500).setListener(
-                            new AnimatorListenerAdapter() {
-                                @Override
-                                public void onAnimationEnd(Animator animation) {
-                                    super.onAnimationEnd(animation);
-                                    tel_textView.setAlpha(1f);
-                                }
-                            });
-                }
-            }
         });
 
         // Control bottom sheet by sliding comment_imageView.
