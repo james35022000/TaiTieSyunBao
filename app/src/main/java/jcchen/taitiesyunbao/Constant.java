@@ -1,7 +1,7 @@
 package jcchen.taitiesyunbao;
 
 /**
- * Created by Jack-PC on 2017/7/19.
+ * Created by JCChen on 2017/7/19.
  */
 
 public class Constant {

@@ -3,6 +3,8 @@ package jcchen.taitiesyunbao;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.FaceDetector;
 import android.media.Image;
 import android.support.v4.view.PagerAdapter;
@@ -28,12 +30,23 @@ import java.util.Vector;
 
 public class StoreImagePagerAdapter extends PagerAdapter {
     private Context context;
-    private LayoutInflater layoutInflater;
     private Vector<ImageAttr> Image;
+    private Vector<Drawable> drawable;
 
     public StoreImagePagerAdapter(Context context, Vector<ImageAttr> Image) {
         this.context = context;
         this.Image = Image;
+        this.drawable = new Vector<>();
+        for(int i = 0; i < Image.size(); i++)
+            drawable.add(null);
+    }
+
+    public Vector<Drawable> getDrawable() {
+        return drawable;
+    }
+
+    public Vector<ImageAttr> getImage() {
+        return new Vector<>(Image);
     }
 
     @Override
@@ -47,27 +60,26 @@ public class StoreImagePagerAdapter extends PagerAdapter {
     }
 
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
-        layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = layoutInflater.inflate(R.layout.store_image_layout, null);
+    public Object instantiateItem(ViewGroup container, final int position) {
 
-        final ImageView pic_imageView = (ImageView) view.findViewById(R.id.pic_imageView);
+        final ImageView imageView = new ImageView(context);
         final ImageLoader imageLoader = ImageLoader.getInstance();
         imageLoader.loadImage(Image.get(position).getImageUrl(), new SimpleImageLoadingListener() {
             @Override
             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                pic_imageView.setImageBitmap(loadedImage);
+                imageView.setImageBitmap(loadedImage);
+                drawable.set(position, new BitmapDrawable(context.getResources(), loadedImage));
                 Animation animation = new AlphaAnimation(0, 1);
                 AnimationSet animationSet = new AnimationSet(true);
                 animation.setDuration(500);
                 animationSet.addAnimation(animation);
-                pic_imageView.startAnimation(animationSet);
+                imageView.startAnimation(animationSet);
             }
         });
 
         ViewPager viewPager = (ViewPager) container;
-        viewPager.addView(view, 0);
-        return view;
+        viewPager.addView(imageView, 0);
+        return imageView;
 
     }
 

@@ -5,11 +5,15 @@ import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.CardView;
@@ -31,6 +35,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.ViewFlipper;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -39,6 +44,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.util.Vector;
 
@@ -52,7 +59,7 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
     private Context context;
     private Vector<StoreInfo> storeList;
     private RecyclerView store_recyclerView, comment_recyclerView;
-    private ViewPager pic_info_viewPager;
+    private ViewFlipper pic_info_viewFlipper;
     private FrameLayout store_info_frame;
     private TextView name_textView, tel_textView, address_textView;
     private ImageView comment_imageView;
@@ -64,7 +71,7 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
         this.context = context;
         this.storeList = storeList;
         this.store_recyclerView = (RecyclerView) view.findViewById(R.id.store_recyclerView);
-        this.pic_info_viewPager = (ViewPager) view.findViewById(R.id.pic_info_viewPager);
+        this.pic_info_viewFlipper = (ViewFlipper) view.findViewById(R.id.pic_info_viewFlipper);
         this.store_info_frame = (FrameLayout) view.findViewById(R.id.store_info_frame);
         this.name_textView = (TextView) view.findViewById(R.id.name_textView);
         this.tel_textView = (TextView) view.findViewById(R.id.tel_textView);
@@ -113,8 +120,9 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
         viewHolder.info_imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setInfoDisplay(viewHolder, index);
-                setCommentView(index);
+                setAnimation(viewHolder, index);
+                //setInfoDisplay(viewHolder, index);
+                //setCommentView(index);
             }
         });
 
@@ -204,11 +212,35 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
         }
     }
 
-    private void setInfoDisplay(final ViewHolder viewHolder, final int index) {
+    private void setAnimation(final ViewHolder viewHolder, final int index) {
         store_recyclerView.setVisibility(View.GONE);
+        StoreImagePagerAdapter adapter = (StoreImagePagerAdapter) viewHolder.pic_viewPager.getAdapter();
+        pic_info_viewFlipper.setFlipInterval(1000);
+        final Vector<Drawable> drawable = adapter.getDrawable();
+        final Vector<ImageAttr> image = adapter.getImage();
+        for(int i = 0; i < adapter.getCount(); i++) {
+            final ImageView imageView = new ImageView(context);
+            if(drawable.get(i) == null) {
+                ImageLoader imageLoader = ImageLoader.getInstance();
+                imageLoader.loadImage(image.get(i).getImageUrl(), new SimpleImageLoadingListener() {
+                    @Override
+                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                        imageView.setImageBitmap(loadedImage);
+                    }
+                });
+            }
+            else
+                imageView.setImageDrawable(drawable.get(i));
+            pic_info_viewFlipper.addView(imageView, i);
+        }
+        pic_info_viewFlipper.setDisplayedChild(viewHolder.pic_viewPager.getCurrentItem());
+        pic_info_viewFlipper.startFlipping();
         store_info_frame.setVisibility(View.VISIBLE);
+    }
 
-        pic_info_viewPager.setAdapter(viewHolder.pic_viewPager.getAdapter());
+    private void setInfoDisplay(final ViewHolder viewHolder, final int index) {
+
+        //pic_info_viewPager.setAdapter(viewHolder.pic_viewPager.getAdapter());
 
         MapFragment mapFragment = MapFragment.newInstance();
         FragmentTransaction fragmentTransaction =
