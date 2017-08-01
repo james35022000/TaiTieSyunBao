@@ -173,7 +173,7 @@ public class GetStoreInfo extends AsyncTask<Void, Void, StoreInfo> {
     protected void onPostExecute(StoreInfo storeInfo) {
         Message msg = new Message();
         msg.what = 0;
-        handler.sendMessage(msg);
+        //handler.sendMessage(msg);
         storeList.add(storeInfo);
         adapter.notifyItemChanged(storeList.size() - 1);
     }

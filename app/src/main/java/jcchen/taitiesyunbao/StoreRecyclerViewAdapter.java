@@ -30,6 +30,9 @@ import android.view.ViewTreeObserver;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.ScaleAnimation;
+import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -44,6 +47,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.vision.Frame;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
@@ -65,7 +69,8 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
     private ImageView comment_imageView;
     private BottomSheetBehavior bottomSheetBehavior;
     private NestedScrollView bottom_sheet;
-    private FrameLayout map;
+    private FrameLayout map, filter;
+    private RelativeLayout info_relativeLayout, pic_info_relativeLayout;
 
     public StoreRecyclerViewAdapter(Context context, Vector<StoreInfo> storeList, View view) {
         this.context = context;
@@ -81,6 +86,9 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
         this.comment_recyclerView = (RecyclerView) view.findViewById(R.id.comment_recyclerView);
         this.bottom_sheet = (NestedScrollView) view.findViewById(R.id.bottom_sheet);
         this.map = (FrameLayout) view.findViewById(R.id.map);
+        this.filter = (FrameLayout) view.findViewById(R.id.filter);
+        this.info_relativeLayout = (RelativeLayout) view.findViewById(R.id.info_relativeLayout);
+        this.pic_info_relativeLayout = (RelativeLayout) view.findViewById(R.id.pic_info_relativeLayout);
     }
 
 
@@ -98,6 +106,21 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
                 " : " + storeList.get(index).getAddress(LANGUAGE_TW));
         viewHolder.tel_textView.setText(context.getResources().getString(R.string.tel) +
                 " : " + storeList.get(index).getTel());*/
+        ViewTreeObserver viewTreeObserver = viewHolder.pic_viewPager.getViewTreeObserver();
+        viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                ViewGroup.LayoutParams layoutParams = viewHolder.pic_viewPager.getLayoutParams();
+                int viewPagerWidth = viewHolder.pic_viewPager.getWidth();
+                float viewPagerHeight = (float) (viewPagerWidth * 0.7);
+
+                layoutParams.width = viewPagerWidth;
+                layoutParams.height = (int) viewPagerHeight;
+
+                viewHolder.pic_viewPager.setLayoutParams(layoutParams);
+                viewHolder.pic_viewPager.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            }
+        });
         viewHolder.pic_viewPager.setAdapter(
                 new StoreImagePagerAdapter(context, storeList.get(index).getImage()));
         for (int i = 0; i < 5; i++) {
@@ -213,13 +236,13 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
     }
 
     private void setAnimation(final ViewHolder viewHolder, final int index) {
-        store_recyclerView.setVisibility(View.GONE);
+
         StoreImagePagerAdapter adapter = (StoreImagePagerAdapter) viewHolder.pic_viewPager.getAdapter();
-        pic_info_viewFlipper.setFlipInterval(1000);
         final Vector<Drawable> drawable = adapter.getDrawable();
         final Vector<ImageAttr> image = adapter.getImage();
         for(int i = 0; i < adapter.getCount(); i++) {
             final ImageView imageView = new ImageView(context);
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             if(drawable.get(i) == null) {
                 ImageLoader imageLoader = ImageLoader.getInstance();
                 imageLoader.loadImage(image.get(i).getImageUrl(), new SimpleImageLoadingListener() {
@@ -234,8 +257,59 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
             pic_info_viewFlipper.addView(imageView, i);
         }
         pic_info_viewFlipper.setDisplayedChild(viewHolder.pic_viewPager.getCurrentItem());
-        pic_info_viewFlipper.startFlipping();
+
+
+        //  Initialize position and scale.
         store_info_frame.setVisibility(View.VISIBLE);
+        info_relativeLayout.setVisibility(View.INVISIBLE);
+        map.setVisibility(View.INVISIBLE);
+        pic_info_relativeLayout.setX(viewHolder.store_cardView.getX() +
+                viewHolder.pic_viewPager.getX() +
+                6 * context.getResources().getDisplayMetrics().density);
+        pic_info_relativeLayout.setY(viewHolder.store_cardView.getY() +
+                viewHolder.pic_viewPager.getY() +
+                9 * context.getResources().getDisplayMetrics().density);
+        pic_info_viewFlipper.getLayoutParams().width = viewHolder.pic_viewPager.getWidth();
+        pic_info_viewFlipper.getLayoutParams().height = viewHolder.pic_viewPager.getHeight();
+        filter.getLayoutParams().width = viewHolder.pic_viewPager.getWidth();
+        filter.getLayoutParams().height = viewHolder.pic_viewPager.getHeight();
+
+        final Animation translateAnimation = new TranslateAnimation(0, -pic_info_relativeLayout.getX(),
+                                                                    0, -pic_info_relativeLayout.getY());
+        final Animation scaleAnimation = new ScaleAnimation(1,
+                (float)store_recyclerView.getWidth()/(float)viewHolder.pic_viewPager.getWidth(),
+                1, 0.8f);
+        final Animation alphaAnimation = new AlphaAnimation(0f, 0.7f);
+        translateAnimation.setDuration(1000);
+        scaleAnimation.setDuration(1000);
+        alphaAnimation.setDuration(1000);
+
+        ViewTreeObserver viewTreeObserver = pic_info_relativeLayout.getViewTreeObserver();
+        viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                AnimationSet animationSet = new AnimationSet(true);
+                animationSet.setFillAfter(true);
+                animationSet.addAnimation(translateAnimation);
+                animationSet.addAnimation(scaleAnimation);
+                pic_info_relativeLayout.startAnimation(animationSet);
+                filter.animate().alpha(0.7f).setDuration(1000).setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        filter.setAlpha(0.7f);
+                        pic_info_viewFlipper.setInAnimation(context, R.anim.slide_in_right);
+                        pic_info_viewFlipper.setOutAnimation(context, R.anim.slide_out_left);
+                        pic_info_viewFlipper.setFlipInterval(2000);
+                        pic_info_viewFlipper.startFlipping();
+                    }
+                }).start();
+                pic_info_relativeLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            }
+        });
+
+
+        store_recyclerView.setVisibility(View.GONE);
     }
 
     private void setInfoDisplay(final ViewHolder viewHolder, final int index) {
@@ -284,6 +358,7 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
                 new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
+                comment_imageView.setVisibility(View.VISIBLE);
                 CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) bottom_sheet.getLayoutParams();
                 params.height = store_info_frame.getHeight();
                 bottom_sheet.setLayoutParams(params);

@@ -17,6 +17,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
@@ -60,7 +61,7 @@ public class StoreImagePagerAdapter extends PagerAdapter {
     }
 
     @Override
-    public Object instantiateItem(ViewGroup container, final int position) {
+    public Object instantiateItem(final ViewGroup container, final int position) {
 
         final ImageView imageView = new ImageView(context);
         final ImageLoader imageLoader = ImageLoader.getInstance();
@@ -68,6 +69,7 @@ public class StoreImagePagerAdapter extends PagerAdapter {
             @Override
             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                 imageView.setImageBitmap(loadedImage);
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 drawable.set(position, new BitmapDrawable(context.getResources(), loadedImage));
                 Animation animation = new AlphaAnimation(0, 1);
                 AnimationSet animationSet = new AnimationSet(true);

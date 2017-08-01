@@ -80,6 +80,8 @@ public class StoreFragment extends Fragment {
         final RecyclerView.Adapter adapter = new StoreRecyclerViewAdapter(context, storeList, view);
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Stores");
 
+        //  DEPRECATED!! Using to improve image loading time at first, but now it's useless.
+        /*
         final Handler handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -112,7 +114,7 @@ public class StoreFragment extends Fragment {
                 }
                 super.handleMessage(msg);
             }
-        };
+        };*/
 
         InternetTaskPool = new Vector<>();
 
@@ -120,11 +122,33 @@ public class StoreFragment extends Fragment {
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        for(DataSnapshot ds : dataSnapshot.getChildren())
-                            InternetTaskPool.add(ds.getKey().toString());
-                        Message msg = new Message();
-                        msg.what = 0;
-                        handler.sendMessage(msg);
+                        for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                            //InternetTaskPool.add(ds.getKey());
+                            DatabaseReference dr = FirebaseDatabase.getInstance().getReference("Stores");
+                            dr.child(ds.getKey()).addListenerForSingleValueEvent(
+                                    new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                            final StoreInfo storeInfo = new StoreInfo();
+                                            storeInfo.setID(dataSnapshot.child("ID").getValue().toString());
+                                            storeInfo.setLatitude(dataSnapshot.child("Latitude").getValue().toString());
+                                            storeInfo.setLongitude(dataSnapshot.child("Longitude").getValue().toString());
+                                            storeInfo.setStation(dataSnapshot.child("Near_Station").getValue().toString());
+                                            storeInfo.setAddress(dataSnapshot.child("Address_tw").getValue().toString(),
+                                                    dataSnapshot.child("Address_en").getValue().toString());
+
+                                            new GetStoreInfo(adapter, storeList, storeInfo, null).execute();
+                                        }
+
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
+
+                                        }
+                                    });
+                        }
+                        //Message msg = new Message();
+                        //msg.what = 0;
+                        //handler.sendMessage(msg);
                     }
 
                     @Override
