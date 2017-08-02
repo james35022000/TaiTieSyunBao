@@ -143,7 +143,7 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
         viewHolder.info_imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setAnimation(viewHolder, index);
+                startAnimation(viewHolder, index);
                 //setInfoDisplay(viewHolder, index);
                 //setCommentView(index);
             }
@@ -235,7 +235,7 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
         }
     }
 
-    private void setAnimation(final ViewHolder viewHolder, final int index) {
+    private void startAnimation(final ViewHolder viewHolder, final int index) {
 
         StoreImagePagerAdapter adapter = (StoreImagePagerAdapter) viewHolder.pic_viewPager.getAdapter();
         final Vector<Drawable> drawable = adapter.getDrawable();
@@ -269,20 +269,17 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
         pic_info_relativeLayout.setY(viewHolder.store_cardView.getY() +
                 viewHolder.pic_viewPager.getY() +
                 9 * context.getResources().getDisplayMetrics().density);
-        pic_info_viewFlipper.getLayoutParams().width = viewHolder.pic_viewPager.getWidth();
+        pic_info_relativeLayout.getLayoutParams().width = viewHolder.pic_viewPager.getWidth();
+        pic_info_relativeLayout.getLayoutParams().height = viewHolder.pic_viewPager.getHeight();
         pic_info_viewFlipper.getLayoutParams().height = viewHolder.pic_viewPager.getHeight();
-        filter.getLayoutParams().width = viewHolder.pic_viewPager.getWidth();
         filter.getLayoutParams().height = viewHolder.pic_viewPager.getHeight();
 
 
         final Animation translateAnimation = new TranslateAnimation(pic_info_relativeLayout.getX(), 0,
                                                                     pic_info_relativeLayout.getY(), 0);
-        final Animation scaleAnimation = new ScaleAnimation(
-                //(float)viewHolder.pic_viewPager.getWidth()/(float)store_recyclerView.getWidth(), 1,
-                //1.25f, 1);
-                1, (float)store_recyclerView.getWidth()/(float)viewHolder.pic_viewPager.getWidth(),
-                1, 0.8f);
-        final Animation alphaAnimation = new AlphaAnimation(0f, 0.7f);
+        final ResizeAnimation resizeAnimation = new ResizeAnimation(pic_info_relativeLayout,
+                viewHolder.pic_viewPager.getWidth(), viewHolder.pic_viewPager.getHeight(),
+                store_recyclerView.getWidth(), (200 * context.getResources().getDisplayMetrics().density));
 
         translateAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
@@ -301,31 +298,9 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
 
             }
         });
-        scaleAnimation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                pic_info_viewFlipper.getLayoutParams().width = store_recyclerView.getWidth();
-                //pic_info_viewFlipper.getLayoutParams().height *= 0.8f;
-                filter.getLayoutParams().width = store_recyclerView.getWidth();
-                //filter.getLayoutParams().height *= 0.8f;
-                pic_info_viewFlipper.requestLayout();
-                filter.requestLayout();
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
 
         translateAnimation.setDuration(1000);
-        scaleAnimation.setDuration(1000);
-        alphaAnimation.setDuration(1000);
+        resizeAnimation.setDuration(1000);
 
         ViewTreeObserver viewTreeObserver = pic_info_relativeLayout.getViewTreeObserver();
         viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -333,20 +308,29 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
             public void onGlobalLayout() {
                 AnimationSet animationSet = new AnimationSet(true);
                 animationSet.setFillBefore(true);
-                animationSet.setFillAfter(true);
+                animationSet.addAnimation(resizeAnimation);
                 animationSet.addAnimation(translateAnimation);
-                animationSet.addAnimation(scaleAnimation);
                 pic_info_relativeLayout.startAnimation(animationSet);
                 filter.animate().alpha(0.7f).setDuration(1000).setListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         super.onAnimationEnd(animation);
                         filter.setAlpha(0.7f);
-                        pic_info_viewFlipper.setInAnimation(context, R.anim.slide_in_right);
-                        pic_info_viewFlipper.setOutAnimation(context, R.anim.slide_out_left);
-                        pic_info_viewFlipper.setFlipInterval(2000);
-                        pic_info_viewFlipper.showNext();
-                        pic_info_viewFlipper.startFlipping();
+                    }
+                }).start();
+
+                info_relativeLayout.setVisibility(View.VISIBLE);
+                setInfoDisplay(viewHolder, index);
+
+                map.setVisibility(View.VISIBLE);
+                map.setAlpha(0);
+                map.requestLayout();
+                setCommentView(index);
+                map.animate().alpha(1).setDuration(1000).setStartDelay(1000).setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        map.setAlpha(1);
                     }
                 }).start();
                 pic_info_relativeLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
@@ -358,8 +342,6 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
     }
 
     private void setInfoDisplay(final ViewHolder viewHolder, final int index) {
-
-        //pic_info_viewPager.setAdapter(viewHolder.pic_viewPager.getAdapter());
 
         MapFragment mapFragment = MapFragment.newInstance();
         FragmentTransaction fragmentTransaction =
@@ -387,6 +369,13 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
             }
         });
 
+
+
+        name_textView.setAlpha(0f);
+        tel_textView.setAlpha(0f);
+        address_textView.setAlpha(0f);
+        info_relativeLayout.requestLayout();
+
         name_textView.setText(storeList.get(index).getName());
         if(!storeList.get(index).getTel().equals("null"))
             tel_textView.setText(context.getResources().getString(R.string.tel) + ": " +
@@ -394,6 +383,35 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
         address_textView.setText(context.getResources().getString(R.string.address) + ": " +
                                     storeList.get(index).getAddress(LANGUAGE_TW));
 
+        name_textView.animate().alpha(1f).setStartDelay(1000).setDuration(500).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                name_textView.setAlpha(1f);
+            }
+        }).start();
+        tel_textView.animate().alpha(1f).setStartDelay(1500).setDuration(500).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                tel_textView.setAlpha(1f);
+            }
+        }).start();
+        address_textView.animate().alpha(1f).setStartDelay(1500).setDuration(500).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                address_textView.setAlpha(1f);
+
+                if(pic_info_viewFlipper.getChildCount() > 1) {
+                    pic_info_viewFlipper.setInAnimation(context, R.anim.slide_in_right);
+                    pic_info_viewFlipper.setOutAnimation(context, R.anim.slide_out_left);
+                    pic_info_viewFlipper.setFlipInterval(2000);
+                    pic_info_viewFlipper.showNext();
+                    pic_info_viewFlipper.startFlipping();
+                }
+            }
+        }).start();
 
     }
 
@@ -404,6 +422,15 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
             @Override
             public void onGlobalLayout() {
                 comment_imageView.setVisibility(View.VISIBLE);
+                comment_imageView.setAlpha(0f);
+                comment_imageView.requestLayout();
+                comment_imageView.animate().alpha(1).setDuration(1000).setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        comment_imageView.setAlpha(1f);
+                    }
+                }).start();
                 CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) bottom_sheet.getLayoutParams();
                 params.height = store_info_frame.getHeight();
                 bottom_sheet.setLayoutParams(params);

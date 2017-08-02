@@ -49,7 +49,7 @@
       <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/jcchen/taitiesyunbao/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2499">
+            <state relative-caret-position="17">
               <caret line="179" column="42" selection-start-line="179" selection-start-column="42" selection-end-line="179" selection-end-column="42" />
               <folding />
             </state>
@@ -59,14 +59,36 @@
       <file leaf-file-name="StoreRecyclerViewAdapter.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/jcchen/taitiesyunbao/StoreRecyclerViewAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="94">
-              <caret line="347" column="56" selection-start-line="347" selection-start-column="56" selection-end-line="347" selection-end-column="56" />
+            <state relative-caret-position="352">
+              <caret line="328" column="75" selection-start-line="328" selection-start-column="75" selection-end-line="328" selection-end-column="75" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#16253#16901#0" expanded="true" />
-                <element signature="e#16900#16901#0" expanded="true" />
-                <element signature="e#17575#18555#0" expanded="true" />
-                <element signature="e#18554#18555#0" expanded="true" />
+                <element signature="e#15298#15572#0" expanded="true" />
+                <element signature="e#15571#15572#0" expanded="true" />
+                <element signature="e#15948#16216#0" expanded="true" />
+                <element signature="e#16215#16216#0" expanded="true" />
+                <element signature="e#16809#17789#0" expanded="true" />
+                <element signature="e#17788#17789#0" expanded="true" />
+                <element signature="e#18501#18732#0" expanded="true" />
+                <element signature="e#18731#18732#0" expanded="true" />
+                <element signature="e#18833#19063#0" expanded="true" />
+                <element signature="e#19062#19063#0" expanded="true" />
+                <element signature="e#19168#19838#0" expanded="true" />
+                <element signature="e#19837#19838#0" expanded="true" />
+                <element signature="e#20402#20685#0" expanded="true" />
+                <element signature="e#20684#20685#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ResizeAnimation.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/jcchen/taitiesyunbao/ResizeAnimation.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="369">
+              <caret line="30" column="78" selection-start-line="30" selection-start-column="78" selection-end-line="30" selection-end-column="78" />
+              <folding>
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -74,13 +96,13 @@
       </file>
       <file leaf-file-name="store_frg_layout.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/store_frg_layout.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="561">
+          <provider editor-type-id="text-editor">
+            <state relative-caret-position="17">
               <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
               <folding />
             </state>
           </provider>
-          <provider editor-type-id="android-designer2">
+          <provider selected="true" editor-type-id="android-designer2">
             <state />
           </provider>
         </entry>
@@ -113,8 +135,8 @@
         <option value="valueResourceFile" />
         <option value="layoutResourceFile_vertical" />
         <option value="layoutResourceFile" />
-        <option value="Class" />
         <option value="resourceFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -2574,12 +2596,13 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/store_cardview.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/jcchen/taitiesyunbao/GetStoreInfo.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/jcchen/taitiesyunbao/StoreFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/store_frg_layout.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/jcchen/taitiesyunbao/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/anim/slide_out_right.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/anim/slide_in_left.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/anim/slide_in_right.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/anim/slide_out_left.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/store_frg_layout.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/jcchen/taitiesyunbao/ResizeAnimation.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/jcchen/taitiesyunbao/StoreRecyclerViewAdapter.java" />
       </list>
     </option>
@@ -2634,6 +2657,42 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="TaiTieSyunBao" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TaiTieSyunBao" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TaiTieSyunBao" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="taitiesyunbao" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -3004,6 +3063,7 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289183" sideWeight="0.5021322" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289183" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289183" sideWeight="0.4978678" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -3015,7 +3075,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30573952" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30471382" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -3024,7 +3084,6 @@
       <window_info id="Assistant" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289183" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -3072,19 +3131,11 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="114" />
+      <option name="time" value="115" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="4" column="34" selection-start-line="4" selection-start-column="34" selection-end-line="4" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/nonactive_dot.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -3169,6 +3220,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
           <caret line="10" column="36" selection-start-line="10" selection-start-column="36" selection-end-line="10" selection-end-column="36" />
+          <folding />
         </state>
       </provider>
       <provider editor-type-id="android-designer2">
@@ -3219,6 +3271,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="418">
           <caret line="82" column="54" selection-start-line="82" selection-start-column="54" selection-end-line="82" selection-end-column="54" />
+          <folding />
         </state>
       </provider>
       <provider editor-type-id="android-designer2">
@@ -3238,7 +3291,7 @@
         <state relative-caret-position="2592">
           <caret line="72" column="13" selection-start-line="72" selection-start-column="13" selection-end-line="72" selection-end-column="13" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -3254,6 +3307,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
           <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -3261,6 +3315,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
           <caret line="10" column="1" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -3268,6 +3323,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
           <caret line="12" column="58" selection-start-line="12" selection-start-column="58" selection-end-line="12" selection-end-column="58" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -3301,6 +3357,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
           <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -3379,14 +3436,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/jcchen/taitiesyunbao/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2499">
-          <caret line="179" column="42" selection-start-line="179" selection-start-column="42" selection-end-line="179" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/anim/slide_in_right.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -3418,26 +3467,54 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/store_frg_layout.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="17">
           <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
           <folding />
         </state>
       </provider>
-      <provider editor-type-id="android-designer2">
+      <provider selected="true" editor-type-id="android-designer2">
         <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/jcchen/taitiesyunbao/ResizeAnimation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="369">
+          <caret line="30" column="78" selection-start-line="30" selection-start-column="78" selection-end-line="30" selection-end-column="78" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/jcchen/taitiesyunbao/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="179" column="42" selection-start-line="179" selection-start-column="42" selection-end-line="179" selection-end-column="42" />
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/jcchen/taitiesyunbao/StoreRecyclerViewAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="94">
-          <caret line="347" column="56" selection-start-line="347" selection-start-column="56" selection-end-line="347" selection-end-column="56" />
+        <state relative-caret-position="352">
+          <caret line="328" column="75" selection-start-line="328" selection-start-column="75" selection-end-line="328" selection-end-column="75" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#16253#16901#0" expanded="true" />
-            <element signature="e#16900#16901#0" expanded="true" />
-            <element signature="e#17575#18555#0" expanded="true" />
-            <element signature="e#18554#18555#0" expanded="true" />
+            <element signature="e#15298#15572#0" expanded="true" />
+            <element signature="e#15571#15572#0" expanded="true" />
+            <element signature="e#15948#16216#0" expanded="true" />
+            <element signature="e#16215#16216#0" expanded="true" />
+            <element signature="e#16809#17789#0" expanded="true" />
+            <element signature="e#17788#17789#0" expanded="true" />
+            <element signature="e#18501#18732#0" expanded="true" />
+            <element signature="e#18731#18732#0" expanded="true" />
+            <element signature="e#18833#19063#0" expanded="true" />
+            <element signature="e#19062#19063#0" expanded="true" />
+            <element signature="e#19168#19838#0" expanded="true" />
+            <element signature="e#19837#19838#0" expanded="true" />
+            <element signature="e#20402#20685#0" expanded="true" />
+            <element signature="e#20684#20685#0" expanded="true" />
           </folding>
         </state>
       </provider>
