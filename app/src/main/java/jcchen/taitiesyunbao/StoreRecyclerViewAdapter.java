@@ -274,12 +274,55 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
         filter.getLayoutParams().width = viewHolder.pic_viewPager.getWidth();
         filter.getLayoutParams().height = viewHolder.pic_viewPager.getHeight();
 
-        final Animation translateAnimation = new TranslateAnimation(0, -pic_info_relativeLayout.getX(),
-                                                                    0, -pic_info_relativeLayout.getY());
-        final Animation scaleAnimation = new ScaleAnimation(1,
-                (float)store_recyclerView.getWidth()/(float)viewHolder.pic_viewPager.getWidth(),
+
+        final Animation translateAnimation = new TranslateAnimation(pic_info_relativeLayout.getX(), 0,
+                                                                    pic_info_relativeLayout.getY(), 0);
+        final Animation scaleAnimation = new ScaleAnimation(
+                //(float)viewHolder.pic_viewPager.getWidth()/(float)store_recyclerView.getWidth(), 1,
+                //1.25f, 1);
+                1, (float)store_recyclerView.getWidth()/(float)viewHolder.pic_viewPager.getWidth(),
                 1, 0.8f);
         final Animation alphaAnimation = new AlphaAnimation(0f, 0.7f);
+
+        translateAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                pic_info_relativeLayout.setX(0);
+                pic_info_relativeLayout.setY(0);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        scaleAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                pic_info_viewFlipper.getLayoutParams().width = store_recyclerView.getWidth();
+                //pic_info_viewFlipper.getLayoutParams().height *= 0.8f;
+                filter.getLayoutParams().width = store_recyclerView.getWidth();
+                //filter.getLayoutParams().height *= 0.8f;
+                pic_info_viewFlipper.requestLayout();
+                filter.requestLayout();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
         translateAnimation.setDuration(1000);
         scaleAnimation.setDuration(1000);
         alphaAnimation.setDuration(1000);
@@ -289,6 +332,7 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
             @Override
             public void onGlobalLayout() {
                 AnimationSet animationSet = new AnimationSet(true);
+                animationSet.setFillBefore(true);
                 animationSet.setFillAfter(true);
                 animationSet.addAnimation(translateAnimation);
                 animationSet.addAnimation(scaleAnimation);
@@ -301,6 +345,7 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
                         pic_info_viewFlipper.setInAnimation(context, R.anim.slide_in_right);
                         pic_info_viewFlipper.setOutAnimation(context, R.anim.slide_out_left);
                         pic_info_viewFlipper.setFlipInterval(2000);
+                        pic_info_viewFlipper.showNext();
                         pic_info_viewFlipper.startFlipping();
                     }
                 }).start();
