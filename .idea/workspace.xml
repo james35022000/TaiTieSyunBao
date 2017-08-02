@@ -59,35 +59,38 @@
       <file leaf-file-name="StoreRecyclerViewAdapter.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/jcchen/taitiesyunbao/StoreRecyclerViewAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="743">
-              <caret line="318" column="21" selection-start-line="318" selection-start-column="21" selection-end-line="318" selection-end-column="21" />
+            <state relative-caret-position="250">
+              <caret line="349" column="45" selection-start-line="349" selection-start-column="45" selection-end-line="349" selection-end-column="45" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#15298#15572#0" expanded="true" />
-                <element signature="e#15948#16216#0" expanded="true" />
-                <element signature="e#16215#16216#0" expanded="true" />
-                <element signature="e#16809#17789#0" expanded="true" />
-                <element signature="e#17788#17789#0" expanded="true" />
-                <element signature="e#18501#18732#0" expanded="true" />
-                <element signature="e#18731#18732#0" expanded="true" />
-                <element signature="e#18833#19063#0" expanded="true" />
-                <element signature="e#19062#19063#0" expanded="true" />
-                <element signature="e#19168#19838#0" expanded="true" />
-                <element signature="e#19837#19838#0" expanded="true" />
-                <element signature="e#20402#20685#0" expanded="true" />
-                <element signature="e#20684#20685#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ResizeAnimation.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/jcchen/taitiesyunbao/ResizeAnimation.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="369">
-              <caret line="30" column="78" selection-start-line="30" selection-start-column="78" selection-end-line="30" selection-end-column="78" />
-              <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#5193#5860#0" expanded="true" />
+                <element signature="e#5859#5860#0" expanded="true" />
+                <element signature="e#6882#7146#0" expanded="true" />
+                <element signature="e#7145#7146#0" expanded="true" />
+                <element signature="e#7201#7202#0" expanded="true" />
+                <element signature="e#7264#7265#0" expanded="true" />
+                <element signature="e#12091#12358#0" expanded="true" />
+                <element signature="e#12357#12358#0" expanded="true" />
+                <element signature="e#15306#15580#0" expanded="true" />
+                <element signature="e#15579#15580#0" expanded="true" />
+                <element signature="e#16480#17913#0" expanded="true" />
+                <element signature="e#16763#17887#0" expanded="true" />
+                <element signature="e#17593#17845#0" expanded="true" />
+                <element signature="e#17844#17845#0" expanded="true" />
+                <element signature="e#17886#17887#0" expanded="true" />
+                <element signature="e#17912#17913#0" expanded="true" />
+                <element signature="e#18634#18865#0" expanded="true" />
+                <element signature="e#18864#18865#0" expanded="true" />
+                <element signature="e#18966#19196#0" expanded="true" />
+                <element signature="e#19195#19196#0" expanded="true" />
+                <element signature="e#19301#19971#0" expanded="true" />
+                <element signature="e#19970#19971#0" expanded="true" />
+                <element signature="e#20535#20818#0" expanded="true" />
+                <element signature="e#20817#20818#0" expanded="true" />
+                <marker date="1501677481781" expanded="false" signature="18238:18284" ph="&quot;電話&quot;" />
+                <marker date="1501677481781" expanded="false" signature="18399:18449" ph="&quot;地址&quot;" />
+                <marker date="1501677481781" expanded="false" signature="20177:20289" ph="() → {" />
+                <marker date="1501677481781" expanded="false" signature="21314:21329" ph="}" />
               </folding>
             </state>
           </provider>
@@ -2600,9 +2603,9 @@
         <option value="$PROJECT_DIR$/app/src/main/res/anim/slide_in_left.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/store_frg_layout.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/jcchen/taitiesyunbao/ResizeAnimation.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/jcchen/taitiesyunbao/StoreRecyclerViewAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/anim/slide_out_left.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/anim/slide_in_right.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/jcchen/taitiesyunbao/StoreRecyclerViewAdapter.java" />
       </list>
     </option>
   </component>
@@ -2661,6 +2664,10 @@
               <option name="myItemId" value="app" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -2692,6 +2699,16 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="taitiesyunbao" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TaiTieSyunBao" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -3188,7 +3205,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1404">
           <caret line="39" column="56" selection-start-line="39" selection-start-column="56" selection-end-line="39" selection-end-column="56" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3230,7 +3246,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="544">
           <caret line="6409" column="34" selection-start-line="6409" selection-start-column="19" selection-end-line="6409" selection-end-column="34" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3281,7 +3296,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="108">
           <caret line="3" column="20" selection-start-line="3" selection-start-column="20" selection-end-line="3" selection-end-column="20" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3289,9 +3303,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2592">
           <caret line="72" column="13" selection-start-line="72" selection-start-column="13" selection-end-line="72" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3306,7 +3317,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
           <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3314,7 +3324,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
           <caret line="10" column="1" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3322,7 +3331,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
           <caret line="12" column="58" selection-start-line="12" selection-start-column="58" selection-end-line="12" selection-end-column="58" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3348,7 +3356,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3312">
           <caret line="133" column="0" selection-start-line="133" selection-start-column="0" selection-end-line="133" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3356,7 +3363,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
           <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3387,14 +3393,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="794">
           <caret line="70" column="54" selection-start-line="70" selection-start-column="54" selection-end-line="70" selection-end-column="54" />
-          <folding>
-            <element signature="e#1418#1419#0" expanded="false" />
-            <element signature="e#1449#1450#0" expanded="false" />
-            <element signature="e#1492#1493#0" expanded="false" />
-            <element signature="e#1534#1535#0" expanded="false" />
-            <element signature="e#2021#2704#0" expanded="false" />
-            <element signature="e#2703#2704#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3496,23 +3494,38 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/jcchen/taitiesyunbao/StoreRecyclerViewAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="743">
-          <caret line="318" column="21" selection-start-line="318" selection-start-column="21" selection-end-line="318" selection-end-column="21" />
+        <state relative-caret-position="250">
+          <caret line="349" column="45" selection-start-line="349" selection-start-column="45" selection-end-line="349" selection-end-column="45" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#15298#15572#0" expanded="true" />
-            <element signature="e#15948#16216#0" expanded="true" />
-            <element signature="e#16215#16216#0" expanded="true" />
-            <element signature="e#16809#17789#0" expanded="true" />
-            <element signature="e#17788#17789#0" expanded="true" />
-            <element signature="e#18501#18732#0" expanded="true" />
-            <element signature="e#18731#18732#0" expanded="true" />
-            <element signature="e#18833#19063#0" expanded="true" />
-            <element signature="e#19062#19063#0" expanded="true" />
-            <element signature="e#19168#19838#0" expanded="true" />
-            <element signature="e#19837#19838#0" expanded="true" />
-            <element signature="e#20402#20685#0" expanded="true" />
-            <element signature="e#20684#20685#0" expanded="true" />
+            <element signature="e#5193#5860#0" expanded="true" />
+            <element signature="e#5859#5860#0" expanded="true" />
+            <element signature="e#6882#7146#0" expanded="true" />
+            <element signature="e#7145#7146#0" expanded="true" />
+            <element signature="e#7201#7202#0" expanded="true" />
+            <element signature="e#7264#7265#0" expanded="true" />
+            <element signature="e#12091#12358#0" expanded="true" />
+            <element signature="e#12357#12358#0" expanded="true" />
+            <element signature="e#15306#15580#0" expanded="true" />
+            <element signature="e#15579#15580#0" expanded="true" />
+            <element signature="e#16480#17913#0" expanded="true" />
+            <element signature="e#16763#17887#0" expanded="true" />
+            <element signature="e#17593#17845#0" expanded="true" />
+            <element signature="e#17844#17845#0" expanded="true" />
+            <element signature="e#17886#17887#0" expanded="true" />
+            <element signature="e#17912#17913#0" expanded="true" />
+            <element signature="e#18634#18865#0" expanded="true" />
+            <element signature="e#18864#18865#0" expanded="true" />
+            <element signature="e#18966#19196#0" expanded="true" />
+            <element signature="e#19195#19196#0" expanded="true" />
+            <element signature="e#19301#19971#0" expanded="true" />
+            <element signature="e#19970#19971#0" expanded="true" />
+            <element signature="e#20535#20818#0" expanded="true" />
+            <element signature="e#20817#20818#0" expanded="true" />
+            <marker date="1501677481781" expanded="false" signature="18238:18284" ph="&quot;電話&quot;" />
+            <marker date="1501677481781" expanded="false" signature="18399:18449" ph="&quot;地址&quot;" />
+            <marker date="1501677481781" expanded="false" signature="20177:20289" ph="() → {" />
+            <marker date="1501677481781" expanded="false" signature="21314:21329" ph="}" />
           </folding>
         </state>
       </provider>

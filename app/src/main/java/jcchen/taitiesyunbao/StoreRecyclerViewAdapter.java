@@ -302,10 +302,10 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
         translateAnimation.setDuration(1000);
         resizeAnimation.setDuration(1000);
 
-        ViewTreeObserver viewTreeObserver = pic_info_relativeLayout.getViewTreeObserver();
-        viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
+        //ViewTreeObserver viewTreeObserver = pic_info_relativeLayout.getViewTreeObserver();
+        //viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        //    @Override
+        //    public void onGlobalLayout() {
                 AnimationSet animationSet = new AnimationSet(true);
                 animationSet.setFillBefore(true);
                 animationSet.addAnimation(resizeAnimation);
@@ -319,23 +319,18 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
                     }
                 }).start();
 
-                info_relativeLayout.setVisibility(View.VISIBLE);
-                setInfoDisplay(viewHolder, index);
 
                 map.setVisibility(View.VISIBLE);
                 map.setAlpha(0);
                 map.requestLayout();
+                info_relativeLayout.setVisibility(View.VISIBLE);
+                setInfoDisplay(viewHolder, index);
+
                 setCommentView(index);
-                map.animate().alpha(1).setDuration(1000).setStartDelay(1000).setListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        super.onAnimationEnd(animation);
-                        map.setAlpha(1);
-                    }
-                }).start();
-                pic_info_relativeLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-            }
-        });
+
+        //        pic_info_relativeLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+        //    }
+        //});
 
 
         store_recyclerView.setVisibility(View.GONE);
@@ -343,31 +338,39 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
 
     private void setInfoDisplay(final ViewHolder viewHolder, final int index) {
 
-        MapFragment mapFragment = MapFragment.newInstance();
-        FragmentTransaction fragmentTransaction =
+        final MapFragment mapFragment = MapFragment.newInstance();
+        final FragmentTransaction fragmentTransaction =
                 ((Activity) context).getFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.map, mapFragment);
-        fragmentTransaction.commit();
-        mapFragment.getMapAsync(new OnMapReadyCallback() {
+        map.animate().alpha(1).setDuration(1000).setStartDelay(1000).setListener(new AnimatorListenerAdapter() {
             @Override
-            public void onMapReady(GoogleMap googleMap) {
-                LatLng latLng = new LatLng(Double.valueOf(storeList.get(index).getLatitude()),
-                        Double.valueOf(storeList.get(index).getLongitude()));
-                googleMap.addMarker(new MarkerOptions()
-                        .position(latLng));
-                        //.title(storeList.get(index).getName()));
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 18));
-                // Disable all gestures on map
-                googleMap.getUiSettings().setAllGesturesEnabled(false);
-                // Disable marker click
-                googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                map.setAlpha(1);
+                fragmentTransaction.commit();
+                mapFragment.getMapAsync(new OnMapReadyCallback() {
                     @Override
-                    public boolean onMarkerClick(Marker marker) {
-                        return true;
+                    public void onMapReady(GoogleMap googleMap) {
+                        LatLng latLng = new LatLng(Double.valueOf(storeList.get(index).getLatitude()),
+                                Double.valueOf(storeList.get(index).getLongitude()));
+                        googleMap.addMarker(new MarkerOptions()
+                                .position(latLng));
+                        //.title(storeList.get(index).getName()));
+                        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 18));
+                        // Disable all gestures on map
+                        googleMap.getUiSettings().setAllGesturesEnabled(false);
+                        // Disable marker click
+                        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                            @Override
+                            public boolean onMarkerClick(Marker marker) {
+                                return true;
+                            }
+                        });
                     }
                 });
             }
-        });
+        }).start();
+
 
 
 
