@@ -48,6 +48,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.vision.Frame;
+import com.google.android.gms.vision.text.Line;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
@@ -60,6 +61,12 @@ import static jcchen.taitiesyunbao.Constant.LANGUAGE_TW;
  */
 
 public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecyclerViewAdapter.ViewHolder> {
+
+    private final int STORE_CARD = 0;
+    private final int LOADING_CARD = 1;
+
+    private boolean isLoading = true;
+
     private Context context;
     private Vector<StoreInfo> storeList;
     private RecyclerView store_recyclerView, comment_recyclerView;
@@ -91,69 +98,86 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
         this.pic_info_relativeLayout = (RelativeLayout) view.findViewById(R.id.pic_info_relativeLayout);
     }
 
-
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.store_cardview, viewGroup, false);
-        return new ViewHolder(view);
+    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+        switch(viewType) {
+            case LOADING_CARD:
+                return new ViewHolder(LayoutInflater.from(viewGroup.getContext())
+                        .inflate(R.layout.store_recyclerview_progressbar, viewGroup, false));
+            default:
+                return new ViewHolder(LayoutInflater.from(viewGroup.getContext())
+                        .inflate(R.layout.store_cardview, viewGroup, false));
+        }
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, final int index) {
-        viewHolder.name_textView.setText(storeList.get(index).getName());
-        /*viewHolder.address_textView.setText(context.getResources().getString(R.string.address) +
-                " : " + storeList.get(index).getAddress(LANGUAGE_TW));
-        viewHolder.tel_textView.setText(context.getResources().getString(R.string.tel) +
-                " : " + storeList.get(index).getTel());*/
-        ViewTreeObserver viewTreeObserver = viewHolder.pic_viewPager.getViewTreeObserver();
-        viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                ViewGroup.LayoutParams layoutParams = viewHolder.pic_viewPager.getLayoutParams();
-                int viewPagerWidth = viewHolder.pic_viewPager.getWidth();
-                float viewPagerHeight = (float) (viewPagerWidth * 0.7);
+        switch(getItemViewType(index)) {
+            case LOADING_CARD:
+                if(isLoading)
+                    viewHolder.loading_linearLayout.setVisibility(View.VISIBLE);
+                else
+                    viewHolder.loading_linearLayout.setVisibility(View.GONE);
+                break;
+            default:
+                viewHolder.name_textView.setText(storeList.get(index).getName());
+                /*viewHolder.address_textView.setText(context.getResources().getString(R.string.address) +
+                        " : " + storeList.get(index).getAddress(LANGUAGE_TW));
+                viewHolder.tel_textView.setText(context.getResources().getString(R.string.tel) +
+                        " : " + storeList.get(index).getTel());*/
+                ViewTreeObserver viewTreeObserver = viewHolder.pic_viewPager.getViewTreeObserver();
+                viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        ViewGroup.LayoutParams layoutParams = viewHolder.pic_viewPager.getLayoutParams();
+                        int viewPagerWidth = viewHolder.pic_viewPager.getWidth();
+                        float viewPagerHeight = (float) (viewPagerWidth * 0.7);
 
-                layoutParams.width = viewPagerWidth;
-                layoutParams.height = (int) viewPagerHeight;
+                        layoutParams.width = viewPagerWidth;
+                        layoutParams.height = (int) viewPagerHeight;
 
-                viewHolder.pic_viewPager.setLayoutParams(layoutParams);
-                viewHolder.pic_viewPager.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-            }
-        });
-        viewHolder.pic_viewPager.setAdapter(
-                new StoreImagePagerAdapter(context, storeList.get(index).getImage()));
-        for (int i = 0; i < 5; i++) {
-            if (i < Double.valueOf(storeList.get(index).getRate()).intValue())
-                viewHolder.star_imageView[i].setSelected(true);
-            else
-                viewHolder.star_imageView[i].setSelected(false);
+                        viewHolder.pic_viewPager.setLayoutParams(layoutParams);
+                        viewHolder.pic_viewPager.requestLayout();
+                        viewHolder.pic_viewPager.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    }
+                });
+                viewHolder.pic_viewPager.setAdapter(
+                        new StoreImagePagerAdapter(context, storeList.get(index).getImage()));
+                for (int i = 0; i < 5; i++) {
+                    if (i < Double.valueOf(storeList.get(index).getRate()).intValue())
+                        viewHolder.star_imageView[i].setSelected(true);
+                    else
+                        viewHolder.star_imageView[i].setSelected(false);
+                }
+                if (storeList.get(index).getImage().size() > 0) {
+                    if (!storeList.get(index).getImage().get(0).getProvider().equals("")) {
+                        viewHolder.photoby_textView.setVisibility(View.VISIBLE);
+                        viewHolder.attr_textView.setText(Html.fromHtml("<u>" + storeList.get(index).getImage().get(0).getProvider() + "</u>"));
+                    } else {
+                        viewHolder.photoby_textView.setVisibility(View.INVISIBLE);
+                        viewHolder.attr_textView.setText("");
+                    }
+                }
+                setDots(viewHolder, index);
+
+                viewHolder.info_imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startAnimation(viewHolder, index);
+                    }
+                });
+                break;
         }
-        if(storeList.get(index).getImage().size() > 0) {
-            if (!storeList.get(index).getImage().get(0).getProvider().equals("")) {
-                viewHolder.photoby_textView.setVisibility(View.VISIBLE);
-                viewHolder.attr_textView.setText(Html.fromHtml("<u>" + storeList.get(index).getImage().get(0).getProvider() + "</u>"));
-            } else {
-                viewHolder.photoby_textView.setVisibility(View.INVISIBLE);
-                viewHolder.attr_textView.setText("");
-            }
-        }
-        setDots(viewHolder, index);
-
-        viewHolder.info_imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startAnimation(viewHolder, index);
-                //setInfoDisplay(viewHolder, index);
-                //setCommentView(index);
-            }
-        });
-
     }
 
     @Override
     public int getItemCount() {
-        return storeList == null ? 0 : storeList.size();
+        return storeList == null ? 1 : storeList.size() + 1;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return (position == getItemCount() - 1)? LOADING_CARD: STORE_CARD;
     }
 
 
@@ -163,7 +187,7 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
         public ViewPager pic_viewPager;
         public ImageView info_imageView, like_imageView;
         public ImageView[] star_imageView = new ImageView[5];
-        public LinearLayout sliderDots;
+        public LinearLayout sliderDots, loading_linearLayout;
 
         public ViewHolder(View v) {
             super(v);
@@ -182,7 +206,13 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
             star_imageView[3] = (ImageView) v.findViewById(R.id.star3_imageView);
             star_imageView[4] = (ImageView) v.findViewById(R.id.star4_imageView);
             sliderDots = (LinearLayout) v.findViewById(R.id.sliderDots);
+            loading_linearLayout = (LinearLayout) v.findViewById(R.id.loading_linearLayout);
         }
+    }
+
+    public void setLoadingState(boolean isLoading) {
+        this.isLoading = isLoading;
+        notifyItemChanged(getItemCount() - 1);
     }
 
     private void setDots(final ViewHolder viewHolder, final int index) {
@@ -299,8 +329,8 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
             }
         });
 
-        translateAnimation.setDuration(1000);
-        resizeAnimation.setDuration(1000);
+        translateAnimation.setDuration(800);
+        resizeAnimation.setDuration(800);
 
         //ViewTreeObserver viewTreeObserver = pic_info_relativeLayout.getViewTreeObserver();
         //viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {

@@ -10,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.LinearLayout;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -18,6 +20,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Vector;
+
+import static jcchen.taitiesyunbao.Constant.HANDLER_BEGIN;
+import static jcchen.taitiesyunbao.Constant.HANDLER_END;
 
 
 /**
@@ -31,6 +36,8 @@ public class StoreFragment extends Fragment {
     private RecyclerView store_recyclerView;
 
     private Vector<String> InternetTaskPool;
+
+    private boolean isLoading, isFinished;
 
 
     @Override
@@ -80,52 +87,18 @@ public class StoreFragment extends Fragment {
         final RecyclerView.Adapter adapter = new StoreRecyclerViewAdapter(context, storeList, view);
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Stores");
 
-        //  DEPRECATED!! Using to improve image loading time at first, but now it's useless.
-        /*
         final Handler handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 final Handler h = this;
-                if(msg.what == 0) {
-                    if(InternetTaskPool.size() > 0) {
-                        DatabaseReference dr = FirebaseDatabase.getInstance().getReference("Stores");
-                        dr.child(InternetTaskPool.get(0)).addListenerForSingleValueEvent(
-                                new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                        final StoreInfo storeInfo = new StoreInfo();
-                                        storeInfo.setID(dataSnapshot.child("ID").getValue().toString());
-                                        storeInfo.setLatitude(dataSnapshot.child("Latitude").getValue().toString());
-                                        storeInfo.setLongitude(dataSnapshot.child("Longitude").getValue().toString());
-                                        storeInfo.setStation(dataSnapshot.child("Near_Station").getValue().toString());
-                                        storeInfo.setAddress(dataSnapshot.child("Address_tw").getValue().toString(),
-                                                             dataSnapshot.child("Address_en").getValue().toString());
-
-                                        new GetStoreInfo(adapter, storeList, storeInfo, h).execute();
-                                    }
-
-                                    @Override
-                                    public void onCancelled(DatabaseError databaseError) {
-
-                                    }
-                                });
-                        InternetTaskPool.remove(0);
-                    }
-                }
-                super.handleMessage(msg);
-            }
-        };*/
-
-        InternetTaskPool = new Vector<>();
-
-        databaseReference.child("Stations").child("二結").addListenerForSingleValueEvent(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                            //InternetTaskPool.add(ds.getKey());
+                switch(msg.what) {
+                    case HANDLER_BEGIN:
+                        isLoading = true;
+                        ((StoreRecyclerViewAdapter)store_recyclerView.getAdapter()).setLoadingState(isLoading);
+                        for(int i = InternetTaskPool.size() >= 5 ? 5 : InternetTaskPool.size(); i > 0; i--) {
+                            final int j = i;
                             DatabaseReference dr = FirebaseDatabase.getInstance().getReference("Stores");
-                            dr.child(ds.getKey()).addListenerForSingleValueEvent(
+                            dr.child(InternetTaskPool.get(0)).addListenerForSingleValueEvent(
                                     new ValueEventListener() {
                                         @Override
                                         public void onDataChange(DataSnapshot dataSnapshot) {
@@ -137,7 +110,12 @@ public class StoreFragment extends Fragment {
                                             storeInfo.setAddress(dataSnapshot.child("Address_tw").getValue().toString(),
                                                     dataSnapshot.child("Address_en").getValue().toString());
 
-                                            new GetStoreInfo(adapter, storeList, storeInfo, null).execute();
+                                            new GetStoreInfo(adapter, storeList, storeInfo, h, j == 1).execute();
+                                            //if(j == 1) {
+                                            //    Message msg = new Message();
+                                            //    msg.what = HANDLER_END;
+                                            //    h.sendMessage(msg);
+                                            //}
                                         }
 
                                         @Override
@@ -145,10 +123,31 @@ public class StoreFragment extends Fragment {
 
                                         }
                                     });
+                            InternetTaskPool.remove(0);
                         }
-                        //Message msg = new Message();
-                        //msg.what = 0;
-                        //handler.sendMessage(msg);
+                        break;
+                    case HANDLER_END:
+                        isLoading = false;
+                        ((StoreRecyclerViewAdapter)store_recyclerView.getAdapter()).setLoadingState(isLoading);
+                        break;
+                    default:
+                        break;
+                }
+                super.handleMessage(msg);
+            }
+        };
+
+        InternetTaskPool = new Vector<>();
+
+        databaseReference.child("Stations").child("二結").addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot ds : dataSnapshot.getChildren())
+                            InternetTaskPool.add(ds.getKey());
+                        Message msg = new Message();
+                        msg.what = HANDLER_BEGIN;
+                        handler.sendMessage(msg);
                     }
 
                     @Override
@@ -158,6 +157,29 @@ public class StoreFragment extends Fragment {
                 });
         store_recyclerView.setAdapter(adapter);
         store_recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        store_recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                switch(newState) {
+                    case AbsListView.OnScrollListener.SCROLL_STATE_IDLE:
+
+                        break;
+                }
+            }
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int totalCount = store_recyclerView.getLayoutManager().getItemCount() - 1;
+                int lastVisibleItem = ((LinearLayoutManager)store_recyclerView.getLayoutManager()).findLastVisibleItemPosition();
+                if(!isLoading && totalCount < lastVisibleItem + 2 && InternetTaskPool.size() > 0) {
+                    isLoading = true;
+                    ((StoreRecyclerViewAdapter)store_recyclerView.getAdapter()).setLoadingState(isLoading);
+                    Message msg = new Message();
+                    msg.what = HANDLER_BEGIN;
+                    handler.sendMessage(msg);
+                }
+            }
+        });
     }
 
 

@@ -15,6 +15,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Vector;
 
+import static jcchen.taitiesyunbao.Constant.HANDLER_END;
 
 
 /**
@@ -132,12 +133,15 @@ public class GetStoreInfo extends AsyncTask<Void, Void, StoreInfo> {
 
     private StoreInfo storeInfo;
 
+    private boolean isLast;
 
-    public GetStoreInfo(RecyclerView.Adapter adapter, Vector<StoreInfo> storeList, StoreInfo storeInfo, Handler handler) {
+
+    public GetStoreInfo(RecyclerView.Adapter adapter, Vector<StoreInfo> storeList, StoreInfo storeInfo, Handler handler, boolean isLast) {
         this.adapter = adapter;
         this.storeList = storeList;
         this.handler = handler;
         this.storeInfo = storeInfo;
+        this.isLast = isLast;
     }
 
 
@@ -145,7 +149,6 @@ public class GetStoreInfo extends AsyncTask<Void, Void, StoreInfo> {
         String ID = storeInfo.getID();
         String Latitude = storeInfo.getLatitude();
         String Longitude = storeInfo.getLongitude();
-
 
         JSONObject cacheResponse = null;
         try {
@@ -172,10 +175,11 @@ public class GetStoreInfo extends AsyncTask<Void, Void, StoreInfo> {
 
     protected void onPostExecute(StoreInfo storeInfo) {
         Message msg = new Message();
-        msg.what = 0;
-        //handler.sendMessage(msg);
+        msg.what = HANDLER_END;
         storeList.add(storeInfo);
         adapter.notifyItemChanged(storeList.size() - 1);
+        if(isLast)
+            handler.sendMessage(msg);
     }
 
     private Vector<ImageAttr> getImageUrl(String storeID) {
@@ -213,14 +217,19 @@ public class GetStoreInfo extends AsyncTask<Void, Void, StoreInfo> {
                 if(!jsonObject.getJSONArray("j").getJSONArray(7).getJSONArray(0)
                         .getJSONArray(i).getJSONArray(6).getString(0).startsWith("//geo"))
                     imageAttr.setImageUrl("http://lh6.googleusercontent.com/" + imageID + "/");
-                imageAttr.setProvider(jsonObject.getJSONArray("j").getJSONArray(7).getJSONArray(0)
-                        .getJSONArray(i).getJSONArray(18)
-                        .getJSONArray(0).getJSONArray(1)
-                        .getString(1));
-                imageAttr.setOriginalSite(jsonObject.getJSONArray("j").getJSONArray(7)
-                        .getJSONArray(0).getJSONArray(i).getJSONArray(18)
-                        .getJSONArray(0).getJSONArray(1)
-                        .getString(0));
+                try {
+                    imageAttr.setProvider(jsonObject.getJSONArray("j").getJSONArray(7).getJSONArray(0)
+                            .getJSONArray(i).getJSONArray(18)
+                            .getJSONArray(0).getJSONArray(1)
+                            .getString(1));
+                    imageAttr.setOriginalSite(jsonObject.getJSONArray("j").getJSONArray(7)
+                            .getJSONArray(0).getJSONArray(i).getJSONArray(18)
+                            .getJSONArray(0).getJSONArray(1)
+                            .getString(0));
+                } catch (Exception e) {
+                    imageAttr.setProvider("null");
+                    imageAttr.setOriginalSite("null");
+                }
                 Image.add(imageAttr);
             }
         } catch (Exception e) {
