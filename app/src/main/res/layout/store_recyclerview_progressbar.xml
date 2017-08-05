@@ -18,8 +18,7 @@
             android:id="@+id/progressBar"
             style="@style/Widget.AppCompat.ProgressBar"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_centerHorizontal="false"
+            android:layout_height="20dp"
             android:layout_weight="1" />
 
         <TextView
@@ -28,7 +27,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:text="Loading..." />
+            android:text="Loading..."
+            android:textSize="12sp" />
 
     </LinearLayout>
 </RelativeLayout>

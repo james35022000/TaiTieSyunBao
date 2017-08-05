@@ -9,6 +9,8 @@ import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.CoordinatorLayout;
@@ -49,12 +51,15 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.text.Line;
+import com.google.android.gms.wearable.MessageEvent;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.util.Vector;
 
 import static jcchen.taitiesyunbao.Constant.LANGUAGE_TW;
+import static jcchen.taitiesyunbao.Constant.LOADING_HANDLER_BEGIN;
+import static jcchen.taitiesyunbao.Constant.LOADING_HANDLER_END;
 
 /**
  * Created by JCChen on 2017/7/13.
@@ -65,7 +70,9 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
     private final int STORE_CARD = 0;
     private final int LOADING_CARD = 1;
 
-    private boolean isLoading = true;
+    private boolean isStoreLoading = true;
+
+    private boolean isCommentLoading = true;
 
     private Context context;
     private Vector<StoreInfo> storeList;
@@ -114,7 +121,7 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
     public void onBindViewHolder(final ViewHolder viewHolder, final int index) {
         switch(getItemViewType(index)) {
             case LOADING_CARD:
-                if(isLoading)
+                if(isStoreLoading)
                     viewHolder.loading_linearLayout.setVisibility(View.VISIBLE);
                 else
                     viewHolder.loading_linearLayout.setVisibility(View.GONE);
@@ -210,9 +217,9 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
         }
     }
 
-    public void setLoadingState(boolean isLoading) {
-        this.isLoading = isLoading;
-        notifyItemChanged(getItemCount() - 1);
+    public void setLoadingState(boolean isStoreLoading) {
+        this.isStoreLoading = isStoreLoading;
+        notifyItemChanged(getItemCount());
     }
 
     private void setDots(final ViewHolder viewHolder, final int index) {
@@ -448,7 +455,30 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
 
     }
 
-    private void setCommentView(int index) {
+    private void setCommentView(final int index) {
+        final Handler handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                switch(msg.what) {
+                    case LOADING_HANDLER_BEGIN:
+                        isCommentLoading = true;
+                        StoreCommentRecyclerViewAdapter adapter =
+                                (StoreCommentRecyclerViewAdapter)comment_recyclerView.getAdapter();
+                        adapter.setLoadingState(isCommentLoading);
+                        new GetStoreComment(adapter, adapter.getCommentList(), storeList.get(index), this)
+                                        .execute(String.valueOf(adapter.getItemCount() - 2));
+                        break;
+                    case LOADING_HANDLER_END:
+                        isCommentLoading = false;
+                        ((StoreCommentRecyclerViewAdapter)comment_recyclerView.getAdapter())
+                                .setLoadingState(isCommentLoading);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        };
+
         // Set bottom sheet peek height and height.
         store_info_frame.getViewTreeObserver().addOnGlobalLayoutListener(
                 new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -477,6 +507,18 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
 
         // Hide bottom sheet initially.
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        bottom_sheet.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                    if(!isCommentLoading && scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+                        isCommentLoading = true;
+                        ((StoreCommentRecyclerViewAdapter)comment_recyclerView.getAdapter()).setLoadingState(isCommentLoading);
+                        Message msg = new Message();
+                        msg.what = LOADING_HANDLER_BEGIN;
+                        handler.sendMessage(msg);
+                    }
+            }
+        });
 
         bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             boolean init = false;
@@ -611,7 +653,7 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
         Vector<StoreComment> commentList = new Vector<>();
         commentList.add(null);
         RecyclerView.Adapter adapter = new StoreCommentRecyclerViewAdapter(context, commentList);
-        new GetStoreComment(adapter, commentList, storeList.get(index)).execute("0");
+        new GetStoreComment(adapter, commentList, storeList.get(index), handler).execute("0");
         comment_recyclerView.setAdapter(adapter);
         comment_recyclerView.setLayoutManager(new LinearLayoutManager(context));
 

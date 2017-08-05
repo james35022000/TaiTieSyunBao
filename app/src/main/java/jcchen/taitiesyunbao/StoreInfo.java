@@ -27,6 +27,7 @@ public class StoreInfo {
     private String Area;
     private Vector<ImageAttr> Image;
     private String _storeID;
+    private int ReviewAmount;
 
     public StoreInfo() {}
 
@@ -142,5 +143,13 @@ public class StoreInfo {
 
     public void set_storeID(String _storeID) {
         this._storeID = _storeID;
+    }
+
+    public int getReviewAmount() {
+        return ReviewAmount;
+    }
+
+    public void setReviewAmount(int ReviewAmount) {
+        this.ReviewAmount = ReviewAmount;
     }
 }

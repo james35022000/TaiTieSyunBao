@@ -10,8 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.LinearLayout;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,8 +19,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Vector;
 
-import static jcchen.taitiesyunbao.Constant.HANDLER_BEGIN;
-import static jcchen.taitiesyunbao.Constant.HANDLER_END;
+import static jcchen.taitiesyunbao.Constant.LOADING_HANDLER_BEGIN;
+import static jcchen.taitiesyunbao.Constant.LOADING_HANDLER_END;
 
 
 /**
@@ -37,7 +35,7 @@ public class StoreFragment extends Fragment {
 
     private Vector<String> InternetTaskPool;
 
-    private boolean isLoading, isFinished;
+    private boolean isStoreLoading, isStoreFinished;
 
 
     @Override
@@ -92,9 +90,9 @@ public class StoreFragment extends Fragment {
             public void handleMessage(Message msg) {
                 final Handler h = this;
                 switch(msg.what) {
-                    case HANDLER_BEGIN:
-                        isLoading = true;
-                        ((StoreRecyclerViewAdapter)store_recyclerView.getAdapter()).setLoadingState(isLoading);
+                    case LOADING_HANDLER_BEGIN:
+                        isStoreLoading = true;
+                        ((StoreRecyclerViewAdapter)store_recyclerView.getAdapter()).setLoadingState(isStoreLoading);
                         for(int i = InternetTaskPool.size() >= 5 ? 5 : InternetTaskPool.size(); i > 0; i--) {
                             final int j = i;
                             DatabaseReference dr = FirebaseDatabase.getInstance().getReference("Stores");
@@ -126,9 +124,9 @@ public class StoreFragment extends Fragment {
                             InternetTaskPool.remove(0);
                         }
                         break;
-                    case HANDLER_END:
-                        isLoading = false;
-                        ((StoreRecyclerViewAdapter)store_recyclerView.getAdapter()).setLoadingState(isLoading);
+                    case LOADING_HANDLER_END:
+                        isStoreLoading = false;
+                        ((StoreRecyclerViewAdapter)store_recyclerView.getAdapter()).setLoadingState(isStoreLoading);
                         break;
                     default:
                         break;
@@ -146,7 +144,7 @@ public class StoreFragment extends Fragment {
                         for (DataSnapshot ds : dataSnapshot.getChildren())
                             InternetTaskPool.add(ds.getKey());
                         Message msg = new Message();
-                        msg.what = HANDLER_BEGIN;
+                        msg.what = LOADING_HANDLER_BEGIN;
                         handler.sendMessage(msg);
                     }
 
@@ -159,23 +157,15 @@ public class StoreFragment extends Fragment {
         store_recyclerView.setLayoutManager(new LinearLayoutManager(context));
         store_recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                switch(newState) {
-                    case AbsListView.OnScrollListener.SCROLL_STATE_IDLE:
-
-                        break;
-                }
-            }
-            @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 int totalCount = store_recyclerView.getLayoutManager().getItemCount() - 1;
                 int lastVisibleItem = ((LinearLayoutManager)store_recyclerView.getLayoutManager()).findLastVisibleItemPosition();
-                if(!isLoading && totalCount < lastVisibleItem + 2 && InternetTaskPool.size() > 0) {
-                    isLoading = true;
-                    ((StoreRecyclerViewAdapter)store_recyclerView.getAdapter()).setLoadingState(isLoading);
+                if(!isStoreLoading && totalCount < lastVisibleItem + 2 && InternetTaskPool.size() > 0) {
+                    isStoreLoading = true;
+                    ((StoreRecyclerViewAdapter)store_recyclerView.getAdapter()).setLoadingState(isStoreLoading);
                     Message msg = new Message();
-                    msg.what = HANDLER_BEGIN;
+                    msg.what = LOADING_HANDLER_BEGIN;
                     handler.sendMessage(msg);
                 }
             }

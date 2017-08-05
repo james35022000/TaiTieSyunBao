@@ -4,7 +4,8 @@
     android:id="@+id/store_comment_cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    card_view:cardBackgroundColor="@color/cardview_light_background">
+    card_view:cardBackgroundColor="@color/cardview_light_background"
+    card_view:cardElevation="0dp">
 
     <View
         android:id="@+id/view"
