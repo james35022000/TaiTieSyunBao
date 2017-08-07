@@ -19,6 +19,7 @@ import java.net.URL;
  * Created by JCChen on 2017/7/15.
  */
 
+@Deprecated
 public class GetImage extends AsyncTask<String, Void, Bitmap> {
     private ImageView imageView;
     private Context context;

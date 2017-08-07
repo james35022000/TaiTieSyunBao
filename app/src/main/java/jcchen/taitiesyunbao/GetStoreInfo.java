@@ -114,11 +114,10 @@ public class GetStoreInfo extends AsyncTask<Void, Void, StoreInfo> {
             JSONObject jsonObject = new JSONObject(jsonData);
             int len = jsonObject.getJSONArray("j").getJSONArray(7).getJSONArray(0).length();
             for(int i = 0; i < len; i++) {
-                String imageID = jsonObject.getJSONArray("j").getJSONArray(7)
-                                        .getJSONArray(0).getJSONArray(i).getString(0);
                 ImageAttr imageAttr = new ImageAttr();
                 if(!jsonObject.getJSONArray("j").getJSONArray(7).getJSONArray(0).getJSONArray(i).getJSONArray(6).getString(0).startsWith("//geo")) {
-                    imageAttr.setImageUrl("http://lh6.googleusercontent.com/" + imageID + "/");
+                    String imgURL = jsonObject.getJSONArray("j").getJSONArray(7).getJSONArray(0).getJSONArray(i).getJSONArray(6).getString(0);
+                    imageAttr.setImageUrl(imgURL.substring(0, imgURL.indexOf("=")));
                     try {
                         imageAttr.setProvider(jsonObject.getJSONArray("j").getJSONArray(7).getJSONArray(0)
                                 .getJSONArray(i).getJSONArray(18)

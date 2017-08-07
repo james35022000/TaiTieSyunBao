@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -158,8 +159,8 @@ public class MainActivity extends AppCompatActivity {
         bottom_tab.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String s) {
-                int index = bottom_tab.getCurrentTab();
-                fragment_pager.setCurrentItem(index);
+                fragment_pager.setCurrentItem(bottom_tab.getCurrentTab(), false);
+                //fragment_pager.setCurrentItem(bottom_tab.getCurrentTab());
             }
         });
         for(BottomTabInfo tabInfo : bottomTabInfos) {

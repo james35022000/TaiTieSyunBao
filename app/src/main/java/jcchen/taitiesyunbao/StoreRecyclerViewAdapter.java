@@ -503,7 +503,7 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
         });
 
         // Let comment_recyclerView slide fast.
-        comment_recyclerView.setNestedScrollingEnabled(false);
+        //comment_recyclerView.setNestedScrollingEnabled(false);
 
         // Hide bottom sheet initially.
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
