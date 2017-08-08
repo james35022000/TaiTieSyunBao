@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Bottom tab & Content
         fragment_pager = (MainViewPager) findViewById(R.id.fragment_pager);
-        bottom_tab = (FragmentTabHost) findViewById(R.id.bottom_tab);
+        bottom_tab = (FragmentTabHost) findViewById(android.R.id.tabhost);
 
         fragment_pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -154,13 +154,12 @@ public class MainActivity extends AppCompatActivity {
         fragmentVector.add(new SugFragment());
         fragment_pager.setAdapter(new MainPagerAdapter(getSupportFragmentManager(), fragmentVector));
 
-        bottom_tab.setup(this, getSupportFragmentManager(), R.id.fragment_pager);
+        bottom_tab.setup(this, getSupportFragmentManager(), android.R.id.tabcontent);
         bottom_tab.getTabWidget().setDividerDrawable(null);
         bottom_tab.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String s) {
-                fragment_pager.setCurrentItem(bottom_tab.getCurrentTab(), false);
-                //fragment_pager.setCurrentItem(bottom_tab.getCurrentTab());
+                fragment_pager.setCurrentItem(bottom_tab.getCurrentTab());
             }
         });
         for(BottomTabInfo tabInfo : bottomTabInfos) {
@@ -221,7 +220,7 @@ public class MainActivity extends AppCompatActivity {
         View view = getLayoutInflater().inflate(R.layout.tab_content, null);
         ImageView imageView = (ImageView) view.findViewById(R.id.tab_imageView);
         TextView  textView  = (TextView) view.findViewById(R.id.tab_textView);
-        imageView.setImageDrawable(getResources().getDrawable(tabInfo.ImageID));
+        imageView.setImageDrawable(ContextCompat.getDrawable(context, tabInfo.ImageID));
         textView.setText(tabInfo.StringID);
         return view;
     }

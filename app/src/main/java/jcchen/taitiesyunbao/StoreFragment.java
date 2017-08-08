@@ -67,8 +67,7 @@ public class StoreFragment extends Fragment {
         //alertDialog.show();
 
 
-        if(savedRecyclerView == null)
-            displayStore(view);
+        displayStore(view);
     }
 
     @Override
@@ -76,7 +75,7 @@ public class StoreFragment extends Fragment {
         super.onPause();
         Log.i("onPause", "null");
         //savedAdapter = ((StoreRecyclerViewAdapter)store_recyclerView.getAdapter());
-        savedRecyclerView = store_recyclerView;
+        //savedRecyclerView = store_recyclerView;
     }
 
     @Override
