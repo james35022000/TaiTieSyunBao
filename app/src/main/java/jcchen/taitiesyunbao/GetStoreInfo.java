@@ -23,23 +23,14 @@ import static jcchen.taitiesyunbao.Constant.LOADING_HANDLER_END;
  */
 public class GetStoreInfo extends AsyncTask<Void, Void, StoreInfo> {
 
-    private RecyclerView.Adapter adapter;
-
-    private Vector<StoreInfo> storeList;
-
-    private Handler handler;
-
     private StoreInfo storeInfo;
 
-    private boolean isLast;
+    private Container container;
 
 
-    public GetStoreInfo(RecyclerView.Adapter adapter, Vector<StoreInfo> storeList, StoreInfo storeInfo, Handler handler, boolean isLast) {
-        this.adapter = adapter;
-        this.storeList = storeList;
-        this.handler = handler;
+    public GetStoreInfo(Container container, StoreInfo storeInfo) {
+        this.container = container;
         this.storeInfo = storeInfo;
-        this.isLast = isLast;
     }
 
 
@@ -77,12 +68,7 @@ public class GetStoreInfo extends AsyncTask<Void, Void, StoreInfo> {
     }
 
     protected void onPostExecute(StoreInfo storeInfo) {
-        Message msg = new Message();
-        msg.what = LOADING_HANDLER_END;
-        storeList.add(storeInfo);
-        adapter.notifyItemChanged(storeList.size() - 1);
-        if(isLast)
-            handler.sendMessage(msg);
+        container.showItem(storeInfo);
     }
 
     private Vector<ImageAttr> getImageUrl(String storeID) {
