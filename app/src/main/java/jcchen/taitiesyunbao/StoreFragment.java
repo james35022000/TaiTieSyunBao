@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 
 import java.util.Vector;
 
+import jcchen.taitiesyunbao.View.Container;
+import jcchen.taitiesyunbao.View.StoreContainer;
 
 
 /**
@@ -24,7 +26,7 @@ public class StoreFragment extends Fragment {
 
     private boolean isStoreLoading, isStoreFinished;
 
-    private Container container;
+    private StoreContainer container;
 
     @Override
     public void onAttach(Context context) {

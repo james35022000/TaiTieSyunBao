@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
+
 /**
  * Created by JCChen on 2017/7/13.
  */
