@@ -3,7 +3,6 @@ package jcchen.taitiesyunbao.View;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,27 +50,8 @@ public class StoreFragment extends Fragment {
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        Log.i("onPause", "null");
+    public void onHiddenChanged(boolean hidden) {
+        if(!hidden)
+            ((MainActivity) context).setBackPress((Container) oldView.findViewById(R.id.store_container));
     }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.i("onDestroy", "null");
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        Log.i("onDestroyView", "null");
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        Log.i("onStop", "null");
-    }
-
 }

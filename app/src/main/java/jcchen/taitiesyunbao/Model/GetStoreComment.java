@@ -13,6 +13,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Vector;
 
+import jcchen.taitiesyunbao.Presenter.StorePresenter;
 import jcchen.taitiesyunbao.StoreComment;
 import jcchen.taitiesyunbao.StoreInfo;
 
@@ -24,19 +25,13 @@ import static jcchen.taitiesyunbao.Constant.LOADING_HANDLER_END;
 
 public class GetStoreComment extends AsyncTask<String, Void, JSONObject> {
 
-    private RecyclerView.Adapter adapter;
-
-    private Vector<StoreComment> commentList;
-
     private StoreInfo storeInfo;
+    private StorePresenter storePresenter;
 
-    private Handler handler;
 
-    public GetStoreComment(RecyclerView.Adapter adapter, Vector<StoreComment> commentList, StoreInfo storeInfo, Handler handler) {
-        this.adapter = adapter;
-        this.commentList = commentList;
+    public GetStoreComment(StoreInfo storeInfo, StorePresenter storePresenter) {
         this.storeInfo = storeInfo;
-        this.handler = handler;
+        this.storePresenter = storePresenter;
     }
 
     protected  JSONObject doInBackground(String... params) {
@@ -82,16 +77,13 @@ public class GetStoreComment extends AsyncTask<String, Void, JSONObject> {
                     storeComment.setUserPicUrl("http:" + jsonObject.getJSONArray("j").getJSONArray(0).getJSONArray(i).getJSONArray(0).getString(2));
                     storeComment.setRate(jsonObject.getJSONArray("j").getJSONArray(0).getJSONArray(i).getString(4));
                     storeComment.setTime(jsonObject.getJSONArray("j").getJSONArray(0).getJSONArray(i).getString(1));
-                    commentList.add(storeComment);
-                    adapter.notifyItemChanged(commentList.size() - 1);
+                    storePresenter.onCommentSuccess(storeComment);
                 }
 
             } catch (Exception e) {
                 e.printStackTrace();
+                storePresenter.onCommentError();
             }
         }
-        Message msg = new Message();
-        msg.what = LOADING_HANDLER_END;
-        handler.sendMessage(msg);
     }
 }

@@ -43,8 +43,4 @@ public class StoreModel {
             }
         });
     }
-
-    public void getStoreComment () {
-
-    }
 }

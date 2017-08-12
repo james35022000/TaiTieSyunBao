@@ -11,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -64,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
     private MainViewPager fragment_pager;
     private BottomTab bottom_tab;
 
+    private Container BackPressContainer;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +92,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0
+                && BackPressContainer != null) {
+            return BackPressContainer.onBackPressed();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     private void initUI() {
@@ -209,6 +221,17 @@ public class MainActivity extends AppCompatActivity {
                 toolbar_text_textView.setText("");
             }
         }).start();
+    }
+
+    public void setBackPress(final Container container) {
+        BackPressContainer = container;
+        back_imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(container != null)
+                    container.onBackPressed();
+            }
+        });
     }
 
     /**

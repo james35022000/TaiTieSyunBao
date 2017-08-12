@@ -101,19 +101,20 @@ public class GetStoreInfo extends AsyncTask<Void, Void, StoreInfo> {
                 if(!jsonObject.getJSONArray("j").getJSONArray(7).getJSONArray(0).getJSONArray(i).getJSONArray(6).getString(0).startsWith("//geo")) {
                     String imgURL = jsonObject.getJSONArray("j").getJSONArray(7).getJSONArray(0).getJSONArray(i).getJSONArray(6).getString(0);
                     imageAttr.setImageUrl(imgURL.substring(0, imgURL.indexOf("=")));
-                    try {
-                        imageAttr.setProvider(jsonObject.getJSONArray("j").getJSONArray(7).getJSONArray(0)
-                                .getJSONArray(i).getJSONArray(18)
-                                .getJSONArray(0).getJSONArray(1)
-                                .getString(1));
-                        imageAttr.setOriginalSite(jsonObject.getJSONArray("j").getJSONArray(7)
-                                .getJSONArray(0).getJSONArray(i).getJSONArray(18)
-                                .getJSONArray(0).getJSONArray(1)
-                                .getString(0));
-                    } catch (Exception e) {
+                    /* Google change it's json file, so I cannot get the provider and url. */
+                    //try {
+                    //    imageAttr.setProvider(jsonObject.getJSONArray("j").getJSONArray(7).getJSONArray(0)
+                    //            .getJSONArray(i).getJSONArray(18)
+                    //            .getJSONArray(0).getJSONArray(1)
+                    //            .getString(1));
+                    //    imageAttr.setOriginalSite(jsonObject.getJSONArray("j").getJSONArray(7)
+                    //            .getJSONArray(0).getJSONArray(i).getJSONArray(18)
+                    //            .getJSONArray(0).getJSONArray(1)
+                    //            .getString(0));
+                    //} catch (Exception e) {
                         imageAttr.setProvider("null");
                         imageAttr.setOriginalSite("null");
-                    }
+                    //}
                     Image.add(imageAttr);
                 }
             }

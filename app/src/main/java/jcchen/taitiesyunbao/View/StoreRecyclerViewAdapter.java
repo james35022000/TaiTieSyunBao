@@ -1,8 +1,12 @@
 package jcchen.taitiesyunbao.View;
 
+import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -17,7 +21,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import jcchen.taitiesyunbao.R;
-import jcchen.taitiesyunbao.StoreImagePagerAdapter;
 import jcchen.taitiesyunbao.StoreInfo;
 
 /**
@@ -107,11 +110,16 @@ public class StoreRecyclerViewAdapter extends RecyclerView.Adapter<StoreRecycler
                 }
                 //  Set slide dots.
                 setDots(viewHolder, index);
-
+                //  Set info onClickListener.
                 viewHolder.info_imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
+                        StoreInfoFragment StoreInfoFragment = new StoreInfoFragment();
+                        StoreInfoFragment.setStoreInfo(storeList.get(index));
+                        FragmentManager fragmentManager = ((AppCompatActivity)context).getSupportFragmentManager();
+                        fragmentManager.beginTransaction()
+                                .add(R.id.activity_content, StoreInfoFragment)
+                                .commit();
                     }
                 });
                 break;
