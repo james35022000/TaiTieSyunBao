@@ -13,9 +13,8 @@ import java.net.URLEncoder;
 import java.util.Vector;
 
 import jcchen.taitiesyunbao.ImageAttr;
-import jcchen.taitiesyunbao.Presenter.StoreInfoPresenter;
+import jcchen.taitiesyunbao.Presenter.StorePresenter;
 import jcchen.taitiesyunbao.StoreInfo;
-import jcchen.taitiesyunbao.View.Container;
 
 
 /**
@@ -24,11 +23,11 @@ import jcchen.taitiesyunbao.View.Container;
 public class GetStoreInfo extends AsyncTask<Void, Void, StoreInfo> {
 
     private StoreInfo storeInfo;
-    private StoreInfoPresenter storeInfoPresenter;
+    private StorePresenter storePresenter;
 
-    public GetStoreInfo(StoreInfo storeInfo, StoreInfoPresenter storeInfoPresenter) {
+    public GetStoreInfo(StoreInfo storeInfo, StorePresenter storePresenter) {
         this.storeInfo = storeInfo;
-        this.storeInfoPresenter = storeInfoPresenter;
+        this.storePresenter = storePresenter;
     }
 
 
@@ -66,7 +65,7 @@ public class GetStoreInfo extends AsyncTask<Void, Void, StoreInfo> {
     }
 
     protected void onPostExecute(StoreInfo storeInfo) {
-        storeInfoPresenter.onInfoSuccess(storeInfo);
+        storePresenter.onInfoSuccess(storeInfo);
     }
 
     private Vector<ImageAttr> getImageUrl(String storeID) {

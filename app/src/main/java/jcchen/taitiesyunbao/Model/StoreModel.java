@@ -9,8 +9,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import jcchen.taitiesyunbao.Presenter.StoreInfoPresenter;
-import jcchen.taitiesyunbao.View.Container;
+import jcchen.taitiesyunbao.Presenter.StorePresenter;
 
 /**
  * Created by JCChen on 2017/8/10.
@@ -18,10 +17,10 @@ import jcchen.taitiesyunbao.View.Container;
 
 public class StoreModel {
 
-    private StoreInfoPresenter storeInfoPresenter;
+    private StorePresenter storePresenter;
 
-    public StoreModel(StoreInfoPresenter storeInfoPresenter) {
-        this.storeInfoPresenter = storeInfoPresenter;
+    public StoreModel(StorePresenter storePresenter) {
+        this.storePresenter = storePresenter;
     }
 
     public void getStoreInfo (LatLng latLng_center) {
@@ -35,7 +34,7 @@ public class StoreModel {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren())
                     tackPool.add(ds.getKey());
-                storeInfoPresenter.onInfoSuccess(tackPool);
+                storePresenter.onInfoSuccess(tackPool);
             }
 
             @Override

@@ -9,9 +9,8 @@ import android.widget.FrameLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import jcchen.taitiesyunbao.Presenter.StorePresenter;
 import jcchen.taitiesyunbao.StoreInfo;
-import jcchen.taitiesyunbao.Presenter.StoreInfoPresenter;
-import jcchen.taitiesyunbao.StoreRecyclerViewAdapter;
 
 
 /**
@@ -20,13 +19,12 @@ import jcchen.taitiesyunbao.StoreRecyclerViewAdapter;
 
 public class StoreContainer extends FrameLayout implements Container {
 
-    private boolean isLoading;
     private List<StoreInfo> storeList;
 
     private RecyclerView store_recyclerView;
     private StoreRecyclerViewAdapter adapter;
 
-    private StoreInfoPresenter presenter;
+    private StorePresenter presenter;
 
     private StoreContainer container;
     private Context context;
@@ -40,7 +38,7 @@ public class StoreContainer extends FrameLayout implements Container {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        this.presenter = new StoreInfoPresenter(this);
+        this.presenter = new StorePresenter(this);
         store_recyclerView = (RecyclerView) getChildAt(0);
         storeList = new ArrayList<>();
         adapter = new StoreRecyclerViewAdapter(context, storeList);
