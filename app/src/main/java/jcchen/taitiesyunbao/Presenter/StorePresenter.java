@@ -12,7 +12,7 @@ import jcchen.taitiesyunbao.Model.GetStoreInfo;
 import jcchen.taitiesyunbao.Model.StoreModel;
 import jcchen.taitiesyunbao.StoreComment;
 import jcchen.taitiesyunbao.StoreInfo;
-import jcchen.taitiesyunbao.View.Container;
+import jcchen.taitiesyunbao.View.Container.Container;
 
 /**
  * Created by JCChen on 2017/8/8.
@@ -75,7 +75,9 @@ public class StorePresenter implements OnStoreListener {
     }
 
     @Override
-    public void onInfoError() {}
+    public void onInfoError() {
+        container.loadingState(false);
+    }
 
     @Override
     public void onCommentSuccess(StoreComment storeComment) {

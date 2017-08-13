@@ -9,6 +9,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import jcchen.taitiesyunbao.Presenter.OnStoreListener;
 import jcchen.taitiesyunbao.Presenter.StorePresenter;
 
 /**
@@ -17,13 +18,13 @@ import jcchen.taitiesyunbao.Presenter.StorePresenter;
 
 public class StoreModel {
 
-    private StorePresenter storePresenter;
+    private OnStoreListener onStoreListener;
 
-    public StoreModel(StorePresenter storePresenter) {
-        this.storePresenter = storePresenter;
+    public StoreModel(OnStoreListener onStoreListener) {
+        this.onStoreListener = onStoreListener;
     }
 
-    public void getStoreInfo (LatLng latLng_center) {
+    public void getStoreInfo (LatLng latLng) {
 
     }
 
@@ -34,7 +35,7 @@ public class StoreModel {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren())
                     tackPool.add(ds.getKey());
-                storePresenter.onInfoSuccess(tackPool);
+                onStoreListener.onInfoSuccess(tackPool);
             }
 
             @Override

@@ -27,6 +27,12 @@ import java.util.Vector;
 import jcchen.taitiesyunbao.BottomTab;
 import jcchen.taitiesyunbao.R;
 import jcchen.taitiesyunbao.RoundedImageView;
+import jcchen.taitiesyunbao.View.Adapter.MainPagerAdapter;
+import jcchen.taitiesyunbao.View.Container.Container;
+import jcchen.taitiesyunbao.View.Fragment.LikeFragment;
+import jcchen.taitiesyunbao.View.Fragment.MainFragment;
+import jcchen.taitiesyunbao.View.Fragment.StoreFragment;
+import jcchen.taitiesyunbao.View.Fragment.SugFragment;
 
 /**
  * Created by JCChen on 2017/6/24.

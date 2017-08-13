@@ -13,6 +13,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Vector;
 
+import jcchen.taitiesyunbao.Presenter.OnStoreListener;
 import jcchen.taitiesyunbao.Presenter.StorePresenter;
 import jcchen.taitiesyunbao.StoreComment;
 import jcchen.taitiesyunbao.StoreInfo;
@@ -26,12 +27,12 @@ import static jcchen.taitiesyunbao.Constant.LOADING_HANDLER_END;
 public class GetStoreComment extends AsyncTask<String, Void, JSONObject> {
 
     private StoreInfo storeInfo;
-    private StorePresenter storePresenter;
+    private OnStoreListener onStoreListener;
 
 
-    public GetStoreComment(StoreInfo storeInfo, StorePresenter storePresenter) {
+    public GetStoreComment(StoreInfo storeInfo, OnStoreListener onStoreListener) {
         this.storeInfo = storeInfo;
-        this.storePresenter = storePresenter;
+        this.onStoreListener = onStoreListener;
     }
 
     protected  JSONObject doInBackground(String... params) {
@@ -77,12 +78,12 @@ public class GetStoreComment extends AsyncTask<String, Void, JSONObject> {
                     storeComment.setUserPicUrl("http:" + jsonObject.getJSONArray("j").getJSONArray(0).getJSONArray(i).getJSONArray(0).getString(2));
                     storeComment.setRate(jsonObject.getJSONArray("j").getJSONArray(0).getJSONArray(i).getString(4));
                     storeComment.setTime(jsonObject.getJSONArray("j").getJSONArray(0).getJSONArray(i).getString(1));
-                    storePresenter.onCommentSuccess(storeComment);
+                    onStoreListener.onCommentSuccess(storeComment);
                 }
 
             } catch (Exception e) {
                 e.printStackTrace();
-                storePresenter.onCommentError();
+                onStoreListener.onCommentError();
             }
         }
     }
