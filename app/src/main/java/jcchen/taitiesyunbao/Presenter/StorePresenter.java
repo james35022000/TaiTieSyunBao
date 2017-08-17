@@ -1,9 +1,13 @@
 package jcchen.taitiesyunbao.Presenter;
 
+import android.os.AsyncTask;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -12,7 +16,7 @@ import jcchen.taitiesyunbao.Model.GetStoreInfo;
 import jcchen.taitiesyunbao.Model.StoreModel;
 import jcchen.taitiesyunbao.StoreComment;
 import jcchen.taitiesyunbao.StoreInfo;
-import jcchen.taitiesyunbao.View.Container.Container;
+import jcchen.taitiesyunbao.View.CustomView.Container;
 
 /**
  * Created by JCChen on 2017/8/8.
@@ -26,6 +30,8 @@ public class StorePresenter implements OnStoreListener {
 
     private StoreModel storeModel;
 
+    private AsyncTask<String, Void, JSONObject> getStoreComment;
+
     public StorePresenter(Container container) {
         this.container = container;
         this.storePresenter = this;
@@ -37,7 +43,16 @@ public class StorePresenter implements OnStoreListener {
     }
 
     public void loadStoreComment(StoreInfo storeInfo, int commentCnt) {
-        new GetStoreComment(storeInfo, storePresenter).execute(String.valueOf(commentCnt));
+        getStoreComment = new GetStoreComment(storeInfo, storePresenter).execute(String.valueOf(commentCnt));
+    }
+
+    public void onDestroy() {
+        getStoreComment.cancel(true);
+        getStoreComment = null;
+        container = null;
+        storePresenter = null;
+        storeModel.onDestroy();
+        storeModel = null;
     }
 
     @Override

@@ -44,4 +44,8 @@ public class StoreModel {
             }
         });
     }
+
+    public void onDestroy() {
+        onStoreListener = null;
+    }
 }

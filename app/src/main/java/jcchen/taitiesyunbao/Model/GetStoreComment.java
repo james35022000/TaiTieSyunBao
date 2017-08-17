@@ -35,13 +35,15 @@ public class GetStoreComment extends AsyncTask<String, Void, JSONObject> {
         this.onStoreListener = onStoreListener;
     }
 
-    protected  JSONObject doInBackground(String... params) {
+    protected JSONObject doInBackground(String... params) {
+        if(isCancelled())  return null;
         try {
             if(Integer.valueOf(params[0]) >= storeInfo.getReviewAmount())
                 return null;
 
             URL url = new URL("https://www.google.com/maps/preview/reviews?hl=zh-TW&pb=!1s" +
                     storeInfo.get_storeID() + "!2i" + params[0] + "!3i10!4e6!7m4!2b1!3b1!5b1!6b1");
+            if(isCancelled())  return null;
             String response;
             JSONObject jsonObject;
             BufferedReader reader = null;
@@ -51,10 +53,10 @@ public class GetStoreComment extends AsyncTask<String, Void, JSONObject> {
             connection.setReadTimeout(10 * 1000);
             connection.connect();
 
-            reader = new BufferedReader(
-                    new InputStreamReader(connection.getInputStream()));
+            reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            connection.disconnect();
+            if(isCancelled())  return null;
             StringBuilder stringBuilder = new StringBuilder();
-
             String line;
             while ((line = reader.readLine()) != null) {
                 stringBuilder.append(line + "\n");
@@ -80,11 +82,17 @@ public class GetStoreComment extends AsyncTask<String, Void, JSONObject> {
                     storeComment.setTime(jsonObject.getJSONArray("j").getJSONArray(0).getJSONArray(i).getString(1));
                     onStoreListener.onCommentSuccess(storeComment);
                 }
-
             } catch (Exception e) {
                 e.printStackTrace();
                 onStoreListener.onCommentError();
             }
         }
+        onStoreListener = null;
+        storeInfo = null;
+    }
+
+    protected void onCancelled(JSONObject jsonObject) {
+        onStoreListener = null;
+        storeInfo = null;
     }
 }
