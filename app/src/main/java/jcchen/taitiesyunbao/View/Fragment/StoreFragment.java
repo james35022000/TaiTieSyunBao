@@ -21,6 +21,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Struct;
+import java.util.ArrayList;
+import java.util.List;
 
 import jcchen.taitiesyunbao.R;
 import jcchen.taitiesyunbao.View.CustomView.Container;
@@ -43,18 +45,18 @@ public class StoreFragment extends Fragment {
     private Paint paint;
 
     private class point {
-        public point(int x, int y) {
+        public point(float x, float y) {
             this.x = x;
             this.y = y;
         }
 
-        private int x;
+        private float x;
 
         public void setX(int x) {
             this.x = x;
         }
 
-        public int getY() {
+        public float getY() {
             return y;
         }
 
@@ -62,9 +64,9 @@ public class StoreFragment extends Fragment {
             this.y = y;
         }
 
-        private int y;
+        private float y;
 
-        public int getX() {
+        public float getX() {
             return x;
         }
     }
@@ -91,13 +93,13 @@ public class StoreFragment extends Fragment {
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        baseBitmap = Bitmap.createBitmap(2000, 2000, Bitmap.Config.ARGB_8888);
+        baseBitmap = Bitmap.createBitmap(1000, 2000, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(baseBitmap);
-        canvas.drawColor(Color.WHITE);
+        canvas.drawColor(Color.TRANSPARENT);
 
         paint = new Paint();
         paint.setStrokeWidth(5);
-        paint.setColor(Color.RED);
+        paint.setColor(Color.BLUE);
 
         LayoutInflater inflater = LayoutInflater.from(context);
         View v = inflater.inflate(R.layout.map, null, false);
@@ -122,7 +124,10 @@ public class StoreFragment extends Fragment {
                     .getJSONArray("geometries");
             JSONArray arcs = obj.getJSONArray("arcs");
 
-            setPolygon(Geometries.getJSONObject(62), arcs);
+            for(int i = 0; i < Geometries.length(); i++) {
+                if(!Geometries.getJSONObject(i).get("type").toString().equals("null"))
+                    setPolygon(Geometries.getJSONObject(i), arcs);
+            }
         } catch(Exception ex) {
             ex.printStackTrace();
         }
@@ -136,10 +141,14 @@ public class StoreFragment extends Fragment {
 
     public void setPolygon(JSONObject place, JSONArray arcs) {
         try {
-            point last_point = new point(1000, 1000);
             for(int i = 0; i < place.getJSONArray("arcs").length(); i++) {
                 for(int j = 0; j < place.getJSONArray("arcs").getJSONArray(i).length(); j++) {
-                    last_point = getArcs(Integer.valueOf(place.getJSONArray("arcs").getJSONArray(i).get(j).toString()), arcs, last_point);
+                    List<point> Arcs = getArcs(Integer.valueOf(place.getJSONArray("arcs").getJSONArray(i).get(j).toString()), arcs);
+                    for(int k = 1; k < Arcs.size(); k++) {
+                        canvas.drawLine((Arcs.get(k - 1).getX() - 9000)/15, (Arcs.get(k - 1).getY() + 23000)/15,
+                                (Arcs.get(k).getX() - 9000)/15, (Arcs.get(k).getY() + 23000)/15, paint);
+                        map.setImageBitmap(baseBitmap);
+                    }
                 }
             }
 
@@ -148,31 +157,40 @@ public class StoreFragment extends Fragment {
         }
     }
 
-    public point getArcs(int index, JSONArray arcs, point start_point) {
+    public List<point> getArcs(int index, JSONArray arcs) {
+        List<point> Arcs = new ArrayList<>();
         try {
-            int x = start_point.getX();
-            int y = start_point.getY();
-            if (index < 0) {
-                for(int i = arcs.getJSONArray((-index) - 1).length() - 1; i > 0; i--) {
-                    canvas.drawLine(x, y, x - Float.valueOf(arcs.getJSONArray((-index) - 1).getJSONArray(i).get(0).toString()),
-                            y + Float.valueOf(arcs.getJSONArray((-index) - 1).getJSONArray(i).get(1).toString()), paint);
-                    x -= Integer.valueOf(arcs.getJSONArray((-index) - 1).getJSONArray(i).get(0).toString());
-                    y += Integer.valueOf(arcs.getJSONArray((-index) - 1).getJSONArray(i).get(1).toString());
-                }
-                map.setImageBitmap(baseBitmap);
-            } else {
-                for(int i = 1; i < arcs.getJSONArray(index).length(); i++) {
-                    canvas.drawLine(x, y, x + Float.valueOf(arcs.getJSONArray(index).getJSONArray(i).get(0).toString()),
-                            y - Float.valueOf(arcs.getJSONArray(index).getJSONArray(i).get(1).toString()), paint);
-                    x += Integer.valueOf(arcs.getJSONArray(index).getJSONArray(i).get(0).toString());
-                    y -= Integer.valueOf(arcs.getJSONArray(index).getJSONArray(i).get(1).toString());
-                }
-                map.setImageBitmap(baseBitmap);
+            boolean reverse = (index < 0);
+            index = (index < 0 ? OnesComplement(index) : index);
+            float x = Integer.valueOf(arcs.getJSONArray(index).getJSONArray(0).get(0).toString());
+            float y = Integer.valueOf(arcs.getJSONArray(index).getJSONArray(0).get(1).toString());
+            Arcs.add(new point(x, -y));
+            for(int i = 1; i < arcs.getJSONArray(index).length(); i++) {
+                x = Arcs.get(Arcs.size() - 1).getX() +
+                        Integer.valueOf(arcs.getJSONArray(index).getJSONArray(i).get(0).toString());
+                y = Arcs.get(Arcs.size() - 1).getY() -
+                        Integer.valueOf(arcs.getJSONArray(index).getJSONArray(i).get(1).toString());
+                Arcs.add(new point(x, y));
             }
-            return new point(x, y);
+            if(reverse) {
+                //Arcs = ReverseArc(Arcs);
+            }
+            return Arcs;
         } catch (Exception ex) {
             ex.printStackTrace();
-            return start_point;
+            return null;
         }
+    }
+
+    public int OnesComplement(int num) {
+        return (-num) - 1;
+    }
+
+    public List<point> ReverseArc(List<point> Arcs) {
+        List<point> new_Arcs = new ArrayList<>();
+        for(int i = 1; i <= Arcs.size(); i++) {
+            new_Arcs.add(Arcs.get(Arcs.size() - i));
+        }
+        return new_Arcs;
     }
 }
