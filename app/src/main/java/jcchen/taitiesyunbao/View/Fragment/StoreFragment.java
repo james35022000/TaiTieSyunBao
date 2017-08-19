@@ -6,9 +6,11 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +45,7 @@ public class StoreFragment extends Fragment {
     private Bitmap baseBitmap;
     private Canvas canvas;
     private Paint paint;
+    private List<Region> regions;
 
     private class point {
         public point(float x, float y) {
@@ -71,6 +74,37 @@ public class StoreFragment extends Fragment {
         }
     }
 
+    private class Region {
+        private String id;
+        private String name;
+        private Path polygon;
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public Path getPolygon() {
+            return polygon;
+        }
+
+        public void setPolygon(Path polygon) {
+            this.polygon = polygon;
+        }
+
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -92,6 +126,7 @@ public class StoreFragment extends Fragment {
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        regions = new ArrayList<>();
 
         baseBitmap = Bitmap.createBitmap(1000, 2000, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(baseBitmap);
@@ -99,7 +134,8 @@ public class StoreFragment extends Fragment {
 
         paint = new Paint();
         paint.setStrokeWidth(5);
-        paint.setColor(Color.BLUE);
+        paint.setColor(Color.GREEN);
+        paint.setStyle(Paint.Style.STROKE);
 
         LayoutInflater inflater = LayoutInflater.from(context);
         View v = inflater.inflate(R.layout.map, null, false);
@@ -125,13 +161,20 @@ public class StoreFragment extends Fragment {
             JSONArray arcs = obj.getJSONArray("arcs");
 
             for(int i = 0; i < Geometries.length(); i++) {
-                String COUNTYNAME = Geometries.getJSONObject(i).getJSONObject("properties").get("name").toString();
-                if(COUNTYNAME.equals("連江縣"))  continue;
-                if(COUNTYNAME.equals("澎湖縣"))  continue;
-                if(COUNTYNAME.equals("金門縣"))  continue;
-                if(!Geometries.getJSONObject(i).get("type").toString().equals("null"))
-                    setPolygon(Geometries.getJSONObject(i), arcs);
+                String name = Geometries.getJSONObject(i).getJSONObject("properties").get("name").toString();
+                if(name.equals("連江縣"))  continue;
+                if(name.equals("澎湖縣"))  continue;
+                if(name.equals("金門縣"))  continue;
+                if(!Geometries.getJSONObject(i).get("type").toString().equals("null")) {
+                    Region region = new Region();
+                    region.setId(Geometries.getJSONObject(i).getJSONObject("properties").get("id").toString());
+                    region.setName(name);
+                    region.setPolygon(getPolygon(Geometries.getJSONObject(i), arcs));
+                    regions.add(region);
+                    canvas.drawPath(region.getPolygon(), paint);
+                }
             }
+            map.setImageBitmap(baseBitmap);
         } catch(Exception ex) {
             ex.printStackTrace();
         }
@@ -143,21 +186,22 @@ public class StoreFragment extends Fragment {
             ((MainActivity) context).setBackPress((Container) oldView.findViewById(R.id.store_container));
     }
 
-    public void setPolygon(JSONObject place, JSONArray arcs) {
+    public Path getPolygon(JSONObject place, JSONArray arcs) {
         try {
+            Path polygon = new Path();
             for(int i = 0; i < place.getJSONArray("arcs").length(); i++) {
                 for(int j = 0; j < place.getJSONArray("arcs").getJSONArray(i).length(); j++) {
                     List<point> Arcs = getArcs(Integer.valueOf(place.getJSONArray("arcs").getJSONArray(i).get(j).toString()), arcs);
-                    for(int k = 1; k < Arcs.size(); k++) {
-                        canvas.drawLine((Arcs.get(k - 1).getX() - 11000)/15, (Arcs.get(k - 1).getY() + 24000)/15,
-                                (Arcs.get(k).getX() - 11000)/15, (Arcs.get(k).getY() + 24000)/15, paint);
-                        map.setImageBitmap(baseBitmap);
-                    }
+                    if(i == 0)
+                        polygon.moveTo((Arcs.get(0).getX() - 11000) / 15, (Arcs.get(0).getY() + 24000) / 15);
+                    for(int k = 0; k < Arcs.size(); k++)
+                        polygon.lineTo((Arcs.get(k).getX() - 11000) / 15, (Arcs.get(k).getY() + 24000) / 15);
                 }
             }
-
+            return polygon;
         } catch (Exception ex) {
             ex.printStackTrace();
+            return null;
         }
     }
 
@@ -177,12 +221,12 @@ public class StoreFragment extends Fragment {
                 Arcs.add(new point(x, y));
             }
             if(reverse) {
-                //Arcs = ReverseArc(Arcs);
+                Arcs = ReverseArc(Arcs);
             }
             return Arcs;
         } catch (Exception ex) {
             ex.printStackTrace();
-            return null;
+            return new ArrayList<>();
         }
     }
 
