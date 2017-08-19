@@ -113,18 +113,22 @@ public class StoreFragment extends Fragment {
         String json;
 
         try {
-            InputStream inputStream = getActivity().getAssets().open("twCounty2010.topo.json");
+            InputStream inputStream = getActivity().getAssets().open("Counties.json");
             byte[] buffer = new byte[inputStream.available()];
             inputStream.read(buffer);
             inputStream.close();
             json = new String(buffer, "UTF-8");
             JSONObject obj = new JSONObject(json);
             JSONArray Geometries = obj.getJSONObject("objects")
-                    .getJSONObject("layer1")
+                    .getJSONObject("map")
                     .getJSONArray("geometries");
             JSONArray arcs = obj.getJSONArray("arcs");
 
             for(int i = 0; i < Geometries.length(); i++) {
+                String COUNTYNAME = Geometries.getJSONObject(i).getJSONObject("properties").get("name").toString();
+                if(COUNTYNAME.equals("連江縣"))  continue;
+                if(COUNTYNAME.equals("澎湖縣"))  continue;
+                if(COUNTYNAME.equals("金門縣"))  continue;
                 if(!Geometries.getJSONObject(i).get("type").toString().equals("null"))
                     setPolygon(Geometries.getJSONObject(i), arcs);
             }
@@ -145,8 +149,8 @@ public class StoreFragment extends Fragment {
                 for(int j = 0; j < place.getJSONArray("arcs").getJSONArray(i).length(); j++) {
                     List<point> Arcs = getArcs(Integer.valueOf(place.getJSONArray("arcs").getJSONArray(i).get(j).toString()), arcs);
                     for(int k = 1; k < Arcs.size(); k++) {
-                        canvas.drawLine((Arcs.get(k - 1).getX() - 9000)/15, (Arcs.get(k - 1).getY() + 23000)/15,
-                                (Arcs.get(k).getX() - 9000)/15, (Arcs.get(k).getY() + 23000)/15, paint);
+                        canvas.drawLine((Arcs.get(k - 1).getX() - 11000)/15, (Arcs.get(k - 1).getY() + 24000)/15,
+                                (Arcs.get(k).getX() - 11000)/15, (Arcs.get(k).getY() + 24000)/15, paint);
                         map.setImageBitmap(baseBitmap);
                     }
                 }
