@@ -10,9 +10,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import org.json.JSONArray;
@@ -23,17 +21,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jcchen.taitiesyunbao.R;
-import jcchen.taitiesyunbao.View.MainActivity;
 
 /**
  * Created by JCChen on 2017/8/21.
  */
 
 public class SelectRegionContainer extends RelativeLayout implements Container {
+    //  Function "showRegion" mode.
+    private final int SELECTED = 0;
+    private final int UNSELECTED = 1;
 
     private Context context;
     private int view_width;
     private int view_height;
+
+    private Bitmap baseBitmap;
+    private Canvas canvas;
+    private final Paint paint_stroke, paint_fill;
+    private List<Region> regions;
+    private List<Region> last_regions;
+
+    private Region last_selected_region;
 
     private ImageView map_imageView;
 
@@ -41,6 +49,7 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
         private String id;
         private String name;
         private Path polygon;
+        private int insideRegion;
 
         public String getId() {
             return id;
@@ -66,6 +75,13 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
             this.polygon = polygon;
         }
 
+        public int getInsideRegion() {
+            return insideRegion;
+        }
+
+        public void setInsideRegion(int insideRegion) {
+            this.insideRegion = insideRegion;
+        }
     }
 
     private class point {
@@ -98,6 +114,15 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
     public SelectRegionContainer(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
         this.context = context;
+        this.paint_fill = new Paint();
+        paint_fill.setStrokeWidth(5);
+        paint_fill.setColor(Color.BLUE);
+        paint_fill.setStyle(Paint.Style.FILL);
+        this.paint_stroke = new Paint();
+        paint_stroke.setStrokeWidth(5);
+        paint_stroke.setColor(Color.GREEN);
+        paint_stroke.setStyle(Paint.Style.STROKE);
+        this.regions = null;
     }
 
     public void setSize(final int width, final int height) {
@@ -119,20 +144,13 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
 
     @Override
     public void showItem(Object object) {
-        final Bitmap baseBitmap = Bitmap.createBitmap(view_width, view_height, Bitmap.Config.ARGB_8888);
-        final Canvas canvas = new Canvas(baseBitmap);
-        final Paint paint_stroke = new Paint(), paint_fill = new Paint();
-        final List<Region> regions = new ArrayList<>();
+        last_regions = regions;
+        regions = new ArrayList<>();
+        last_selected_region = null;
 
+        baseBitmap = Bitmap.createBitmap(view_width, view_height, Bitmap.Config.ARGB_8888);
+        canvas = new Canvas(baseBitmap);
         canvas.drawColor(Color.TRANSPARENT);
-
-        paint_stroke.setStrokeWidth(5);
-        paint_stroke.setColor(Color.GREEN);
-        paint_stroke.setStyle(Paint.Style.STROKE);
-
-        paint_fill.setStrokeWidth(5);
-        paint_fill.setColor(Color.BLUE);
-        paint_fill.setStyle(Paint.Style.FILL);
 
         String json;
 
@@ -158,12 +176,15 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
                     region.setId(Geometries.getJSONObject(i).getJSONObject("properties").get("id").toString());
                     region.setName(name);
                     region.setPolygon(getPolygon(Geometries.getJSONObject(i), arcs));
+                    try {
+                        region.setInsideRegion(Integer.valueOf(Geometries.getJSONObject(i).get("insideregion").toString()));
+                    } catch(Exception ex) {
+                        region.setInsideRegion(-1);
+                    }
                     regions.add(region);
-                    //canvas.drawPath(region.getPolygon(), paint_fill);
-                    canvas.drawPath(region.getPolygon(), paint_stroke);
+                    showRegion(regions, regions.size() - 1, SELECTED);
                 }
             }
-            map_imageView.setImageBitmap(baseBitmap);
         } catch(Exception ex) {
             ex.printStackTrace();
         }
@@ -173,39 +194,9 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
             public boolean onTouch(View v, MotionEvent event) {
                 switch(event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        float x = event.getX(), y = event.getY();
-                        Path horizon_path = new Path();
-                        Log.i("Y", y + "");
-                        horizon_path.moveTo(0, y - 0.1f);
-                        horizon_path.lineTo(view_width, y - 0.1f);
-                        horizon_path.lineTo(view_width, y + 0.1f);
-                        horizon_path.lineTo(0, y + 0.1f);
-                        horizon_path.lineTo(0, y - 0.1f);
-                        horizon_path.close();
-                        canvas.drawPath(horizon_path, paint_stroke);
-                        Path vertical_path = new Path();
-                        vertical_path.moveTo(x - 0.1f, 0);
-                        vertical_path.lineTo(x - 0.1f, view_height);
-                        vertical_path.lineTo(x + 0.1f, view_height);
-                        vertical_path.lineTo(x + 0.1f, 0);
-                        vertical_path.lineTo(x - 0.1f, 0);
-                        vertical_path.close();
-                        canvas.drawPath(vertical_path, paint_stroke);
-                        map_imageView.setImageBitmap(baseBitmap);
-
-                        for (int i = 0; i < regions.size(); i++) {
-                            Region region = regions.get(i);
-                            Path hPath = new Path(horizon_path), vPath = new Path(vertical_path);
-
-                            hPath.op(region.getPolygon(), Path.Op.INTERSECT);
-                            vPath.op(region.getPolygon(), Path.Op.INTERSECT);
-                            if (!hPath.isEmpty() && !vPath.isEmpty()) {
-                                Log.i("Detected!", "Select : " + region.getName());
-                        /*).op(vertical_path, Path.Op.UNION);
-                        canvas.drawPath(region.getPolygon(), paint_stroke);
-                        map.setImageBitmap(baseBitmap);*/
-                                return true;
-                            }
+                        int index = getSelectedRegion(regions, event.getX(), event.getY());
+                        if(index != -1) {
+                            Log.i("Detected", regions.get(index).getName());
                         }
                         break;
                 }
@@ -220,7 +211,6 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
     }
 
     public Path getPolygon(JSONObject place, JSONArray arcs) {
-
         try {
             Path polygon = new Path();
             for(int i = 0; i < place.getJSONArray("arcs").length(); i++) {
@@ -274,5 +264,57 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
             new_Arcs.add(Arcs.get(Arcs.size() - i));
         }
         return new_Arcs;
+    }
+
+    public int getSelectedRegion(final List<Region> regions, final float x, final float y) {
+        Path horizon_path = new Path();
+        horizon_path.moveTo(0, y - 0.1f);
+        horizon_path.lineTo(view_width, y - 0.1f);
+        horizon_path.lineTo(view_width, y + 0.1f);
+        horizon_path.lineTo(0, y + 0.1f);
+        horizon_path.lineTo(0, y - 0.1f);
+        horizon_path.close();
+
+        Path vertical_path = new Path();
+        vertical_path.moveTo(x - 0.1f, 0);
+        vertical_path.lineTo(x - 0.1f, view_height);
+        vertical_path.lineTo(x + 0.1f, view_height);
+        vertical_path.lineTo(x + 0.1f, 0);
+        vertical_path.lineTo(x - 0.1f, 0);
+        vertical_path.close();
+
+        for (int i = 0; i < regions.size(); i++) {
+            Region region = regions.get(i);
+            Path hPath = new Path(horizon_path), vPath = new Path(vertical_path);
+            hPath.op(region.getPolygon(), Path.Op.INTERSECT);
+            vPath.op(region.getPolygon(), Path.Op.INTERSECT);
+            if (!hPath.isEmpty() && !vPath.isEmpty())
+                return i;
+        }
+        return -1;
+    }
+
+    public void showRegion(final List<Region> regions, int index, int mode) {
+        if(index != -1) {
+            switch (mode) {
+                case SELECTED:
+                    canvas.drawPath(regions.get(index).getPolygon(), paint_fill);
+                    canvas.drawPath(regions.get(index).getPolygon(), paint_stroke);
+                    while(regions.get(index).getInsideRegion() != -1) {
+                        index = regions.get(index).getInsideRegion();
+                        canvas.drawPath(regions.get(index).getPolygon(), paint_fill);
+                        canvas.drawPath(regions.get(index).getPolygon(), paint_stroke);
+                    }
+                    break;
+                case UNSELECTED:
+                    canvas.drawPath(regions.get(index).getPolygon(), paint_stroke);
+                    while(regions.get(index).getInsideRegion() != -1) {
+                        index = regions.get(index).getInsideRegion();
+                        canvas.drawPath(regions.get(index).getPolygon(), paint_stroke);
+                    }
+                    break;
+            }
+            map_imageView.setImageBitmap(baseBitmap);
+        }
     }
 }
