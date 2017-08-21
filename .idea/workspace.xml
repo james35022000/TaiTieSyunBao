@@ -86,15 +86,14 @@
       <file leaf-file-name="SelectRegionContainer.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/jcchen/taitiesyunbao/View/CustomView/SelectRegionContainer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-7306">
-              <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
+            <state relative-caret-position="628">
+              <caret line="317" column="9" selection-start-line="317" selection-start-column="9" selection-end-line="317" selection-end-column="9" />
               <folding>
-                <element signature="class#point#0;class#SelectRegionContainer#0" expanded="false" />
                 <element signature="method#point#0;class#point#0;class#SelectRegionContainer#0" expanded="false" />
                 <element signature="method#setSize#0;class#SelectRegionContainer#0" expanded="false" />
                 <element signature="method#onFinishInflate#0;class#SelectRegionContainer#0" expanded="false" />
-                <element signature="e#8220#8221#0" expanded="true" />
-                <element signature="e#8253#8254#0" expanded="true" />
+                <element signature="e#8466#8467#0" expanded="true" />
+                <element signature="e#8499#8500#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -3218,7 +3217,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="204" />
+      <option name="time" value="205" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -3552,15 +3551,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/jcchen/taitiesyunbao/View/CustomView/SelectRegionContainer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-7306">
-          <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
+        <state relative-caret-position="628">
+          <caret line="317" column="9" selection-start-line="317" selection-start-column="9" selection-end-line="317" selection-end-column="9" />
           <folding>
-            <element signature="class#point#0;class#SelectRegionContainer#0" expanded="false" />
             <element signature="method#point#0;class#point#0;class#SelectRegionContainer#0" expanded="false" />
             <element signature="method#setSize#0;class#SelectRegionContainer#0" expanded="false" />
             <element signature="method#onFinishInflate#0;class#SelectRegionContainer#0" expanded="false" />
-            <element signature="e#8220#8221#0" expanded="true" />
-            <element signature="e#8253#8254#0" expanded="true" />
+            <element signature="e#8466#8467#0" expanded="true" />
+            <element signature="e#8499#8500#0" expanded="true" />
           </folding>
         </state>
       </provider>
