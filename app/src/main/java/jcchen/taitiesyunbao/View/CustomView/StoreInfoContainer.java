@@ -183,7 +183,7 @@ public class StoreInfoContainer extends FrameLayout implements Container {
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
                 switch(newState) {
                     case BottomSheetBehavior.STATE_HIDDEN:
-                        ((MainActivity) context).setBackPress(container);
+                        ((MainActivity) context).popBackPress(comment_container);
                         break;
                     case BottomSheetBehavior.STATE_COLLAPSED:
                         ((MainActivity) context).setBackPress(comment_container);

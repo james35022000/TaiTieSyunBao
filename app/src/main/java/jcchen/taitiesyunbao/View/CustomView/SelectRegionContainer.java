@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
 import org.json.JSONArray;
@@ -41,6 +42,7 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
     private Context context;
     private int view_width;
     private int view_height;
+    private PopupWindow popupWindow;
 
     private Bitmap baseBitmap;
     private Canvas canvas;
@@ -147,6 +149,10 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
 
     }
 
+    public void setPopupWindow(PopupWindow popupWindow) {
+        this.popupWindow = popupWindow;
+    }
+
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
@@ -156,7 +162,8 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
 
     @Override
     public boolean onBackPressed() {
-        return false;
+        popupWindow.dismiss();
+        return true;
     }
 
     @Override
@@ -168,7 +175,7 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
         String json;
 
         try {
-            InputStream inputStream = context.getAssets().open("mid_counties.json");
+            InputStream inputStream = context.getAssets().open("normal_part_counties.json");
             byte[] buffer = new byte[inputStream.available()];
             inputStream.read(buffer);
             inputStream.close();

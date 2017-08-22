@@ -70,7 +70,6 @@ public class CommentContainer extends FrameLayout implements Container {
     public boolean onBackPressed() {
         bottomSheetBehavior = BottomSheetBehavior.from(this.getRootView().findViewById(R.id.bottom_sheet));
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-        ((MainActivity) context).setBackPress((Container) getRootView().findViewById(R.id.store_info_container));
         return true;
     }
 

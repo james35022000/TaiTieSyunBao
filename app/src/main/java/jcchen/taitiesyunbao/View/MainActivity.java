@@ -3,11 +3,7 @@ package jcchen.taitiesyunbao.View;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -18,14 +14,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -35,7 +28,9 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
+import java.util.Stack;
 import java.util.Vector;
+import java.util.concurrent.ExecutionException;
 
 import jcchen.taitiesyunbao.BottomTab;
 import jcchen.taitiesyunbao.R;
@@ -87,12 +82,16 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar activity_main_toolbar;
 
     private Container BackPressContainer;
+    private Stack<Container> BackPressStack;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity_layout);
+
+        BackPressStack = new Stack<>();
+        BackPressStack.add(null);
 
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
         ImageLoader.getInstance().init(config);
@@ -118,9 +117,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0
-                && BackPressContainer != null) {
-            return BackPressContainer.onBackPressed();
+                && BackPressStack.peek() != null) {
+            try {
+                return BackPressStack.pop().onBackPressed();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                BackPressStack.pop();
+                return true;
+            }
         }
+        if(BackPressStack.size() > 1)
+            BackPressStack.pop();
         return super.onKeyDown(keyCode, event);
     }
 
@@ -131,6 +138,24 @@ public class MainActivity extends AppCompatActivity {
         activity_main_toolbar = (Toolbar) findViewById(R.id.activity_main_toolbar);
         toolbar_icon_imageView = (ImageView) findViewById(R.id.toolbar_icon_imageView);
         toolbar_text_textView = (TextView) findViewById(R.id.toolbar_text_textView);
+        back_imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Container container = BackPressStack.peek();
+                if(container != null) {
+                    try{
+                        container.onBackPressed();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                    BackPressStack.pop();
+                }
+                else {
+                    if(BackPressStack.size() > 1)
+                        BackPressStack.pop();
+                }
+            }
+        });
         toolbar_icon_imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -142,15 +167,16 @@ public class MainActivity extends AppCompatActivity {
                 final int app_width = findViewById(R.id.activity_linearLayout).getWidth();
                 LayoutInflater inflater = LayoutInflater.from(context);
                 View view = inflater.inflate(R.layout.select_region_layout, null, false);
+                SelectRegionContainer container = (SelectRegionContainer) view;
                 PopupWindow popupWindow = new PopupWindow(context);
+                container.setPopupWindow(popupWindow);
                 popupWindow.setWidth(app_width);
                 popupWindow.setHeight(app_height - toolbar_height);
                 popupWindow.setContentView(view);
-                popupWindow.setFocusable(true);
                 popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 popupWindow.showAtLocation(view, Gravity.NO_GRAVITY, 0, toolbar_height + statusbar_height);
 
-                SelectRegionContainer container = (SelectRegionContainer) view;
+                setBackPress(container);
                 container.setSize(app_width, app_height - toolbar_height);
                 container.showItem(null);
             }
@@ -270,14 +296,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setBackPress(final Container container) {
-        BackPressContainer = container;
-        back_imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(container != null)
-                    container.onBackPressed();
-            }
-        });
+        if(!container.equals(BackPressStack.peek()))
+            BackPressStack.add(container);
+    }
+
+    public void popBackPress(final Container container) {
+        if(container.equals(BackPressStack.peek()))
+            BackPressStack.pop();
     }
 
     /**
