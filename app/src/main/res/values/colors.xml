@@ -5,4 +5,5 @@
     <color name="colorAccent">#2980b9</color>
     <color name="colorFragmentHostTab">#D1D5D7</color>
     <color name="colorBackground">#ECF0F1</color>
+    <color name="colorMapBackground">#BB000000</color>
 </resources>

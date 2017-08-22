@@ -9,5 +9,6 @@
         android:id="@+id/map_imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="center"/>
+        android:background="@color/colorMapBackground"
+        android:scaleType="center" />
 </jcchen.taitiesyunbao.View.CustomView.SelectRegionContainer>
