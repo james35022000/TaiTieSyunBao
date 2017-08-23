@@ -244,6 +244,11 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
 
     }
 
+    @Override
+    public Context getMainThread() {
+        return context;
+    }
+
     public Path getPolygon(JSONObject place, JSONArray arcs) {
         try {
             float scale = (max_pos.getX() - min_pos.getX()) / view_width;

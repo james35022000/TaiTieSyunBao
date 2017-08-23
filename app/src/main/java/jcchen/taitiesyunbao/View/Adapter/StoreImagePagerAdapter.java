@@ -2,28 +2,22 @@ package jcchen.taitiesyunbao.View.Adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.media.FaceDetector;
-import android.media.Image;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
-import java.io.ByteArrayOutputStream;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 import jcchen.taitiesyunbao.ImageAttr;
 
@@ -33,23 +27,23 @@ import jcchen.taitiesyunbao.ImageAttr;
 
 public class StoreImagePagerAdapter extends PagerAdapter {
     private Context context;
-    private Vector<ImageAttr> Image;
-    private Vector<Drawable> drawable;
+    private List<ImageAttr> Image;
+    private List<Drawable> drawable;
 
-    public StoreImagePagerAdapter(Context context, Vector<ImageAttr> Image) {
+    public StoreImagePagerAdapter(Context context, List<ImageAttr> Image) {
         this.context = context;
         this.Image = Image;
-        this.drawable = new Vector<>();
+        this.drawable = new ArrayList<>();
         for(int i = 0; i < Image.size(); i++)
             drawable.add(null);
     }
 
-    public Vector<Drawable> getDrawable() {
+    public List<Drawable> getDrawable() {
         return drawable;
     }
 
-    public Vector<ImageAttr> getImage() {
-        return new Vector<>(Image);
+    public List<ImageAttr> getImage() {
+        return new ArrayList<>(Image);
     }
 
     @Override

@@ -1,6 +1,8 @@
 package jcchen.taitiesyunbao.Presenter;
 
+import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Handler;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -13,6 +15,7 @@ import java.util.List;
 
 import jcchen.taitiesyunbao.Model.GetStoreComment;
 import jcchen.taitiesyunbao.Model.GetStoreInfo;
+import jcchen.taitiesyunbao.Model.GetStoreInfoV2;
 import jcchen.taitiesyunbao.Model.StoreModel;
 import jcchen.taitiesyunbao.StoreComment;
 import jcchen.taitiesyunbao.StoreInfo;
@@ -32,10 +35,14 @@ public class StorePresenter implements OnStoreListener {
 
     private AsyncTask<String, Void, JSONObject> getStoreComment;
 
+    private Context context;
+
+
     public StorePresenter(Container container) {
         this.container = container;
+        this.context = container.getMainThread();
         this.storePresenter = this;
-        this.storeModel = new StoreModel(storePresenter);
+        this.storeModel = new StoreModel(storePresenter, context);
     }
 
     public void loadStoreInfo() {
@@ -71,7 +78,8 @@ public class StorePresenter implements OnStoreListener {
                             storeInfo.setAddress(dataSnapshot.child("Address_tw").getValue().toString(),
                                     dataSnapshot.child("Address_en").getValue().toString());
                             container.loadingState(true);
-                            new GetStoreInfo(storeInfo, storePresenter).execute();
+                            //new GetStoreInfo(storeInfo, storePresenter).execute();
+                            storeModel.getStoreInfo(storeInfo);
                         }
 
                         @Override

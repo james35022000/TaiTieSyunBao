@@ -1,10 +1,8 @@
 package jcchen.taitiesyunbao;
 
 
-import android.media.Image;
-import android.support.v4.content.ContextCompat;
-
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 import static jcchen.taitiesyunbao.Constant.LANGUAGE_EN;
 
@@ -22,10 +20,10 @@ public class StoreInfo {
     private String Info;
     private String Latitude;
     private String Longitude;
-    private Vector<String> Types;
+    private List<String> Types;
     private String Station;
     private String Area;
-    private Vector<ImageAttr> Image;
+    private List<ImageAttr> Image;
     private String _storeID;
     private int ReviewAmount;
 
@@ -101,13 +99,13 @@ public class StoreInfo {
         this.Longitude = Longitude;
     }
 
-    public Vector<String> getTypes() {
+    public List<String> getTypes() {
         if(Types == null)
-            this.Types = new Vector<>();
-        return new Vector<>(this.Types);
+            this.Types = new ArrayList<>();
+        return new ArrayList<>(this.Types);
     }
 
-    public void setTypes(Vector<String> Types) {
+    public void setTypes(List<String> Types) {
         this.Types = Types;
     }
 
@@ -127,21 +125,21 @@ public class StoreInfo {
         this.Area = Area;
     }
 
-    public Vector<ImageAttr> getImage() {
+    public List<ImageAttr> getImage() {
         if(this.Image == null)
-            this.Image = new Vector<>();
-        return new Vector<>(this.Image);
+            this.Image = new ArrayList<>();
+        return new ArrayList<>(this.Image);
     }
 
-    public void setImage(Vector<ImageAttr> Image) {
+    public void setImage(List<ImageAttr> Image) {
         this.Image = Image;
     }
 
-    public String get_storeID() {
+    public String getStoreID() {
         return this._storeID;
     }
 
-    public void set_storeID(String _storeID) {
+    public void setStoreID(String _storeID) {
         this._storeID = _storeID;
     }
 

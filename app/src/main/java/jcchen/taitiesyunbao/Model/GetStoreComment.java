@@ -1,9 +1,6 @@
 package jcchen.taitiesyunbao.Model;
 
 import android.os.AsyncTask;
-import android.os.Handler;
-import android.os.Message;
-import android.support.v7.widget.RecyclerView;
 
 import org.json.JSONObject;
 
@@ -11,14 +8,10 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Vector;
 
 import jcchen.taitiesyunbao.Presenter.OnStoreListener;
-import jcchen.taitiesyunbao.Presenter.StorePresenter;
 import jcchen.taitiesyunbao.StoreComment;
 import jcchen.taitiesyunbao.StoreInfo;
-
-import static jcchen.taitiesyunbao.Constant.LOADING_HANDLER_END;
 
 /**
  * Created by JCChen on 2017/7/28.
@@ -42,7 +35,7 @@ public class GetStoreComment extends AsyncTask<String, Void, JSONObject> {
                 return null;
 
             URL url = new URL("https://www.google.com/maps/preview/reviews?hl=zh-TW&pb=!1s" +
-                    storeInfo.get_storeID() + "!2i" + params[0] + "!3i10!4e6!7m4!2b1!3b1!5b1!6b1");
+                    storeInfo.getStoreID() + "!2i" + params[0] + "!3i10!4e6!7m4!2b1!3b1!5b1!6b1");
             if(isCancelled())  return null;
             String response;
             JSONObject jsonObject;

@@ -83,4 +83,9 @@ public class CommentContainer extends FrameLayout implements Container {
     public void loadingState(boolean state) {
 
     }
+
+    @Override
+    public Context getMainThread() {
+        return context;
+    }
 }

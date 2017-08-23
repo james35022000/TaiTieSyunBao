@@ -85,4 +85,9 @@ public class StoreContainer extends FrameLayout implements Container {
             adapter.setLoadingState(false);
     }
 
+    @Override
+    public Context getMainThread() {
+        return context;
+    }
+
 }

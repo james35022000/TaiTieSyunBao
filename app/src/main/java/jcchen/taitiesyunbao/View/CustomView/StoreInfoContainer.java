@@ -250,4 +250,9 @@ public class StoreInfoContainer extends FrameLayout implements Container {
 
     @Override
     public void loadingState(boolean state) {}
+
+    @Override
+    public Context getMainThread() {
+        return context;
+    }
 }

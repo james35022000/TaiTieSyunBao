@@ -14,13 +14,13 @@ import java.util.Vector;
 
 import jcchen.taitiesyunbao.ImageAttr;
 import jcchen.taitiesyunbao.Presenter.OnStoreListener;
-import jcchen.taitiesyunbao.Presenter.StorePresenter;
 import jcchen.taitiesyunbao.StoreInfo;
 
 
 /**
  * Created by JCChen on 2017/7/15.
  */
+@Deprecated
 public class GetStoreInfo extends AsyncTask<Void, Void, StoreInfo> {
 
     private StoreInfo storeInfo;
@@ -52,8 +52,8 @@ public class GetStoreInfo extends AsyncTask<Void, Void, StoreInfo> {
             }
             catch (Exception e) {  }
             storeInfo.setRate(cacheResponse.getJSONArray("j").getJSONArray(8).getString(3));
-            storeInfo.set_storeID(cacheResponse.getJSONArray("j").getJSONArray(8).getJSONArray(0).getString(0));
-            storeInfo.setImage(getImageUrl(storeInfo.get_storeID()));
+            storeInfo.setStoreID(cacheResponse.getJSONArray("j").getJSONArray(8).getJSONArray(0).getString(0));
+            storeInfo.setImage(getImageUrl(storeInfo.getStoreID()));
             String ReviewAmount = cacheResponse.getJSONArray("j").getJSONArray(8).getString(4);
             if(!ReviewAmount.equals("null"))
                 storeInfo.setReviewAmount(Integer.valueOf(ReviewAmount.split(" ")[0]));
