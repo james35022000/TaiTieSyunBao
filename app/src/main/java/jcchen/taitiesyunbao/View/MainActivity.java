@@ -30,9 +30,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.util.Stack;
 import java.util.Vector;
-import java.util.concurrent.ExecutionException;
 
-import jcchen.taitiesyunbao.BottomTab;
 import jcchen.taitiesyunbao.R;
 import jcchen.taitiesyunbao.RoundedImageView;
 import jcchen.taitiesyunbao.View.Adapter.MainPagerAdapter;

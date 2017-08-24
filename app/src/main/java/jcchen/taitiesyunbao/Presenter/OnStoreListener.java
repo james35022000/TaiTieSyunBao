@@ -2,8 +2,8 @@ package jcchen.taitiesyunbao.Presenter;
 
 import java.util.List;
 
-import jcchen.taitiesyunbao.StoreComment;
-import jcchen.taitiesyunbao.StoreInfo;
+import jcchen.taitiesyunbao.Entity.StoreComment;
+import jcchen.taitiesyunbao.Entity.StoreInfo;
 
 /**
  * Created by JCChen on 2017/8/10.

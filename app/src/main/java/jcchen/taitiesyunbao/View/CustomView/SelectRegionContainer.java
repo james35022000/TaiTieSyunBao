@@ -245,7 +245,7 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
     }
 
     @Override
-    public Context getMainThread() {
+    public Context getActivity() {
         return context;
     }
 

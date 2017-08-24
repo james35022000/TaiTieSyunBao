@@ -10,13 +10,14 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import jcchen.taitiesyunbao.Presenter.OnStoreListener;
-import jcchen.taitiesyunbao.StoreComment;
-import jcchen.taitiesyunbao.StoreInfo;
+import jcchen.taitiesyunbao.Entity.StoreComment;
+import jcchen.taitiesyunbao.Entity.StoreInfo;
 
 /**
  * Created by JCChen on 2017/7/28.
  */
 
+@Deprecated
 public class GetStoreComment extends AsyncTask<String, Void, JSONObject> {
 
     private StoreInfo storeInfo;

@@ -10,5 +10,5 @@ public interface Container {
     boolean onBackPressed();
     void showItem(Object object);
     void loadingState(boolean state);
-    Context getMainThread();
+    Context getActivity();
 }

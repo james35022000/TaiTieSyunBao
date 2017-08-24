@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import jcchen.taitiesyunbao.R;
-import jcchen.taitiesyunbao.StoreInfo;
+import jcchen.taitiesyunbao.Entity.StoreInfo;
 import jcchen.taitiesyunbao.View.CustomView.StoreInfoContainer;
 
 /**

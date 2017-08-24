@@ -21,9 +21,9 @@ import java.util.List;
 
 import jcchen.taitiesyunbao.R;
 import jcchen.taitiesyunbao.RoundedImageView;
-import jcchen.taitiesyunbao.StoreComment;
+import jcchen.taitiesyunbao.Entity.StoreComment;
 
-import static jcchen.taitiesyunbao.Constant.RESOURCE_GOOGLE;
+import static jcchen.taitiesyunbao.Entity.Constant.RESOURCE_GOOGLE;
 
 /**
  * Created by JCChen on 2017/7/28.

@@ -6,17 +6,16 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import jcchen.taitiesyunbao.Presenter.StorePresenter;
+import jcchen.taitiesyunbao.Presenter.impl.StorePresenterImpl;
 import jcchen.taitiesyunbao.R;
-import jcchen.taitiesyunbao.StoreComment;
-import jcchen.taitiesyunbao.StoreInfo;
-import jcchen.taitiesyunbao.View.MainActivity;
+import jcchen.taitiesyunbao.Entity.StoreComment;
+import jcchen.taitiesyunbao.Entity.StoreInfo;
 import jcchen.taitiesyunbao.View.Adapter.StoreCommentRecyclerViewAdapter;
 
 /**
@@ -46,7 +45,6 @@ public class CommentContainer extends FrameLayout implements Container {
     public void onDestroy() {
         context = null;
         commentList = null;
-        presenter.onDestroy();
         presenter = null;
         adapter = null;
         comment_recyclerView.setAdapter(null);
@@ -57,7 +55,7 @@ public class CommentContainer extends FrameLayout implements Container {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        this.presenter = new StorePresenter(this);
+        this.presenter = new StorePresenterImpl(this);
         this.comment_recyclerView = (RecyclerView) getChildAt(0);
         commentList = new ArrayList<>();
         commentList.add(null);
@@ -70,6 +68,7 @@ public class CommentContainer extends FrameLayout implements Container {
     public boolean onBackPressed() {
         bottomSheetBehavior = BottomSheetBehavior.from(this.getRootView().findViewById(R.id.bottom_sheet));
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        presenter.cancelStoreComment();
         return true;
     }
 
@@ -85,7 +84,7 @@ public class CommentContainer extends FrameLayout implements Container {
     }
 
     @Override
-    public Context getMainThread() {
+    public Context getActivity() {
         return context;
     }
 }

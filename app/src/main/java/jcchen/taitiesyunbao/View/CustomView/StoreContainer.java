@@ -10,7 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jcchen.taitiesyunbao.Presenter.StorePresenter;
-import jcchen.taitiesyunbao.StoreInfo;
+import jcchen.taitiesyunbao.Presenter.impl.StorePresenterImpl;
+import jcchen.taitiesyunbao.Entity.StoreInfo;
 import jcchen.taitiesyunbao.View.Adapter.StoreRecyclerViewAdapter;
 
 
@@ -39,7 +40,7 @@ public class StoreContainer extends FrameLayout implements Container {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        this.presenter = new StorePresenter(this);
+        this.presenter = new StorePresenterImpl(this);
         this.loadingCount = 0;
         store_recyclerView = (RecyclerView) getChildAt(0);
         storeList = new ArrayList<>();
@@ -51,7 +52,6 @@ public class StoreContainer extends FrameLayout implements Container {
     }
 
     public void onDestroy() {
-        presenter.onDestroy();
         presenter = null;
         storeList = null;
         adapter = null;
@@ -86,7 +86,7 @@ public class StoreContainer extends FrameLayout implements Container {
     }
 
     @Override
-    public Context getMainThread() {
+    public Context getActivity() {
         return context;
     }
 

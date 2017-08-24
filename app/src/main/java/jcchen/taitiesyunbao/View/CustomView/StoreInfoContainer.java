@@ -29,12 +29,12 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
-import jcchen.taitiesyunbao.ImageAttr;
+import jcchen.taitiesyunbao.Entity.ImageAttr;
 import jcchen.taitiesyunbao.R;
-import jcchen.taitiesyunbao.StoreInfo;
+import jcchen.taitiesyunbao.Entity.StoreInfo;
 import jcchen.taitiesyunbao.View.MainActivity;
 
-import static jcchen.taitiesyunbao.Constant.LANGUAGE_TW;
+import static jcchen.taitiesyunbao.Entity.Constant.LANGUAGE_TW;
 
 /**
  * Created by JCChen on 2017/8/12.
@@ -252,7 +252,7 @@ public class StoreInfoContainer extends FrameLayout implements Container {
     public void loadingState(boolean state) {}
 
     @Override
-    public Context getMainThread() {
+    public Context getActivity() {
         return context;
     }
 }

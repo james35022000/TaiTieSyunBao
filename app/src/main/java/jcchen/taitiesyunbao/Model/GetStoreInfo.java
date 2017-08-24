@@ -12,9 +12,9 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Vector;
 
-import jcchen.taitiesyunbao.ImageAttr;
+import jcchen.taitiesyunbao.Entity.ImageAttr;
 import jcchen.taitiesyunbao.Presenter.OnStoreListener;
-import jcchen.taitiesyunbao.StoreInfo;
+import jcchen.taitiesyunbao.Entity.StoreInfo;
 
 
 /**

@@ -19,7 +19,7 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import java.util.ArrayList;
 import java.util.List;
 
-import jcchen.taitiesyunbao.ImageAttr;
+import jcchen.taitiesyunbao.Entity.ImageAttr;
 
 /**
  * Created by JCChen on 2017/7/16.
