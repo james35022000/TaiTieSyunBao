@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<jcchen.taitiesyunbao.View.CustomView.SelectRegionContainer
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<jcchen.taitiesyunbao.View.CustomView.SelectRegionContainer xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/select_region_container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorMapBackground">
 
     <ImageView
         android:id="@+id/map_imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorMapBackground"
+        android:layout_alignParentLeft="false"
+        android:layout_toLeftOf="@+id/select_listView"
         android:scaleType="center" />
+
+    <ListView
+        android:id="@+id/select_listView"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true" />
 </jcchen.taitiesyunbao.View.CustomView.SelectRegionContainer>

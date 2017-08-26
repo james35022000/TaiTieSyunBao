@@ -10,7 +10,9 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
@@ -37,7 +39,8 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
     private final int MIN_Y = 2;
     private final int MAX_Y = 3;
 
-    private final int map_padding = 10;
+    private int map_padding_x = 10;  // dp
+    private int map_padding_y = 10;  // dp
 
     private Context context;
     private int view_width;
@@ -54,6 +57,7 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
     private int last_selected_region;
 
     private ImageView map_imageView;
+    private ListView select_listView;
 
     private class Region {
         private String id;
@@ -140,8 +144,10 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
     }
 
     public void setSize(final int width, final int height) {
-        this.view_width = width;
-        this.view_height = height;
+        this.map_padding_x *= context.getResources().getDisplayMetrics().density;
+        this.map_padding_y *= context.getResources().getDisplayMetrics().density;
+        this.view_width = width - (int)(50 * context.getResources().getDisplayMetrics().density) - 2 * map_padding_x;
+        this.view_height = height - 2 * map_padding_y;
 
         baseBitmap = Bitmap.createBitmap(view_width, view_height, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(baseBitmap);
@@ -158,6 +164,7 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
         super.onFinishInflate();
         View view = this;
         this.map_imageView = (ImageView) view.findViewById(R.id.map_imageView);
+        this.select_listView = (ListView) view.findViewById(R.id.select_listView);
     }
 
     @Override
@@ -175,7 +182,7 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
         String json;
 
         try {
-            InputStream inputStream = context.getAssets().open("normal_part_counties.json");
+            InputStream inputStream = context.getAssets().open("north_counties.json");
             byte[] buffer = new byte[inputStream.available()];
             inputStream.read(buffer);
             inputStream.close();
@@ -219,6 +226,15 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
             ex.printStackTrace();
         }
 
+        String[] name_list = new String[regions.size()];
+        for(int i = 0; i < regions.size(); i++)
+            name_list[i] = (regions.get(i).getName());
+
+        ArrayAdapter<String> listAdapter = new ArrayAdapter<>(context,
+                R.layout.select_region_listview_text,
+                name_list);
+        select_listView.setAdapter(listAdapter);
+
         map_imageView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -254,14 +270,16 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
             float scale = (max_pos.getX() - min_pos.getX()) / view_width;
             scale = scale > (max_pos.getY() - min_pos.getY()) / view_height ?
                     scale : (max_pos.getY() - min_pos.getY()) / view_height;
+            float offset_x = (view_width - (max_pos.getX() - min_pos.getX()) / scale) / 2;
+            float offset_y = (view_height - (max_pos.getY() - min_pos.getY()) / scale) / 2;
             Path polygon = new Path();
             for(int i = 0; i < place.getJSONArray("arcs").length(); i++) {
                 for(int j = 0; j < place.getJSONArray("arcs").getJSONArray(i).length(); j++) {
                     List<point> Arcs = getArcs(Integer.valueOf(place.getJSONArray("arcs").getJSONArray(i).get(j).toString()), arcs);
                     if(i == 0 && j == 0)
-                        polygon.moveTo((Arcs.get(0).getX() - min_pos.getX()) / scale, (Arcs.get(0).getY() + max_pos.getY()) / scale);
+                        polygon.moveTo((Arcs.get(0).getX() - min_pos.getX()) / scale + offset_x, (Arcs.get(0).getY() + max_pos.getY()) / scale + offset_y);
                     for(int k = 1; k < Arcs.size(); k++)
-                        polygon.lineTo((Arcs.get(k).getX() - min_pos.getX()) / scale, (Arcs.get(k).getY() + max_pos.getY()) / scale);
+                        polygon.lineTo((Arcs.get(k).getX() - min_pos.getX()) / scale + offset_x, (Arcs.get(k).getY() + max_pos.getY()) / scale + offset_y);
                 }
             }
             return polygon;
