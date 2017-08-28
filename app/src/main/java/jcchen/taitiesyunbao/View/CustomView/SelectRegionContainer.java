@@ -238,9 +238,20 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
         map_imageView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                float real_x = event.getX() - map_padding_x, real_y = event.getY() - map_padding_y;
                 switch(event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        int index = getSelectedRegion(regions, event.getX(), event.getY());
+                        int index = getSelectedRegion(regions, real_x, real_y);
+                        //  DEBUG START
+                        /*Path p1 = new Path(), p2 = new Path();
+                        p1.moveTo(0, event.getY());
+                        p1.lineTo(view_width, event.getY());
+                        p2.moveTo(event.getX(), 0);
+                        p2.lineTo(event.getX(), view_height);
+                        canvas.drawPath(p1, paint_stroke);
+                        canvas.drawPath(p2, paint_stroke);
+                        map_imageView.setImageBitmap(baseBitmap);*/
+                        //  DEBUG END
                         if(index != -1) {
                             showRegion(regions, index, SELECTED);
                         }
