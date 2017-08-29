@@ -7,12 +7,11 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
@@ -24,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jcchen.taitiesyunbao.R;
+import jcchen.taitiesyunbao.SelectRegionListView;
 
 /**
  * Created by JCChen on 2017/8/21.
@@ -57,7 +57,7 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
     private int last_selected_region;
 
     private ImageView map_imageView;
-    private ListView select_listView;
+    private SelectRegionListView select_listView;
 
     private class Region {
         private String id;
@@ -164,7 +164,7 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
         super.onFinishInflate();
         View view = this;
         this.map_imageView = (ImageView) view.findViewById(R.id.map_imageView);
-        this.select_listView = (ListView) view.findViewById(R.id.select_listView);
+        this.select_listView = (SelectRegionListView) view.findViewById(R.id.select_listView);
     }
 
     @Override
@@ -226,15 +226,6 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
             ex.printStackTrace();
         }
 
-        String[] name_list = new String[regions.size()];
-        for(int i = 0; i < regions.size(); i++)
-            name_list[i] = (regions.get(i).getName());
-
-        ArrayAdapter<String> listAdapter = new ArrayAdapter<>(context,
-                R.layout.select_region_listview_text,
-                name_list);
-        select_listView.setAdapter(listAdapter);
-
         map_imageView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -262,6 +253,38 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
                         break;
                 }
                 return false;
+            }
+        });
+
+        String[] name_list = new String[regions.size() * 2 + 1];
+        name_list[regions.size()] = "請選擇";
+        for(int i = 0; i < regions.size(); i++) {
+            name_list[i] = (regions.get(i).getName());
+            name_list[i + regions.size() + 1] = name_list[i];
+        }
+        final ArrayAdapter<String> listAdapter = new ArrayAdapter<>(context,
+                R.layout.select_region_listview_text,
+                name_list);
+        select_listView.setAdapter(listAdapter);
+
+        select_listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                select_listView.setState(scrollState);
+                switch (scrollState) {
+                    case SCROLL_STATE_FLING:
+                        break;
+                    case SCROLL_STATE_IDLE:
+                        select_listView.smoothScrollToPosition((view.getFirstVisiblePosition() + view.getLastVisiblePosition()) / 2 - 1);
+                        break;
+                    case SCROLL_STATE_TOUCH_SCROLL:
+                        break;
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
             }
         });
     }

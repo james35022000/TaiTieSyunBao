@@ -13,10 +13,11 @@
         android:layout_toLeftOf="@+id/select_listView"
         android:scaleType="center" />
 
-    <ListView
+    <jcchen.taitiesyunbao.SelectRegionListView
         android:id="@+id/select_listView"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
+        android:layout_width="42sp"
+        android:layout_height="56sp"
         android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true" />
+        android:layout_centerVertical="true"
+        android:scrollbars="none" />
 </jcchen.taitiesyunbao.View.CustomView.SelectRegionContainer>
