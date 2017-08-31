@@ -15,7 +15,7 @@ import jcchen.taitiesyunbao.Presenter.OnStoreListener;
 import jcchen.taitiesyunbao.Presenter.StorePresenter;
 import jcchen.taitiesyunbao.Entity.StoreComment;
 import jcchen.taitiesyunbao.Entity.StoreInfo;
-import jcchen.taitiesyunbao.View.CustomView.Container;
+import jcchen.taitiesyunbao.View.Container.Container;
 
 /**
  * Created by JCChen on 2017/8/25.

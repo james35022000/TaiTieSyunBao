@@ -1,4 +1,4 @@
-package jcchen.taitiesyunbao.View.CustomView;
+package jcchen.taitiesyunbao.View.Container;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -10,7 +10,6 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AbsListView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -23,7 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jcchen.taitiesyunbao.R;
-import jcchen.taitiesyunbao.SelectRegionListView;
+import jcchen.taitiesyunbao.View.CircularListView.CircularListViewAdapter;
+import jcchen.taitiesyunbao.View.CircularListView.ContentView;
+import jcchen.taitiesyunbao.View.CircularListView.SelectRegionListView;
 
 /**
  * Created by JCChen on 2017/8/21.
@@ -256,26 +257,53 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
             }
         });
 
-        String[] name_list = new String[regions.size() * 2 + 1];
-        name_list[regions.size()] = "請選擇";
-        for(int i = 0; i < regions.size(); i++) {
-            name_list[i] = (regions.get(i).getName());
-            name_list[i + regions.size() + 1] = name_list[i];
+        List<String> name_list = new ArrayList<>(regions.size() + 1);
+        name_list.add("請選擇");
+        for(int i = 0; i < 1000; i++) {
+            //name_list.add(regions.get(i).getName());
+            name_list.add("測試中");
         }
-        final ArrayAdapter<String> listAdapter = new ArrayAdapter<>(context,
-                R.layout.select_region_listview_text,
-                name_list);
-        select_listView.setAdapter(listAdapter);
-
+        CircularListViewAdapter adapter = new CircularListViewAdapter(context, select_listView, name_list);
+        select_listView.setAdapter(adapter);
+        select_listView.setClipToPadding(false);
+        select_listView.setClipChildren(false);
+        select_listView.setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch(event.getAction()) {
+                    case MotionEvent.ACTION_UP:
+                        int center_index = 0;
+                        float last_pos = Float.MAX_VALUE;
+                        for(int i = 0; i < select_listView.getChildCount(); i++) {
+                            float pos = 1f - ((ContentView)select_listView.getChildAt(i)).getPosRate();
+                            if(pos < last_pos)
+                                last_pos = pos;
+                            else {
+                                center_index = i - 1;
+                                break;
+                            }
+                        }
+                        try {
+                            float scroll_offset = (1f - ((ContentView) select_listView.getChildAt(center_index)).getPosRate()) * (float) select_listView.getHeight() / 2f;
+                            if(select_listView.getChildAt(center_index).getTop() < select_listView.getHeight() / 2)
+                                select_listView.smoothScrollBy(-(int)scroll_offset, 200);
+                            else
+                                select_listView.smoothScrollBy((int)scroll_offset, 200);
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                        break;
+                }
+                return false;
+            }
+        });
         select_listView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
-                select_listView.setState(scrollState);
                 switch (scrollState) {
                     case SCROLL_STATE_FLING:
                         break;
                     case SCROLL_STATE_IDLE:
-                        select_listView.smoothScrollToPosition((view.getFirstVisiblePosition() + view.getLastVisiblePosition()) / 2 - 1);
                         break;
                     case SCROLL_STATE_TOUCH_SCROLL:
                         break;
@@ -284,7 +312,9 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-
+                if(visibleItemCount == 0)
+                    return;
+                view.invalidateViews();
             }
         });
     }
@@ -301,9 +331,7 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
 
     public Path getPolygon(JSONObject place, JSONArray arcs) {
         try {
-            float scale = (max_pos.getX() - min_pos.getX()) / view_width;
-            scale = scale > (max_pos.getY() - min_pos.getY()) / view_height ?
-                    scale : (max_pos.getY() - min_pos.getY()) / view_height;
+            float scale = Math.max((max_pos.getX() - min_pos.getX()) / view_width, (max_pos.getY() - min_pos.getY()) / view_height);
             float offset_x = (view_width - (max_pos.getX() - min_pos.getX()) / scale) / 2;
             float offset_y = (view_height - (max_pos.getY() - min_pos.getY()) / scale) / 2;
             Path polygon = new Path();

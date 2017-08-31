@@ -1,4 +1,4 @@
-package jcchen.taitiesyunbao.View.CustomView;
+package jcchen.taitiesyunbao.View.Container;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
@@ -48,7 +48,7 @@ public class StoreContainer extends FrameLayout implements Container {
         store_recyclerView.setAdapter(adapter);
         store_recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
-        presenter.loadStoreInfo();
+        //presenter.loadStoreInfo();
     }
 
     public void onDestroy() {

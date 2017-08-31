@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<jcchen.taitiesyunbao.View.CustomView.SelectRegionContainer xmlns:android="http://schemas.android.com/apk/res/android"
+<jcchen.taitiesyunbao.View.Container.SelectRegionContainer xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/select_region_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,14 +10,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="false"
-        android:layout_toLeftOf="@+id/select_listView"
+        android:layout_marginRight="50dp"
         android:scaleType="center" />
 
-    <jcchen.taitiesyunbao.SelectRegionListView
+    <jcchen.taitiesyunbao.View.CircularListView.SelectRegionListView
         android:id="@+id/select_listView"
-        android:layout_width="42sp"
-        android:layout_height="56sp"
+        android:layout_width="60sp"
+        android:layout_height="140dp"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
+        android:divider="@null"
+        android:dividerHeight="0px"
         android:scrollbars="none" />
-</jcchen.taitiesyunbao.View.CustomView.SelectRegionContainer>
+</jcchen.taitiesyunbao.View.Container.SelectRegionContainer>
