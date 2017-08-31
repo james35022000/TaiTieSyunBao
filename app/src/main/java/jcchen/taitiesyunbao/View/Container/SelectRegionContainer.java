@@ -312,9 +312,8 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if(visibleItemCount == 0)
-                    return;
-                view.invalidateViews();
+                for(int i = 0; i < visibleItemCount; i++)
+                    select_listView.getChildAt(i).invalidate();
             }
         });
     }
