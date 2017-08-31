@@ -257,14 +257,14 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
             }
         });
 
-        List<String> name_list = new ArrayList<>(regions.size() + 1);
+        List<String> name_list = new ArrayList<>();
         name_list.add("請選擇");
-        for(int i = 0; i < 1000; i++) {
-            //name_list.add(regions.get(i).getName());
-            name_list.add("測試中");
+        for(int i = 0; i < regions.size(); i++) {
+            name_list.add(regions.get(i).getName());
         }
         CircularListViewAdapter adapter = new CircularListViewAdapter(context, select_listView, name_list);
         select_listView.setAdapter(adapter);
+        select_listView.setSelection(adapter.getCount() / 2);
         select_listView.setClipToPadding(false);
         select_listView.setClipChildren(false);
         select_listView.setOnTouchListener(new OnTouchListener() {

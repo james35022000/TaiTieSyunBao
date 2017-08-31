@@ -21,6 +21,8 @@ public class CircularListViewAdapter extends BaseAdapter {
 
     private Context context;
 
+    private final int count = 10000;
+
     private List<String> region_list;
     private ListView select_listView;
 
@@ -32,17 +34,17 @@ public class CircularListViewAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return region_list.size();
+        return count;
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return position;
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -53,7 +55,7 @@ public class CircularListViewAdapter extends BaseAdapter {
             convertView = contentView;
         }
         TextView region_name = (TextView) convertView.findViewById(R.id.region_name);
-        region_name.setText(region_list.get(position));
+        region_name.setText(region_list.get(Math.abs(position - count / 2) % region_list.size()));
         return convertView;
     }
 }
