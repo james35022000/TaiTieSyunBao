@@ -39,23 +39,25 @@ public class CircularListViewAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return position;
+        return region_list.get((int) getItemId(position));
     }
 
     @Override
     public long getItemId(int position) {
-        return position;
+        if(position > count / 2)
+            return (position - count / 2) % region_list.size();
+        else
+            return Math.abs((count / 2 - position) % region_list.size() - region_list.size() + 1);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if(convertView == null) {
-            ContentView contentView = (ContentView) LayoutInflater.from(context).inflate(R.layout.select_region_listview_content, null);
-            contentView.setParentHeight(select_listView.getHeight());
-            convertView = contentView;
+            convertView = LayoutInflater.from(context).inflate(R.layout.select_region_listview_content, null);
         }
+        ((ContentView) convertView).setParentHeight(select_listView.getHeight());
         TextView region_name = (TextView) convertView.findViewById(R.id.region_name);
-        region_name.setText(region_list.get(Math.abs(position - count / 2) % region_list.size()));
+        region_name.setText((String) getItem(position));
         return convertView;
     }
 }

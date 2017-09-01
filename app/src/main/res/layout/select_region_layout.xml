@@ -16,10 +16,9 @@
     <jcchen.taitiesyunbao.View.CircularListView.SelectRegionListView
         android:id="@+id/select_listView"
         android:layout_width="60sp"
-        android:layout_height="140dp"
+        android:layout_height="100sp"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:divider="@null"
-        android:dividerHeight="0px"
         android:scrollbars="none" />
 </jcchen.taitiesyunbao.View.Container.SelectRegionContainer>

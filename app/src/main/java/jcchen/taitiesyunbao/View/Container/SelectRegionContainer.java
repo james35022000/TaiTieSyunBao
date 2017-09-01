@@ -221,7 +221,7 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
                     region.setInsideRegion(-1);
                 }
                 regions.add(region);
-                showRegion(regions, regions.size() - 1, UNSELECTED);
+                //showRegion(regions, regions.size() - 1, UNSELECTED);
             }
         } catch(Exception ex) {
             ex.printStackTrace();
@@ -265,6 +265,7 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
         CircularListViewAdapter adapter = new CircularListViewAdapter(context, select_listView, name_list);
         select_listView.setAdapter(adapter);
         select_listView.setSelection(adapter.getCount() / 2);
+        select_listView.smoothScroll();
         select_listView.setClipToPadding(false);
         select_listView.setClipChildren(false);
         select_listView.setOnTouchListener(new OnTouchListener() {
@@ -272,26 +273,7 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
             public boolean onTouch(View v, MotionEvent event) {
                 switch(event.getAction()) {
                     case MotionEvent.ACTION_UP:
-                        int center_index = 0;
-                        float last_pos = Float.MAX_VALUE;
-                        for(int i = 0; i < select_listView.getChildCount(); i++) {
-                            float pos = 1f - ((ContentView)select_listView.getChildAt(i)).getPosRate();
-                            if(pos < last_pos)
-                                last_pos = pos;
-                            else {
-                                center_index = i - 1;
-                                break;
-                            }
-                        }
-                        try {
-                            float scroll_offset = (1f - ((ContentView) select_listView.getChildAt(center_index)).getPosRate()) * (float) select_listView.getHeight() / 2f;
-                            if(select_listView.getChildAt(center_index).getTop() < select_listView.getHeight() / 2)
-                                select_listView.smoothScrollBy(-(int)scroll_offset, 200);
-                            else
-                                select_listView.smoothScrollBy((int)scroll_offset, 200);
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
-                        }
+                        select_listView.smoothScroll();
                         break;
                 }
                 return false;
@@ -312,7 +294,7 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                for(int i = 0; i < visibleItemCount; i++)
+                for(int i = 0; i < select_listView.getChildCount(); i++)
                     select_listView.getChildAt(i).invalidate();
             }
         });
