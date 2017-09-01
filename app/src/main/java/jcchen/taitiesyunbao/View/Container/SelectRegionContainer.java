@@ -9,6 +9,7 @@ import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
@@ -221,7 +222,7 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
                     region.setInsideRegion(-1);
                 }
                 regions.add(region);
-                //showRegion(regions, regions.size() - 1, UNSELECTED);
+                showRegion(regions, regions.size() - 1, UNSELECTED);
             }
         } catch(Exception ex) {
             ex.printStackTrace();
@@ -246,10 +247,11 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
                         //  DEBUG END
                         if(index != -1) {
                             showRegion(regions, index, SELECTED);
+                            select_listView.smoothScroll(index);
                         }
                         else {
                             showRegion(regions, last_selected_region, UNSELECTED);
-                            last_selected_region = -1;
+                            select_listView.smoothScroll(regions.size());
                         }
                         break;
                 }
@@ -258,14 +260,19 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
         });
 
         List<String> name_list = new ArrayList<>();
-        name_list.add("請選擇");
         for(int i = 0; i < regions.size(); i++) {
             name_list.add(regions.get(i).getName());
         }
-        CircularListViewAdapter adapter = new CircularListViewAdapter(context, select_listView, name_list);
+        name_list.add("請選擇");
+        final CircularListViewAdapter adapter = new CircularListViewAdapter(context, select_listView, name_list);
         select_listView.setAdapter(adapter);
-        select_listView.setSelection(adapter.getCount() / 2);
-        select_listView.smoothScroll();
+        select_listView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                select_listView.setSelection(adapter.getCount() / 2 - 1);
+                select_listView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            }
+        });
         select_listView.setClipToPadding(false);
         select_listView.setClipChildren(false);
         select_listView.setOnTouchListener(new OnTouchListener() {
@@ -273,7 +280,18 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
             public boolean onTouch(View v, MotionEvent event) {
                 switch(event.getAction()) {
                     case MotionEvent.ACTION_UP:
-                        select_listView.smoothScroll();
+                        select_listView.smoothScroll(select_listView.SCROLL_TO_CENTER);
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        if(Math.abs(((ContentView)select_listView.getChildAt(select_listView.getChildCount() / 2)).getPosRate()) >= 0.8) {
+                            int index = (int) adapter.getItemId(select_listView.getFirstVisiblePosition() + select_listView.getChildCount() / 2);
+                            if(index != regions.size()) {
+                                showRegion(regions, index, SELECTED);
+                            }
+                            else {
+                                showRegion(regions, last_selected_region, UNSELECTED);
+                            }
+                        }
                         break;
                 }
                 return false;
@@ -434,6 +452,7 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
                     }
                     break;
                 case UNSELECTED:
+                    last_selected_region = -1;
                     canvas.drawPath(regions.get(index).getPolygon(), paint_clear);
                     canvas.drawPath(regions.get(index).getPolygon(), paint_stroke);
                     while(regions.get(index).getInsideRegion() != -1) {

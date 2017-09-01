@@ -37,6 +37,10 @@ public class CircularListViewAdapter extends BaseAdapter {
         return count;
     }
 
+    public int getListSize() {
+        return region_list.size();
+    }
+
     @Override
     public Object getItem(int position) {
         return region_list.get((int) getItemId(position));
@@ -44,10 +48,10 @@ public class CircularListViewAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        if(position > count / 2)
+        if(position >= count / 2)
             return (position - count / 2) % region_list.size();
         else
-            return Math.abs((count / 2 - position) % region_list.size() - region_list.size() + 1);
+            return Math.abs((count / 2 - position - 1) % region_list.size() - region_list.size() + 1);
     }
 
     @Override

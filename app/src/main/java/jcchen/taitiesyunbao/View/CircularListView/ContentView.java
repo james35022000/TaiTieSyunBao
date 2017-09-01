@@ -24,10 +24,6 @@ public class ContentView extends RelativeLayout {
         this.parentHeight = parentHeight;
     }
 
-    public int getMid() {
-        return (getTop() + getBottom()) / 2;
-    }
-
     @Override
     protected void dispatchDraw(Canvas canvas) {
         float angle = getAngle();
@@ -35,14 +31,14 @@ public class ContentView extends RelativeLayout {
         canvas.save();
         {
             canvas.scale(scale, scale, getWidth(), getHeight() / 2);
-            canvas.rotate(angle);
+            canvas.rotate(angle, getWidth(), getHeight() / 2);
             super.dispatchDraw(canvas);
         }
         canvas.restore();
     }
 
     private float getAngle() {
-        if(getMid() < parentHeight / 2f)
+        if(getTop() < parentHeight / 2f)
             return (1f - getPosRate()) * ANGLE_MAX;
         else
             return -(1f - getPosRate()) * ANGLE_MAX;
@@ -53,9 +49,9 @@ public class ContentView extends RelativeLayout {
     }
 
     public float getPosRate() {
-        if(getMid() < parentHeight / 2f)
-            return (float)getMid() / (parentHeight / 2f);
+        if(getTop() < parentHeight / 2f)
+            return (float)getTop() / (parentHeight / 2f);
         else
-            return (parentHeight - (float)getMid()) / (parentHeight / 2f);
+            return (parentHeight - (float)getTop()) / (parentHeight / 2f);
     }
 }

@@ -8,6 +8,8 @@ import android.widget.ListView;
 
 import java.lang.reflect.Field;
 
+import jcchen.taitiesyunbao.R;
+
 
 /**
  * Created by JCChen on 2017/8/30.
@@ -15,9 +17,7 @@ import java.lang.reflect.Field;
 
 public class SelectRegionListView extends ListView {
 
-    public SelectRegionListView(Context context) {
-        super(context);
-    }
+    public final int SCROLL_TO_CENTER = -1;
 
     public SelectRegionListView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
@@ -30,26 +30,43 @@ public class SelectRegionListView extends ListView {
         }
     }
 
-    public void smoothScroll() {
-        int center_index = 0;
-        float last_pos = Float.MAX_VALUE;
-        for(int i = 0; i < getChildCount(); i++) {
-            float pos = 1f - ((ContentView) getChildAt(i)).getPosRate();
-            if(pos < last_pos)
-                last_pos = pos;
-            else {
-                center_index = i - 1;
-                break;
+    @Override
+    public void setSelection(int position) {
+        setSelectionFromTop(position, getHeight() / 2);
+    }
+
+    public void smoothScroll(int itemId) {
+        if(itemId == SCROLL_TO_CENTER) {
+            int center_index = -1;  //  Child index (0 ~ ChildCount)
+            float last_pos = Float.MAX_VALUE;
+            for (int i = 0; i < getChildCount(); i++) {
+                float pos = 1f - ((ContentView) getChildAt(i)).getPosRate();
+                if (pos < last_pos)
+                    last_pos = pos;
+                else {
+                    center_index = i - 1;
+                    break;
+                }
             }
-        }
-        try {
             float scroll_offset = (1f - ((ContentView) getChildAt(center_index)).getPosRate()) * (float) getHeight() / 2f;
-            if(((ContentView)getChildAt(center_index)).getMid() < getHeight() / 2)
-                smoothScrollBy(-(int)scroll_offset, 200);
+            if ((getChildAt(center_index)).getTop() < getHeight() / 2)
+                smoothScrollBy(-(int) scroll_offset, 200);
             else
-                smoothScrollBy((int)scroll_offset, 200);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+                smoothScrollBy((int) scroll_offset, 200);
         }
+        else {
+            int contentHeight = getChildAt(0).getHeight();
+            int id_select = (int) getAdapter().getItemId(getFirstVisiblePosition() + getChildCount() / 2);
+            int count = absMin(absMin(itemId - id_select - ((CircularListViewAdapter)getAdapter()).getListSize(),
+                            itemId - id_select + ((CircularListViewAdapter)getAdapter()).getListSize()), itemId - id_select);
+            smoothScrollBy(count * contentHeight - (getHeight() / 2 - getChildAt(getChildCount() / 2).getTop()), 200);
+        }
+    }
+
+    private int absMin(int a, int b) {
+        if(Math.abs(a) < Math.abs(b))
+            return a;
+        else
+            return b;
     }
 }
