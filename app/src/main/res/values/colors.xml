@@ -6,4 +6,5 @@
     <color name="colorFragmentHostTab">#D1D5D7</color>
     <color name="colorBackground">#ECF0F1</color>
     <color name="colorMapBackground">#BB000000</color>
+    <color name="colorRegionSelect">#f39c12</color>
 </resources>

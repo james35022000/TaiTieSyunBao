@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -21,10 +22,11 @@ import org.json.JSONObject;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 import jcchen.taitiesyunbao.R;
 import jcchen.taitiesyunbao.View.CircularListView.CircularListViewAdapter;
-import jcchen.taitiesyunbao.View.CircularListView.ContentView;
+import jcchen.taitiesyunbao.View.CircularListView.CircularListViewContent;
 import jcchen.taitiesyunbao.View.CircularListView.SelectRegionListView;
 
 /**
@@ -53,12 +55,13 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
     private Canvas canvas;
     private final Paint paint_stroke, paint_fill, paint_clear;
     private List<Region> regions;
-    private List<Region> last_regions;
+    private Stack<String> stack_regions;
+    private String selected_region;
     private point min_pos, max_pos;
 
     private int last_selected_region;
 
-    private ImageView map_imageView;
+    private ImageView map_imageView, back_imageView, next_imageView;
     private SelectRegionListView select_listView;
 
     private class Region {
@@ -131,18 +134,20 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
         super(context, attributeSet);
         this.context = context;
         this.paint_fill = new Paint();
-        paint_fill.setStrokeWidth(5);
-        paint_fill.setColor(Color.BLUE);
+        paint_fill.setStrokeWidth(4);
+        paint_fill.setColor(ContextCompat.getColor(context, R.color.colorRegionSelect));
         paint_fill.setStyle(Paint.Style.FILL);
         this.paint_stroke = new Paint();
-        paint_stroke.setStrokeWidth(5);
-        paint_stroke.setColor(Color.GREEN);
+        paint_stroke.setStrokeWidth(4);
+        paint_stroke.setColor(ContextCompat.getColor(context, R.color.colorPrimary));
         paint_stroke.setStyle(Paint.Style.STROKE);
         this.paint_clear = new Paint();
-        paint_clear.setStrokeWidth(5);
-        paint_clear.setColor(Color.WHITE);
+        paint_clear.setStrokeWidth(3);
+        paint_clear.setColor(ContextCompat.getColor(context, R.color.colorBackground));
         paint_clear.setStyle(Paint.Style.FILL);
         this.regions = null;
+        this.stack_regions = new Stack<>();
+        this.selected_region = "null";
     }
 
     public void setSize(final int width, final int height) {
@@ -154,7 +159,6 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
         baseBitmap = Bitmap.createBitmap(view_width, view_height, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(baseBitmap);
         canvas.drawColor(Color.TRANSPARENT);
-
     }
 
     public void setPopupWindow(PopupWindow popupWindow) {
@@ -167,6 +171,8 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
         View view = this;
         this.map_imageView = (ImageView) view.findViewById(R.id.map_imageView);
         this.select_listView = (SelectRegionListView) view.findViewById(R.id.select_listView);
+        this.back_imageView = (ImageView) view.findViewById(R.id.back_imageView);
+        this.next_imageView = (ImageView) view.findViewById(R.id.next_imageView);
     }
 
     @Override
@@ -177,18 +183,16 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
 
     @Override
     public void showItem(Object object) {
-        last_regions = regions;
+        stack_regions.push((String) object);
         regions = new ArrayList<>();
         last_selected_region = -1;
 
-        String json;
-
         try {
-            InputStream inputStream = context.getAssets().open("north_counties.json");
+            InputStream inputStream = context.getAssets().open("Normal/" + object + ".json");
             byte[] buffer = new byte[inputStream.available()];
             inputStream.read(buffer);
             inputStream.close();
-            json = new String(buffer, "UTF-8");
+            String json = new String(buffer, "UTF-8");
             JSONObject obj = new JSONObject(json);
             JSONArray Geometries = obj.getJSONObject("objects")
                     .getJSONObject("map")
@@ -247,10 +251,12 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
                         //  DEBUG END
                         if(index != -1) {
                             showRegion(regions, index, SELECTED);
+                            selected_region = regions.get(index).getName();
                             select_listView.smoothScroll(index);
                         }
                         else {
                             showRegion(regions, last_selected_region, UNSELECTED);
+                            selected_region = "null";
                             select_listView.smoothScroll(regions.size());
                         }
                         break;
@@ -259,6 +265,47 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
             }
         });
 
+        if(stack_regions.peek().equals("0")) {
+            back_imageView.setVisibility(INVISIBLE);
+            back_imageView.setClickable(false);
+        }
+        else {
+            back_imageView.setVisibility(VISIBLE);
+            back_imageView.setClickable(true);
+            back_imageView.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showNextRegion();
+                    stack_regions.pop();
+                    showItem(stack_regions.peek());
+                }
+            });
+        }
+        next_imageView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!selected_region.equals("null")) {
+                    showNextRegion();
+                    showItem(selected_region);
+                }
+            }
+        });
+
+
+        setListView();
+    }
+
+    @Override
+    public void loadingState(boolean state) {
+
+    }
+
+    @Override
+    public Context getActivity() {
+        return context;
+    }
+
+    private void setListView() {
         List<String> name_list = new ArrayList<>();
         for(int i = 0; i < regions.size(); i++) {
             name_list.add(regions.get(i).getName());
@@ -283,13 +330,15 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
                         select_listView.smoothScroll(select_listView.SCROLL_TO_CENTER);
                         break;
                     case MotionEvent.ACTION_MOVE:
-                        if(Math.abs(((ContentView)select_listView.getChildAt(select_listView.getChildCount() / 2)).getPosRate()) >= 0.8) {
+                        if(Math.abs(((CircularListViewContent)select_listView.getChildAt(select_listView.getChildCount() / 2)).getPosRate()) >= 0.8) {
                             int index = (int) adapter.getItemId(select_listView.getFirstVisiblePosition() + select_listView.getChildCount() / 2);
                             if(index != regions.size()) {
                                 showRegion(regions, index, SELECTED);
+                                selected_region = regions.get(index).getName();
                             }
                             else {
                                 showRegion(regions, last_selected_region, UNSELECTED);
+                                selected_region = "null";
                             }
                         }
                         break;
@@ -318,14 +367,11 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
         });
     }
 
-    @Override
-    public void loadingState(boolean state) {
-
-    }
-
-    @Override
-    public Context getActivity() {
-        return context;
+    private void showNextRegion() {
+        baseBitmap = Bitmap.createBitmap(view_width, view_height, Bitmap.Config.ARGB_8888);
+        canvas = new Canvas(baseBitmap);
+        canvas.drawColor(Color.TRANSPARENT);
+        map_imageView.setImageBitmap(baseBitmap);
     }
 
     public Path getPolygon(JSONObject place, JSONArray arcs) {
@@ -467,7 +513,7 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
     }
 
     private int getBorder(final List<point> Arcs, int mode) {
-        int border = (mode == MIN_X || mode == MIN_Y) ? 2147483647 : -2147483648;
+        int border = (mode == MIN_X || mode == MIN_Y) ? Integer.MAX_VALUE : Integer.MIN_VALUE;
         for(int i = 0; i < Arcs.size(); i++) {
             int x = (int)Arcs.get(i).getX();
             int y = (int)Arcs.get(i).getY();
@@ -480,6 +526,8 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
                     border = border < y ? border : y;  break;
                 case MAX_Y:
                     border = border > y ? border : y;  break;
+                default:
+                    break;
             }
         }
         return border;

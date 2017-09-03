@@ -59,7 +59,7 @@ public class CircularListViewAdapter extends BaseAdapter {
         if(convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.select_region_listview_content, null);
         }
-        ((ContentView) convertView).setParentHeight(select_listView.getHeight());
+        ((CircularListViewContent) convertView).setParentHeight(select_listView.getHeight());
         TextView region_name = (TextView) convertView.findViewById(R.id.region_name);
         region_name.setText((String) getItem(position));
         return convertView;

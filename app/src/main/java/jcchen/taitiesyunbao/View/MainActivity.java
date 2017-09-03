@@ -176,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
 
                 setBackPress(container);
                 container.setSize(app_width, app_height - toolbar_height);
-                container.showItem(null);
+                container.showItem("0");
             }
         });
         setTitleImage(ContextCompat.getDrawable(context, Toolbar_Image[0]));
