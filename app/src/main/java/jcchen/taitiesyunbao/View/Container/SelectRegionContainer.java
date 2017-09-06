@@ -55,9 +55,8 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
     private Canvas canvas;
     private final Paint paint_stroke, paint_fill, paint_clear;
     private List<Region> regions;
-    private Stack<String> stack_regions;
-    private String selected_region;
-    private point min_pos, max_pos;
+    private Stack<RegionRecord> stack_regions;
+    private Point min_pos, max_pos;
 
     private int last_selected_region;
 
@@ -67,7 +66,8 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
     private class Region {
         private String id;
         private String name;
-        private Path polygon;
+        private Path pathPolygon;
+        private List<Point> pointPolygon;
         private int insideRegion;
 
         public String getId() {
@@ -86,12 +86,20 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
             this.name = name;
         }
 
-        public Path getPolygon() {
-            return polygon;
+        public Path getPathPolygon() {
+            return pathPolygon;
         }
 
-        public void setPolygon(Path polygon) {
-            this.polygon = polygon;
+        public void setPathPolygon(Path pathPolygon) {
+            this.pathPolygon = pathPolygon;
+        }
+
+        public List<Point> getPointPolygon() {
+            return pointPolygon;
+        }
+
+        public void setPointPolygon(List<Point> pointPolygon) {
+            this.pointPolygon = pointPolygon;
         }
 
         public int getInsideRegion() {
@@ -103,8 +111,60 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
         }
     }
 
-    private class point {
-        public point(float x, float y) {
+    private class RegionRecord {
+        private String recordName;
+        private Point minPos;
+        private Point maxPos;
+        private List<Region> oldRegions;
+        private int selectedRegion;
+
+        public RegionRecord() {
+            selectedRegion = -1;
+        }
+
+        public String getRecordName() {
+            return recordName;
+        }
+
+        public void setRecordName(String recordName) {
+            this.recordName = recordName;
+        }
+
+        public Point getMinPos() {
+            return minPos;
+        }
+
+        public void setMinPos(Point minPos) {
+            this.minPos = minPos;
+        }
+
+        public Point getMaxPos() {
+            return maxPos;
+        }
+
+        public void setMaxPos(Point maxPos) {
+            this.maxPos = maxPos;
+        }
+
+        public List<Region> getOldRegions() {
+            return oldRegions;
+        }
+
+        public void setOldRegions(List<Region> oldRegions) {
+            this.oldRegions = oldRegions;
+        }
+
+        public int getSelectedRegion() {
+            return selectedRegion;
+        }
+
+        public void setSelectedRegion(int selectedRegion) {
+            this.selectedRegion = selectedRegion;
+        }
+    }
+
+    private class Point {
+        public Point(float x, float y) {
             this.x = x;
             this.y = y;
         }
@@ -147,7 +207,6 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
         paint_clear.setStyle(Paint.Style.FILL);
         this.regions = null;
         this.stack_regions = new Stack<>();
-        this.selected_region = "null";
     }
 
     public void setSize(final int width, final int height) {
@@ -183,9 +242,11 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
 
     @Override
     public void showItem(Object object) {
-        stack_regions.push((String) object);
         regions = new ArrayList<>();
         last_selected_region = -1;
+
+        final JSONArray Geometries;
+        final JSONArray arcs;
 
         try {
             InputStream inputStream = context.getAssets().open("Normal/" + object + ".json");
@@ -194,40 +255,43 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
             inputStream.close();
             String json = new String(buffer, "UTF-8");
             JSONObject obj = new JSONObject(json);
-            JSONArray Geometries = obj.getJSONObject("objects")
+            Geometries = obj.getJSONObject("objects")
                     .getJSONObject("map")
                     .getJSONArray("geometries");
-            JSONArray arcs = obj.getJSONArray("arcs");
+            arcs = obj.getJSONArray("arcs");
 
-            List<point> Arcs = new ArrayList<>();
+            List<Point> Arcs = new ArrayList<>();
             for(int i = 0; i < arcs.length(); i++) {
                 for (int j = 0; j < arcs.getJSONArray(i).length(); j++) {
                     int x = Integer.valueOf(arcs.getJSONArray(i).getJSONArray(j).get(0).toString());
                     int y = Integer.valueOf(arcs.getJSONArray(i).getJSONArray(j).get(1).toString());
                     if (j == 0)
-                        Arcs.add(new point(x, y));
+                        Arcs.add(new Point(x, y));
                     else
-                        Arcs.add(new point(Arcs.get(Arcs.size() - 1).getX() + x,
+                        Arcs.add(new Point(Arcs.get(Arcs.size() - 1).getX() + x,
                                            Arcs.get(Arcs.size() - 1).getY() + y));
                 }
             }
-            min_pos = new point(getBorder(Arcs, MIN_X), getBorder(Arcs, MIN_Y));
-            max_pos = new point(getBorder(Arcs, MAX_X), getBorder(Arcs, MAX_Y));
+            min_pos = new Point(getBorder(Arcs, MIN_X), getBorder(Arcs, MIN_Y));
+            max_pos = new Point(getBorder(Arcs, MAX_X), getBorder(Arcs, MAX_Y));
 
             for(int i = 0; i < Geometries.length(); i++) {
                 String name = Geometries.getJSONObject(i).getJSONObject("properties").get("name").toString();
                 Region region = new Region();
                 region.setId(Geometries.getJSONObject(i).getJSONObject("properties").get("id").toString());
                 region.setName(name);
-                region.setPolygon(getPolygon(Geometries.getJSONObject(i), arcs));
+                region.setPointPolygon(getPolygon(Geometries.getJSONObject(i), arcs));
+                region.setPathPolygon(ConvertToPath(region.getPointPolygon()));
                 try {
                     region.setInsideRegion(Integer.valueOf(Geometries.getJSONObject(i).get("insideregion").toString()));
                 } catch (Exception ex) {
                     region.setInsideRegion(-1);
                 }
                 regions.add(region);
-                showRegion(regions, regions.size() - 1, UNSELECTED);
             }
+
+            setButton(Geometries, arcs);
+
         } catch(Exception ex) {
             ex.printStackTrace();
         }
@@ -251,12 +315,12 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
                         //  DEBUG END
                         if(index != -1) {
                             showRegion(regions, index, SELECTED);
-                            selected_region = regions.get(index).getName();
+                            stack_regions.peek().setSelectedRegion(index);
                             select_listView.smoothScroll(index);
                         }
                         else {
                             showRegion(regions, last_selected_region, UNSELECTED);
-                            selected_region = "null";
+                            stack_regions.peek().setSelectedRegion(-1);
                             select_listView.smoothScroll(regions.size());
                         }
                         break;
@@ -264,35 +328,21 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
                 return false;
             }
         });
-
-        if(stack_regions.peek().equals("0")) {
-            back_imageView.setVisibility(INVISIBLE);
-            back_imageView.setClickable(false);
-        }
-        else {
-            back_imageView.setVisibility(VISIBLE);
-            back_imageView.setClickable(true);
-            back_imageView.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    showNextRegion();
-                    stack_regions.pop();
-                    showItem(stack_regions.peek());
-                }
-            });
-        }
-        next_imageView.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!selected_region.equals("null")) {
-                    showNextRegion();
-                    showItem(selected_region);
-                }
-            }
-        });
-
-
         setListView();
+
+
+        if(stack_regions.size() != 0) {
+            showNextRegion();
+        }
+
+        for(int i = 0; i < regions.size(); i++)
+            showRegion(regions, i, UNSELECTED);
+
+        stack_regions.push(new RegionRecord());
+        stack_regions.peek().setRecordName((String) object);
+        stack_regions.peek().setMinPos(min_pos);
+        stack_regions.peek().setMaxPos(max_pos);
+        stack_regions.peek().setOldRegions(regions);
     }
 
     @Override
@@ -334,11 +384,11 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
                             int index = (int) adapter.getItemId(select_listView.getFirstVisiblePosition() + select_listView.getChildCount() / 2);
                             if(index != regions.size()) {
                                 showRegion(regions, index, SELECTED);
-                                selected_region = regions.get(index).getName();
+                                stack_regions.peek().setSelectedRegion(index);
                             }
                             else {
                                 showRegion(regions, last_selected_region, UNSELECTED);
-                                selected_region = "null";
+                                stack_regions.peek().setSelectedRegion(-1);
                             }
                         }
                         break;
@@ -367,26 +417,83 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
         });
     }
 
-    private void showNextRegion() {
+    private void setButton(final JSONArray Geometries, final JSONArray arcs) {
+        if(stack_regions.peek().equals("0")) {
+            back_imageView.setVisibility(INVISIBLE);
+            back_imageView.setClickable(false);
+        }
+        else {
+            back_imageView.setVisibility(VISIBLE);
+            back_imageView.setClickable(true);
+            back_imageView.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    stack_regions.pop();
+                    showItem(stack_regions.peek().getRecordName());
+                }
+            });
+        }
+        next_imageView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showItem(stack_regions.peek().getOldRegions().get(stack_regions.peek().getSelectedRegion()).getName());
+            }
+        });
+    }
+
+    private void showNextRegion(JSONObject place, JSONArray arcs) {
+        float old_scale = Math.max((max_pos.getX() - min_pos.getX()) / view_width, (max_pos.getY() - min_pos.getY()) / view_height);
+
+        /*List<Point> Arcs = new ArrayList<>();
+        for(int i = 0; i < arcs.length(); i++) {
+            for (int j = 0; j < arcs.getJSONArray(i).length(); j++) {
+                int x = Integer.valueOf(arcs.getJSONArray(i).getJSONArray(j).get(0).toString());
+                int y = Integer.valueOf(arcs.getJSONArray(i).getJSONArray(j).get(1).toString());
+                if (j == 0)
+                    Arcs.add(new Point(x, y));
+                else
+                    Arcs.add(new Point(Arcs.get(Arcs.size() - 1).getX() + x,
+                            Arcs.get(Arcs.size() - 1).getY() + y));
+            }
+        }
+        min_pos = new Point(getBorder(Arcs, MIN_X), getBorder(Arcs, MIN_Y));
+        max_pos = new Point(getBorder(Arcs, MAX_X), getBorder(Arcs, MAX_Y));*/
+
+
         baseBitmap = Bitmap.createBitmap(view_width, view_height, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(baseBitmap);
         canvas.drawColor(Color.TRANSPARENT);
         map_imageView.setImageBitmap(baseBitmap);
     }
 
-    public Path getPolygon(JSONObject place, JSONArray arcs) {
+    private Path ConvertToPath(List<Point> polygon) {
+        Path p = new Path();
+
+        if(polygon == null)  return p;
+        if(polygon.size() == 0)  return p;
+
+        p.moveTo(polygon.get(0).getX(), polygon.get(0).getY());
+        for(int i = 1; i < polygon.size(); i++)
+            p.lineTo(polygon.get(i).getX(), polygon.get(i).getY());
+        return p;
+    }
+
+    private List<Point> getPolygon(JSONObject place, JSONArray arcs) {
         try {
             float scale = Math.max((max_pos.getX() - min_pos.getX()) / view_width, (max_pos.getY() - min_pos.getY()) / view_height);
             float offset_x = (view_width - (max_pos.getX() - min_pos.getX()) / scale) / 2;
             float offset_y = (view_height - (max_pos.getY() - min_pos.getY()) / scale) / 2;
-            Path polygon = new Path();
+            //Path polygon = new Path();
+            List<Point> polygon = new ArrayList<>();
             for(int i = 0; i < place.getJSONArray("arcs").length(); i++) {
                 for(int j = 0; j < place.getJSONArray("arcs").getJSONArray(i).length(); j++) {
-                    List<point> Arcs = getArcs(Integer.valueOf(place.getJSONArray("arcs").getJSONArray(i).get(j).toString()), arcs);
+                    List<Point> Arcs = getArcs(Integer.valueOf(place.getJSONArray("arcs").getJSONArray(i).get(j).toString()), arcs);
                     if(i == 0 && j == 0)
-                        polygon.moveTo((Arcs.get(0).getX() - min_pos.getX()) / scale + offset_x, (Arcs.get(0).getY() + max_pos.getY()) / scale + offset_y);
+                        polygon.add(new Point((Arcs.get(0).getX() - min_pos.getX()) / scale + offset_x, (Arcs.get(0).getY() + max_pos.getY()) / scale + offset_y));
+                        //polygon.moveTo((Arcs.get(0).getX() - min_pos.getX()) / scale + offset_x, (Arcs.get(0).getY() + max_pos.getY()) / scale + offset_y);
                     for(int k = 1; k < Arcs.size(); k++)
-                        polygon.lineTo((Arcs.get(k).getX() - min_pos.getX()) / scale + offset_x, (Arcs.get(k).getY() + max_pos.getY()) / scale + offset_y);
+                        polygon.add(new Point((Arcs.get(k).getX() - min_pos.getX()) / scale + offset_x, (Arcs.get(k).getY() + max_pos.getY()) / scale + offset_y));
+                        //polygon.lineTo((Arcs.get(k).getX() - min_pos.getX()) / scale + offset_x, (Arcs.get(k).getY() + max_pos.getY()) / scale + offset_y);
                 }
             }
             return polygon;
@@ -396,20 +503,20 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
         }
     }
 
-    public List<point> getArcs(int index, JSONArray arcs) {
-        List<point> Arcs = new ArrayList<>();
+    public List<Point> getArcs(int index, JSONArray arcs) {
+        List<Point> Arcs = new ArrayList<>();
         try {
             boolean reverse = (index < 0);
             index = (index < 0 ? OnesComplement(index) : index);
             float x = Integer.valueOf(arcs.getJSONArray(index).getJSONArray(0).get(0).toString());
             float y = Integer.valueOf(arcs.getJSONArray(index).getJSONArray(0).get(1).toString());
-            Arcs.add(new point(x, -y));
+            Arcs.add(new Point(x, -y));
             for(int i = 1; i < arcs.getJSONArray(index).length(); i++) {
                 x = Arcs.get(Arcs.size() - 1).getX() +
                         Integer.valueOf(arcs.getJSONArray(index).getJSONArray(i).get(0).toString());
                 y = Arcs.get(Arcs.size() - 1).getY() -
                         Integer.valueOf(arcs.getJSONArray(index).getJSONArray(i).get(1).toString());
-                Arcs.add(new point(x, y));
+                Arcs.add(new Point(x, y));
             }
             if(reverse) {
                 Arcs = ReverseArc(Arcs);
@@ -425,8 +532,8 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
         return (-num) - 1;
     }
 
-    public List<point> ReverseArc(List<point> Arcs) {
-        List<point> new_Arcs = new ArrayList<>();
+    public List<Point> ReverseArc(List<Point> Arcs) {
+        List<Point> new_Arcs = new ArrayList<>();
         for(int i = 1; i <= Arcs.size(); i++) {
             new_Arcs.add(Arcs.get(Arcs.size() - i));
         }
@@ -470,10 +577,10 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
             Region region = regions.get(i);
             Path lPath = new Path(left_path), rPath = new Path(right_path);
             Path uPath = new Path(up_path), dPath = new Path(down_path);
-            lPath.op(region.getPolygon(), Path.Op.INTERSECT);
-            rPath.op(region.getPolygon(), Path.Op.INTERSECT);
-            uPath.op(region.getPolygon(), Path.Op.INTERSECT);
-            dPath.op(region.getPolygon(), Path.Op.INTERSECT);
+            lPath.op(region.getPathPolygon(), Path.Op.INTERSECT);
+            rPath.op(region.getPathPolygon(), Path.Op.INTERSECT);
+            uPath.op(region.getPathPolygon(), Path.Op.INTERSECT);
+            dPath.op(region.getPathPolygon(), Path.Op.INTERSECT);
             if (!lPath.isEmpty() && !rPath.isEmpty() && !uPath.isEmpty() && !dPath.isEmpty())
                 return i;
         }
@@ -489,22 +596,22 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
                     if(last_selected_region != -1)
                         showRegion(regions, last_selected_region, UNSELECTED);
                     last_selected_region = index;
-                    canvas.drawPath(regions.get(index).getPolygon(), paint_fill);
-                    canvas.drawPath(regions.get(index).getPolygon(), paint_stroke);
+                    canvas.drawPath(regions.get(index).getPathPolygon(), paint_fill);
+                    canvas.drawPath(regions.get(index).getPathPolygon(), paint_stroke);
                     while(regions.get(index).getInsideRegion() != -1) {
                         index = regions.get(index).getInsideRegion();
-                        canvas.drawPath(regions.get(index).getPolygon(), paint_clear);
-                        canvas.drawPath(regions.get(index).getPolygon(), paint_stroke);
+                        canvas.drawPath(regions.get(index).getPathPolygon(), paint_clear);
+                        canvas.drawPath(regions.get(index).getPathPolygon(), paint_stroke);
                     }
                     break;
                 case UNSELECTED:
                     last_selected_region = -1;
-                    canvas.drawPath(regions.get(index).getPolygon(), paint_clear);
-                    canvas.drawPath(regions.get(index).getPolygon(), paint_stroke);
+                    canvas.drawPath(regions.get(index).getPathPolygon(), paint_clear);
+                    canvas.drawPath(regions.get(index).getPathPolygon(), paint_stroke);
                     while(regions.get(index).getInsideRegion() != -1) {
                         index = regions.get(index).getInsideRegion();
-                        canvas.drawPath(regions.get(index).getPolygon(), paint_clear);
-                        canvas.drawPath(regions.get(index).getPolygon(), paint_stroke);
+                        canvas.drawPath(regions.get(index).getPathPolygon(), paint_clear);
+                        canvas.drawPath(regions.get(index).getPathPolygon(), paint_stroke);
                     }
                     break;
             }
@@ -512,7 +619,7 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
         }
     }
 
-    private int getBorder(final List<point> Arcs, int mode) {
+    private int getBorder(final List<Point> Arcs, int mode) {
         int border = (mode == MIN_X || mode == MIN_Y) ? Integer.MAX_VALUE : Integer.MIN_VALUE;
         for(int i = 0; i < Arcs.size(); i++) {
             int x = (int)Arcs.get(i).getX();
