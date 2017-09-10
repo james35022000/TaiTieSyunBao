@@ -28,6 +28,7 @@ import jcchen.taitiesyunbao.R;
 import jcchen.taitiesyunbao.View.CircularListView.CircularListViewAdapter;
 import jcchen.taitiesyunbao.View.CircularListView.CircularListViewContent;
 import jcchen.taitiesyunbao.View.CircularListView.SelectRegionListView;
+import jcchen.taitiesyunbao.View.MapImageView;
 
 /**
  * Created by JCChen on 2017/8/21.
@@ -60,7 +61,8 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
 
     private int last_selected_region;
 
-    private ImageView map_imageView, back_imageView, next_imageView;
+    private ImageView back_imageView, next_imageView;
+    private MapImageView map_imageView;
     private SelectRegionListView select_listView;
 
     private class Region {
@@ -69,6 +71,10 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
         private Path pathPolygon;
         private List<Point> pointPolygon;
         private int insideRegion;
+
+        public Region() {
+            this.insideRegion = -1;
+        }
 
         public String getId() {
             return id;
@@ -117,6 +123,7 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
         private Point maxPos;
         private List<Region> oldRegions;
         private int selectedRegion;
+        private boolean isNext;
 
         public RegionRecord() {
             selectedRegion = -1;
@@ -160,6 +167,14 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
 
         public void setSelectedRegion(int selectedRegion) {
             this.selectedRegion = selectedRegion;
+        }
+
+        public boolean isNext() {
+            return isNext;
+        }
+
+        public void setNext(boolean next) {
+            isNext = next;
         }
     }
 
@@ -228,7 +243,7 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
     protected void onFinishInflate() {
         super.onFinishInflate();
         View view = this;
-        this.map_imageView = (ImageView) view.findViewById(R.id.map_imageView);
+        this.map_imageView = (MapImageView) view.findViewById(R.id.map_imageView);
         this.select_listView = (SelectRegionListView) view.findViewById(R.id.select_listView);
         this.back_imageView = (ImageView) view.findViewById(R.id.back_imageView);
         this.next_imageView = (ImageView) view.findViewById(R.id.next_imageView);
@@ -330,13 +345,12 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
         });
         setListView();
 
-
-        if(stack_regions.size() != 0) {
+        if(stack_regions.size() != 0)
             showNextRegion();
-        }
 
-        for(int i = 0; i < regions.size(); i++)
-            showRegion(regions, i, UNSELECTED);
+        //for(int i = 0; i < regions.size(); i++)
+        //    showRegion(regions, i, UNSELECTED);
+
 
         stack_regions.push(new RegionRecord());
         stack_regions.peek().setRecordName((String) object);
@@ -418,7 +432,7 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
     }
 
     private void setButton(final JSONArray Geometries, final JSONArray arcs) {
-        if(stack_regions.peek().equals("0")) {
+        if(stack_regions.size() == 0) {
             back_imageView.setVisibility(INVISIBLE);
             back_imageView.setClickable(false);
         }
@@ -429,6 +443,7 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
                 @Override
                 public void onClick(View v) {
                     stack_regions.pop();
+                    stack_regions.peek().setNext(false);
                     showItem(stack_regions.peek().getRecordName());
                 }
             });
@@ -436,34 +451,47 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
         next_imageView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                showItem(stack_regions.peek().getOldRegions().get(stack_regions.peek().getSelectedRegion()).getName());
+                if(stack_regions.peek().getSelectedRegion() != -1) {
+                    stack_regions.peek().setNext(true);
+                    showItem(stack_regions.peek().getOldRegions().get(stack_regions.peek().getSelectedRegion()).getName());
+                }
             }
         });
     }
 
-    private void showNextRegion(JSONObject place, JSONArray arcs) {
-        float old_scale = Math.max((max_pos.getX() - min_pos.getX()) / view_width, (max_pos.getY() - min_pos.getY()) / view_height);
-
-        /*List<Point> Arcs = new ArrayList<>();
-        for(int i = 0; i < arcs.length(); i++) {
-            for (int j = 0; j < arcs.getJSONArray(i).length(); j++) {
-                int x = Integer.valueOf(arcs.getJSONArray(i).getJSONArray(j).get(0).toString());
-                int y = Integer.valueOf(arcs.getJSONArray(i).getJSONArray(j).get(1).toString());
-                if (j == 0)
-                    Arcs.add(new Point(x, y));
-                else
-                    Arcs.add(new Point(Arcs.get(Arcs.size() - 1).getX() + x,
-                            Arcs.get(Arcs.size() - 1).getY() + y));
-            }
-        }
-        min_pos = new Point(getBorder(Arcs, MIN_X), getBorder(Arcs, MIN_Y));
-        max_pos = new Point(getBorder(Arcs, MAX_X), getBorder(Arcs, MAX_Y));*/
-
-
+    private void showNextRegion() {
         baseBitmap = Bitmap.createBitmap(view_width, view_height, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(baseBitmap);
         canvas.drawColor(Color.TRANSPARENT);
-        map_imageView.setImageBitmap(baseBitmap);
+
+        if (stack_regions.peek().isNext()) {
+            final int index = stack_regions.peek().getSelectedRegion();
+            final List<Region> oldRegions = stack_regions.peek().oldRegions;
+            final List<Point> Arcs = new ArrayList<>();
+            for (int i = 0; i < oldRegions.get(index).getPointPolygon().size(); i++)
+                Arcs.add(oldRegions.get(index).getPointPolygon().get(i));
+            min_pos = new Point(getBorder(Arcs, MIN_X), getBorder(Arcs, MIN_Y));
+            max_pos = new Point(getBorder(Arcs, MAX_X), getBorder(Arcs, MAX_Y));
+
+            final float scale = Math.max((max_pos.getX() - min_pos.getX()) / view_width, (max_pos.getY() - min_pos.getY()) / view_height);
+            final float offset_x = (view_width - (max_pos.getX() - min_pos.getX()) / scale) / 2;
+            final float offset_y = (view_height - (max_pos.getY() - min_pos.getY()) / scale) / 2;
+
+            List<Point> polygon;
+            List<Path> action = new ArrayList<>();
+            for(int count = 0; count < 30; count++) {
+                polygon = new ArrayList<>();
+                for (int i = 0; i < Arcs.size(); i++)
+                    polygon.add(new Point((Arcs.get(i).getX() - min_pos.getX() * count / 29) / (((scale - 1) * count / 29) + 1) + offset_x * count / 29, (Arcs.get(i).getY() - min_pos.getY() * count / 29) / (((scale - 1) * count / 29) + 1) + offset_y * count / 29));
+                action.add(ConvertToPath(polygon));
+            }
+            canvas.drawPath(action.get(0), paint_clear);
+            canvas.drawPath(action.get(0), paint_stroke);
+            map_imageView.showMap(baseBitmap);
+            map_imageView.startAnimation(action, Bitmap.createBitmap(view_width, view_height, Bitmap.Config.ARGB_8888));
+        } else {
+
+        }
     }
 
     private Path ConvertToPath(List<Point> polygon) {
@@ -615,7 +643,7 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
                     }
                     break;
             }
-            map_imageView.setImageBitmap(baseBitmap);
+            map_imageView.showMap(baseBitmap);
         }
     }
 

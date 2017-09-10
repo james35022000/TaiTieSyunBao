@@ -7,7 +7,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="98969bac9605b2c93757e730065df363ef48784c">
+        sha1="09cfd2ed39f37edb59ea5dfb475177b69c949eb3">
         <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_fa0e223d470f5c7556bc6e0a483553f11a71c96b\classes.dex" />
     </item>
     <item
@@ -18,6 +18,15 @@
         revision="25.0.2"
         sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
         <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_c0c8b9bf2d0871bf411ec03f7bd60a47cba0029c\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao\app\libs\universal-image-loader-1.9.5.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="442dbfb517b9ab5cb5c6da7ebf8cc28ec5bd0375">
+        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao\app\build\intermediates\transforms\dex\debug\folders\1000\2\universal-image-loader-1.9.5_219d6a4c9b98d67439928fec9b7b02fa48b512b9\classes.dex" />
     </item>
 
 </items>
