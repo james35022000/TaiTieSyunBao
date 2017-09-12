@@ -27,6 +27,7 @@ public class MapImageView extends AppCompatImageView {
 
     private final Paint paint_stroke, paint_clear;
     private Bitmap map;
+    private Canvas animCanvas;
 
     public MapImageView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
@@ -41,40 +42,36 @@ public class MapImageView extends AppCompatImageView {
         this.map = null;
     }
 
-    public void startAnimation(final List<Path> action, final Bitmap bitmap) {
-        map = bitmap;
+    public void setMap(Bitmap map) {
+        this.map = map;
+        animCanvas = new Canvas(map);
+        animCanvas.drawColor(Color.TRANSPARENT);
+    }
+
+    public void startAnimation(final List<Path> action) {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Canvas canvas = new Canvas(map);
-                canvas.drawColor(Color.TRANSPARENT);
-                for(int i = 1; i < action.size(); i++) {
+                for(int i = 0; i < action.size(); i++) {
                     map.eraseColor(Color.TRANSPARENT);
-                    canvas.drawPath(action.get(i), paint_clear);
-                    canvas.drawPath(action.get(i), paint_stroke);
+                    animCanvas.drawPath(action.get(i), paint_clear);
+                    animCanvas.drawPath(action.get(i), paint_stroke);
                     postInvalidate();
                     try {
-                        Thread.sleep(20);
+                        Thread.sleep(30);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
-                map = null;
             }
         }).start();
     }
 
-    public void showMap(Bitmap map) {
-        this.map = map;
-        invalidate();
-        map = null;
-    }
-
     @Override
-    protected void dispatchDraw(Canvas canvas) {
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
         if(map != null) {
             canvas.drawBitmap(map, (canvas.getWidth() - map.getWidth()) / 2, (canvas.getHeight() - map.getHeight()) / 2, null);
         }
-        super.dispatchDraw(canvas);
     }
 }

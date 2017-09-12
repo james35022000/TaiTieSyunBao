@@ -231,6 +231,7 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
         this.view_height = height - 2 * map_padding_y;
 
         baseBitmap = Bitmap.createBitmap(view_width, view_height, Bitmap.Config.ARGB_8888);
+        map_imageView.setMap(baseBitmap);
         canvas = new Canvas(baseBitmap);
         canvas.drawColor(Color.TRANSPARENT);
     }
@@ -259,6 +260,7 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
     public void showItem(Object object) {
         regions = new ArrayList<>();
         last_selected_region = -1;
+        baseBitmap.eraseColor(Color.TRANSPARENT);
 
         final JSONArray Geometries;
         final JSONArray arcs;
@@ -305,8 +307,6 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
                 regions.add(region);
             }
 
-            setButton(Geometries, arcs);
-
         } catch(Exception ex) {
             ex.printStackTrace();
         }
@@ -343,13 +343,32 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
                 return false;
             }
         });
+
+        setButton();
         setListView();
 
-        if(stack_regions.size() != 0)
-            showNextRegion();
+        /*if(stack_regions.size() != 0) {
+            final int delay = showNextRegion();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(delay + 30);
+                        for(int i = 0; i < regions.size(); i++)
+                            showRegion(regions, i, UNSELECTED);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+        }
+        else {
+            for(int i = 0; i < regions.size(); i++)
+                showRegion(regions, i, UNSELECTED);
+        }*/
 
-        //for(int i = 0; i < regions.size(); i++)
-        //    showRegion(regions, i, UNSELECTED);
+        for(int i = 0; i < regions.size(); i++)
+            showRegion(regions, i, UNSELECTED);
 
 
         stack_regions.push(new RegionRecord());
@@ -431,7 +450,7 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
         });
     }
 
-    private void setButton(final JSONArray Geometries, final JSONArray arcs) {
+    private void setButton() {
         if(stack_regions.size() == 0) {
             back_imageView.setVisibility(INVISIBLE);
             back_imageView.setClickable(false);
@@ -444,7 +463,7 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
                 public void onClick(View v) {
                     stack_regions.pop();
                     stack_regions.peek().setNext(false);
-                    showItem(stack_regions.peek().getRecordName());
+                    showItem(stack_regions.pop().getRecordName());
                 }
             });
         }
@@ -459,10 +478,8 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
         });
     }
 
-    private void showNextRegion() {
-        baseBitmap = Bitmap.createBitmap(view_width, view_height, Bitmap.Config.ARGB_8888);
-        canvas = new Canvas(baseBitmap);
-        canvas.drawColor(Color.TRANSPARENT);
+    private int showNextRegion() {
+        baseBitmap.eraseColor(Color.TRANSPARENT);
 
         if (stack_regions.peek().isNext()) {
             final int index = stack_regions.peek().getSelectedRegion();
@@ -479,18 +496,17 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
 
             List<Point> polygon;
             List<Path> action = new ArrayList<>();
-            for(int count = 0; count < 30; count++) {
+            final int parts = 20;
+            for(int count = 0; count < parts; count++) {
                 polygon = new ArrayList<>();
                 for (int i = 0; i < Arcs.size(); i++)
-                    polygon.add(new Point((Arcs.get(i).getX() - min_pos.getX() * count / 29) / (((scale - 1) * count / 29) + 1) + offset_x * count / 29, (Arcs.get(i).getY() - min_pos.getY() * count / 29) / (((scale - 1) * count / 29) + 1) + offset_y * count / 29));
+                    polygon.add(new Point((Arcs.get(i).getX() - min_pos.getX() * count / (parts - 1)) / (((scale - 1) * count / (parts - 1)) + 1) + offset_x * count / (parts - 1), (Arcs.get(i).getY() - min_pos.getY() * count / (parts - 1)) / (((scale - 1) * count / (parts - 1)) + 1) + offset_y * count / (parts - 1)));
                 action.add(ConvertToPath(polygon));
             }
-            canvas.drawPath(action.get(0), paint_clear);
-            canvas.drawPath(action.get(0), paint_stroke);
-            map_imageView.showMap(baseBitmap);
-            map_imageView.startAnimation(action, Bitmap.createBitmap(view_width, view_height, Bitmap.Config.ARGB_8888));
+            map_imageView.startAnimation(action);
+            return parts * 30;
         } else {
-
+            return 0;
         }
     }
 
@@ -643,7 +659,7 @@ public class SelectRegionContainer extends RelativeLayout implements Container {
                     }
                     break;
             }
-            map_imageView.showMap(baseBitmap);
+            map_imageView.postInvalidate();
         }
     }
 
