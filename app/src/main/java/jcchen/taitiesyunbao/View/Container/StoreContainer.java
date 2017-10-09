@@ -48,7 +48,7 @@ public class StoreContainer extends FrameLayout implements Container {
         store_recyclerView.setAdapter(adapter);
         store_recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
-        //presenter.loadStoreInfo();
+        presenter.loadStoreInfo();
     }
 
     public void onDestroy() {

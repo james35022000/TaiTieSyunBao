@@ -157,9 +157,8 @@ public class StoreModelImpl implements StoreModel{
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String jsonData = response.body().string();
-                int index = jsonData.indexOf("cacheResponse",
-                        jsonData.indexOf("cacheResponse") + 1);
-                jsonData = "{\"j\":" + jsonData.substring(index + 14, jsonData.indexOf("]]);", index) + 2) + "}";
+                int index = jsonData.indexOf("cacheResponse([");
+                jsonData = "{\"j\":" + jsonData.substring(index + 14, jsonData.indexOf("]);", index) + 1) + "}";
 
                 try {
                     JSONObject jsonObject = new JSONObject(jsonData);
