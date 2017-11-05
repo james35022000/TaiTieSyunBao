@@ -32,7 +32,8 @@ import java.util.Stack;
 import java.util.Vector;
 
 import jcchen.taitiesyunbao.R;
-import jcchen.taitiesyunbao.RoundedImageView;
+import jcchen.taitiesyunbao.View.Widget.BottomTab;
+import jcchen.taitiesyunbao.View.Widget.RoundedImageView;
 import jcchen.taitiesyunbao.View.Adapter.MainPagerAdapter;
 import jcchen.taitiesyunbao.View.Container.Container;
 import jcchen.taitiesyunbao.View.Container.SelectRegionContainer;
@@ -40,6 +41,7 @@ import jcchen.taitiesyunbao.View.Fragment.LikeFragment;
 import jcchen.taitiesyunbao.View.Fragment.MainFragment;
 import jcchen.taitiesyunbao.View.Fragment.StoreFragment;
 import jcchen.taitiesyunbao.View.Fragment.SugFragment;
+import jcchen.taitiesyunbao.View.Widget.MainViewPager;
 
 /**
  * Created by JCChen on 2017/6/24.

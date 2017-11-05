@@ -25,10 +25,10 @@ import java.util.List;
 import java.util.Stack;
 
 import jcchen.taitiesyunbao.R;
-import jcchen.taitiesyunbao.View.CircularListView.CircularListViewAdapter;
-import jcchen.taitiesyunbao.View.CircularListView.CircularListViewContent;
-import jcchen.taitiesyunbao.View.CircularListView.SelectRegionListView;
-import jcchen.taitiesyunbao.View.MapImageView;
+import jcchen.taitiesyunbao.View.Widget.CircularListView.CircularListViewAdapter;
+import jcchen.taitiesyunbao.View.Widget.CircularListView.CircularListViewContent;
+import jcchen.taitiesyunbao.View.Widget.CircularListView.SelectRegionListView;
+import jcchen.taitiesyunbao.View.Widget.MapImageView;
 
 /**
  * Created by JCChen on 2017/8/21.

@@ -76,13 +76,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
-                    <jcchen.taitiesyunbao.View.MainViewPager
+                    <jcchen.taitiesyunbao.View.Widget.MainViewPager
                         android:id="@+id/fragment_pager"
                         android:layout_width="match_parent"
                         android:layout_height="0px"
                         android:layout_weight="1"/>
 
-                    <jcchen.taitiesyunbao.View.BottomTab
+                    <jcchen.taitiesyunbao.View.Widget.BottomTab
                         android:id="@android:id/tabhost"
                         xmlns:android="http://schemas.android.com/apk/res/android"
                         android:layout_width="fill_parent"
@@ -93,7 +93,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"/>
-                    </jcchen.taitiesyunbao.View.BottomTab>
+                    </jcchen.taitiesyunbao.View.Widget.BottomTab>
 
                 </LinearLayout>
             </FrameLayout>
@@ -110,7 +110,7 @@
                 android:background="@color/colorBackground"
                 android:orientation="vertical">
 
-                <jcchen.taitiesyunbao.RoundedImageView
+                <jcchen.taitiesyunbao.View.Widget.RoundedImageView
                     android:id="@+id/userPic_RoundedImageView"
                     android:layout_width="50dp"
                     android:layout_height="50dp"

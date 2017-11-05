@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <jcchen.taitiesyunbao.RoundedImageView
+            <jcchen.taitiesyunbao.View.Widget.RoundedImageView
                 android:id="@+id/userPic_imageView"
                 android:layout_width="30dp"
                 android:layout_height="30dp"

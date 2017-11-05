@@ -1,12 +1,19 @@
 package jcchen.taitiesyunbao.View.Container;
 
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,25 +24,29 @@ import jcchen.taitiesyunbao.R;
 import jcchen.taitiesyunbao.Entity.StoreComment;
 import jcchen.taitiesyunbao.Entity.StoreInfo;
 import jcchen.taitiesyunbao.View.Adapter.StoreCommentRecyclerViewAdapter;
+import jcchen.taitiesyunbao.View.Widget.BottomSheet;
 
 /**
  * Created by JCChen on 2017/8/12.
  */
 
-public class CommentContainer extends FrameLayout implements Container {
+public class CommentContainer extends RelativeLayout implements Container {
 
     private Context context;
 
     private RecyclerView comment_recyclerView;
-    private BottomSheetBehavior bottomSheetBehavior;
     private StoreCommentRecyclerViewAdapter adapter;
     private List<StoreComment> commentList;
+    private BottomSheet comment_bottomSheet;
+
+    private int peekHeight;
 
     private StorePresenter presenter;
 
     public CommentContainer(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
         this.context = context;
+        this.peekHeight = -1;
     }
 
     public void loadComment(StoreInfo storeInfo) {
@@ -56,18 +67,34 @@ public class CommentContainer extends FrameLayout implements Container {
     protected void onFinishInflate() {
         super.onFinishInflate();
         this.presenter = new StorePresenterImpl(this);
-        this.comment_recyclerView = (RecyclerView) getChildAt(0);
+        this.comment_recyclerView = (RecyclerView) findViewById(R.id.comment_recyclerView);
+        this.comment_bottomSheet = (BottomSheet) findViewById(R.id.comment_bottomSheet);
         commentList = new ArrayList<>();
         commentList.add(null);
         adapter = new StoreCommentRecyclerViewAdapter(context, commentList);
         comment_recyclerView.setAdapter(adapter);
         comment_recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        comment_recyclerView.setVisibility(GONE);
+    }
+
+    public void show() {
+        if(this.peekHeight > 0) {
+            comment_bottomSheet.setPeekHeight(peekHeight);
+            getLayoutParams().height = peekHeight;
+            invalidate();
+            comment_bottomSheet.show();
+        }
+        else {
+            Log.e("CommentContainer.show()", "Set PeekHeight before show.");
+        }
+    }
+
+    public void setPeekHeight(int peekHeight) {
+        this.peekHeight = peekHeight;
     }
 
     @Override
     public boolean onBackPressed() {
-        bottomSheetBehavior = BottomSheetBehavior.from(this.getRootView().findViewById(R.id.bottom_sheet));
-        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
         presenter.cancelStoreComment();
         return true;
     }

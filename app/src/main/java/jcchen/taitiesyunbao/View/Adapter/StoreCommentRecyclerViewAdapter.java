@@ -20,7 +20,7 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import java.util.List;
 
 import jcchen.taitiesyunbao.R;
-import jcchen.taitiesyunbao.RoundedImageView;
+import jcchen.taitiesyunbao.View.Widget.RoundedImageView;
 import jcchen.taitiesyunbao.Entity.StoreComment;
 
 import static jcchen.taitiesyunbao.Entity.Constant.RESOURCE_GOOGLE;

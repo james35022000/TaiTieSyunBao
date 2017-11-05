@@ -33,6 +33,7 @@ import jcchen.taitiesyunbao.Entity.ImageAttr;
 import jcchen.taitiesyunbao.R;
 import jcchen.taitiesyunbao.Entity.StoreInfo;
 import jcchen.taitiesyunbao.View.MainActivity;
+import jcchen.taitiesyunbao.View.Widget.BottomSheet;
 
 import static jcchen.taitiesyunbao.Entity.Constant.LANGUAGE_TW;
 
@@ -45,8 +46,6 @@ public class StoreInfoContainer extends FrameLayout implements Container {
     private ViewFlipper pic_info_viewFlipper;
     private TextView name_textView, tel_textView, address_textView;
     private ImageView comment_imageView;
-    private BottomSheetBehavior bottomSheetBehavior;
-    private NestedScrollView bottom_sheet;
     private FrameLayout map, filter, store_info_container;
     private Container comment_container;
 
@@ -73,11 +72,9 @@ public class StoreInfoContainer extends FrameLayout implements Container {
         this.tel_textView = (TextView) view.findViewById(R.id.tel_textView);
         this.address_textView = (TextView) view.findViewById(R.id.address_textView);
         this.comment_imageView = (ImageView) view.findViewById(R.id.comment_imageView);
-        this.bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.bottom_sheet));
-        this.bottom_sheet = (NestedScrollView) view.findViewById(R.id.bottom_sheet);
         this.map = (FrameLayout) view.findViewById(R.id.map);
         this.filter = (FrameLayout) view.findViewById(R.id.filter);
-        this.store_info_container = (FrameLayout) view.findViewById(R.id.store_info_container);
+        this.store_info_container = this;
         this.comment_container = (Container) view.findViewById(R.id.comment_container);
 
         ((MainActivity) context).setBackPress(this);
@@ -86,7 +83,7 @@ public class StoreInfoContainer extends FrameLayout implements Container {
     public void onDestroy() {
         ((CommentContainer)comment_container).onDestroy();
         this.removeView((View) comment_container);
-        comment_imageView.clearAnimation();
+        //comment_imageView.clearAnimation();
         pic_info_viewFlipper.clearAnimation();
         for(int i = 0; i < pic_info_viewFlipper.getChildCount(); i++)
             pic_info_viewFlipper.removeView(pic_info_viewFlipper.getChildAt(i));
@@ -153,7 +150,7 @@ public class StoreInfoContainer extends FrameLayout implements Container {
                 .beginTransaction()
                 .add(R.id.map, mapFragment)
                 .commit();
-        mapFragment.getMapAsync(new OnMapReadyCallback() {
+        /*mapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 if(storeInfo == null)
@@ -174,33 +171,8 @@ public class StoreInfoContainer extends FrameLayout implements Container {
                     }
                 });
             }
-        });
+        });*/
 
-        // Hide bottom sheet initially.
-        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-        bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                switch(newState) {
-                    case BottomSheetBehavior.STATE_HIDDEN:
-                        ((MainActivity) context).popBackPress(comment_container);
-                        break;
-                    case BottomSheetBehavior.STATE_COLLAPSED:
-                        ((MainActivity) context).setBackPress(comment_container);
-                        break;
-                    case BottomSheetBehavior.STATE_EXPANDED:
-                        ((MainActivity) context).setBackPress(comment_container);
-                        break;
-                }
-            }
-
-            @Override
-            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-
-            }
-        });
-
-        // Set bottom sheet peek height and height.
         store_info_container.getViewTreeObserver().addOnGlobalLayoutListener(
                 new ViewTreeObserver.OnGlobalLayoutListener() {
                     @Override
@@ -216,34 +188,16 @@ public class StoreInfoContainer extends FrameLayout implements Container {
                                     comment_imageView.setAlpha(1f);
                             }
                         }).start();
-                        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) bottom_sheet.getLayoutParams();
-                        params.height = store_info_container.getHeight();
-                        bottom_sheet.setLayoutParams(params);
-                        bottomSheetBehavior.setPeekHeight((int)(store_info_container.getHeight() - (200 * context.getResources().getDisplayMetrics().density)));
                         store_info_container.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                     }
                 });
-        // Control bottom sheet by sliding comment_imageView.
-        comment_imageView.setOnTouchListener(new View.OnTouchListener() {
-            int last_y = 0;
+
+        comment_imageView.setOnClickListener(new OnClickListener() {
             @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                switch(motionEvent.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        last_y = (int) motionEvent.getRawY();
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        int y = (int) motionEvent.getRawY() - last_y;
-                        if(y < 0) {
-                            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                        }
-                        else if(y > 0) {
-                            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-                        }
-                        last_y = (int) motionEvent.getRawY();
-                        break;
-                }
-                return false;
+            public void onClick(View v) {
+                ((CommentContainer) comment_container).setPeekHeight((int) (getHeight() - (200 * context.getResources().getDisplayMetrics().density)));
+                ((CommentContainer) comment_container).show();
+                comment_imageView.setVisibility(GONE);
             }
         });
     }

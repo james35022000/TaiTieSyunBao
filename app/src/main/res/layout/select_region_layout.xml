@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorMapBackground">
 
-    <jcchen.taitiesyunbao.View.MapImageView
+    <jcchen.taitiesyunbao.View.Widget.MapImageView
         android:id="@+id/map_imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,7 +15,7 @@
         android:layout_marginRight="50dp"
         android:scaleType="center" />
 
-    <jcchen.taitiesyunbao.View.CircularListView.SelectRegionListView
+    <jcchen.taitiesyunbao.View.Widget.CircularListView.SelectRegionListView
         android:id="@+id/select_listView"
         android:layout_width="60sp"
         android:layout_height="150sp"
