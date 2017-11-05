@@ -1,116 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
 <jcchen.taitiesyunbao.View.Container.StoreInfoContainer xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/store_info_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground">
 
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:id="@+id/pic_info_relativeLayout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <RelativeLayout
-            android:id="@+id/pic_info_relativeLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <ViewFlipper
-                android:id="@+id/pic_info_viewFlipper"
-                android:layout_width="match_parent"
-                android:layout_height="200dp">
-
-            </ViewFlipper>
-
-            <FrameLayout
-                android:id="@+id/filter"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:alpha="0.7"
-                android:background="#222" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/info_relativeLayout"
+        <ViewFlipper
+            android:id="@+id/pic_info_viewFlipper"
             android:layout_width="match_parent"
             android:layout_height="200dp">
 
-            <TextView
-                android:id="@+id/name_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:textColor="@android:color/white"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+        </ViewFlipper>
 
-            <TextView
-                android:id="@+id/tel_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/name_textView"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
-                android:textColor="@android:color/white"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/address_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"
-                android:textColor="@android:color/white"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-        </RelativeLayout>
-
-        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/map"
+        <FrameLayout
+            android:id="@+id/filter"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/info_relativeLayout"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/edittext_border_color"
-            android:padding="1dp" />
+            android:layout_height="200dp"
+            android:alpha="0.7"
+            android:background="#222" />
 
-        <ImageView
-            android:id="@+id/comment_imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:src="@drawable/map_tab_unclick"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:visibility="gone" />
-        
-        <jcchen.taitiesyunbao.View.Container.CommentContainer
-            android:id="@+id/comment_container"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_alignParentBottom="true">
-
-            <jcchen.taitiesyunbao.View.Widget.BottomSheet
-                android:id="@+id/comment_bottomSheet"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"/>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/comment_recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:overScrollMode="never"/>
-
-        </jcchen.taitiesyunbao.View.Container.CommentContainer>
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/info_relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
 
+        <TextView
+            android:id="@+id/name_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
+        <TextView
+            android:id="@+id/tel_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/name_textView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:textColor="@android:color/white"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/address_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/info_relativeLayout"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/edittext_border_color"
+        android:padding="1dp" />
+
+    <ImageView
+        android:id="@+id/comment_imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:src="@drawable/map_tab_unclick"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone" />
+
+    <jcchen.taitiesyunbao.View.Container.CommentContainer
+        android:id="@+id/comment_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_alignParentBottom="true">
+
+        <jcchen.taitiesyunbao.View.Widget.BottomSheet
+            android:id="@+id/comment_bottomSheet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/comment_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"/>
+
+    </jcchen.taitiesyunbao.View.Container.CommentContainer>
 </jcchen.taitiesyunbao.View.Container.StoreInfoContainer>

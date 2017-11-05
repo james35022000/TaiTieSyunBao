@@ -47,6 +47,7 @@ public class CommentContainer extends RelativeLayout implements Container {
         super(context, attributeSet);
         this.context = context;
         this.peekHeight = -1;
+        setClipChildren(false);
     }
 
     public void loadComment(StoreInfo storeInfo) {

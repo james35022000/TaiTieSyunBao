@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
@@ -41,12 +42,13 @@ import static jcchen.taitiesyunbao.Entity.Constant.LANGUAGE_TW;
  * Created by JCChen on 2017/8/12.
  */
 
-public class StoreInfoContainer extends FrameLayout implements Container {
+public class StoreInfoContainer extends RelativeLayout implements Container {
 
     private ViewFlipper pic_info_viewFlipper;
     private TextView name_textView, tel_textView, address_textView;
     private ImageView comment_imageView;
-    private FrameLayout map, filter, store_info_container;
+    private FrameLayout map, filter;
+    private RelativeLayout store_info_container;
     private Container comment_container;
 
     private MapFragment mapFragment;
@@ -60,6 +62,7 @@ public class StoreInfoContainer extends FrameLayout implements Container {
     public StoreInfoContainer(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
         this.context = context;
+        setClipChildren(false);
     }
 
     @Override
