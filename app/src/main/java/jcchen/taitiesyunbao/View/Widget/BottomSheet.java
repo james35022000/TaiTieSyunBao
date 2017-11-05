@@ -10,6 +10,9 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
+import android.view.animation.OvershootInterpolator;
+
+import jcchen.taitiesyunbao.R;
 
 import static jcchen.taitiesyunbao.Entity.Constant.BOTTOMSHEET_STATUS_HIDE;
 import static jcchen.taitiesyunbao.Entity.Constant.BOTTOMSHEET_STATUS_PEEK;
@@ -27,6 +30,7 @@ public class BottomSheet extends View {
     private int MaxHeight;
     private int peekHeight;
     private int currentHeight;
+    private int overShootHeight;
 
     private Paint paint;
     private Path path;
@@ -38,7 +42,7 @@ public class BottomSheet extends View {
         currentHeight = 0;
         MaxHeight = 0;
         paint = new Paint();
-        paint.setColor(ContextCompat.getColor(context, android.R.color.white));
+        paint.setColor(ContextCompat.getColor(context, R.color.colorPrimary));
         paint.setAntiAlias(true);
         path = new Path();
     }
@@ -51,9 +55,10 @@ public class BottomSheet extends View {
             case BOTTOMSHEET_STATUS_HIDE:
                 break;
             case BOTTOMSHEET_STATUS_SHOWING:
-                controlPoint -= (currentHeight < MaxHeight/3 ? 100*currentHeight/MaxHeight*2 : 100);
+                controlPoint -= (currentHeight < MaxHeight/3 ? 150*currentHeight/MaxHeight*4 : 150);
                 break;
             case BOTTOMSHEET_STATUS_PEEK:
+                controlPoint -= overShootHeight;
                 break;
         }
         path.reset();
@@ -68,10 +73,10 @@ public class BottomSheet extends View {
     public void show() {
         if(this.peekHeight > 0) {
             MaxHeight = peekHeight;
-            ValueAnimator valueAnimator = ValueAnimator.ofInt(0, peekHeight);
-            valueAnimator.setDuration(800);
-            valueAnimator.setInterpolator(new AccelerateInterpolator());
-            valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            ValueAnimator show_VA = ValueAnimator.ofInt(0, peekHeight);
+            show_VA.setDuration(400);
+            show_VA.setInterpolator(new AccelerateInterpolator(0.6f));
+            show_VA.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
                     Status = BOTTOMSHEET_STATUS_SHOWING;
@@ -79,12 +84,23 @@ public class BottomSheet extends View {
 
                     if(currentHeight == peekHeight) {
                         Status = BOTTOMSHEET_STATUS_PEEK;
+                        ValueAnimator peek_VA = ValueAnimator.ofInt(150, 0);
+                        peek_VA.setDuration(300);
+                        peek_VA.setInterpolator(new OvershootInterpolator(4f));
+                        peek_VA.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                            @Override
+                            public void onAnimationUpdate(ValueAnimator animation) {
+                                overShootHeight = (int) animation.getAnimatedValue();
+                                invalidate();
+                            }
+                        });
+                        peek_VA.start();
                     }
 
                     invalidate();
                 }
             });
-            valueAnimator.start();
+            show_VA.start();
         }
         else {
             Log.e("BottomSheet.show()", "Set PeekHeight before show.");
