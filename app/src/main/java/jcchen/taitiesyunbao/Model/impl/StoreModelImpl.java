@@ -2,6 +2,7 @@ package jcchen.taitiesyunbao.Model.impl;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.DataSnapshot;
@@ -167,9 +168,10 @@ public class StoreModelImpl implements StoreModel{
                     try {
                         if (!storeInfo.getTel().equals("null")) {
                             String[] token = storeInfo.getTel().split(" ");
-                            storeInfo.setTel("(0" + token[1] + ") " + token[2] + " " + token[3]);
+                            storeInfo.setTel("(" + token[0] + ") " + token[1] + " " + token[2]);
                         }
                     } catch(Exception ex) {
+                        Log.i("ErrorTel", storeInfo.getTel());
                         ex.printStackTrace();
                     }
                     storeInfo.setRate(jsonObject.getJSONArray("j").getJSONArray(8).getString(3));

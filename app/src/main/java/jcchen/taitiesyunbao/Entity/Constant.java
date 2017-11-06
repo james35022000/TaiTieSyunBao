@@ -18,5 +18,6 @@ public class Constant {
     public static final int BOTTOMSHEET_STATUS_PEEK = 2;
     public static final int BOTTOMSHEET_STATUS_TOUCH = 3;
     public static final int BOTTOMSHEET_STATUS_DRAGGING = 4;
-    public static final int BOTTOMSHEET_STATUS_EXPAND = 5;
+    public static final int BOTTOMSHEET_STATUS_SMOOTH_SCROLL= 5;
+    public static final int BOTTOMSHEET_STATUS_EXPAND = 6;
 }

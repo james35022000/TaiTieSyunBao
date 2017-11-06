@@ -42,7 +42,7 @@ public class BottomSheet extends View {
         currentHeight = 0;
         MaxHeight = 0;
         paint = new Paint();
-        paint.setColor(ContextCompat.getColor(context, R.color.colorPrimary));
+        paint.setColor(ContextCompat.getColor(context, android.R.color.white));
         paint.setAntiAlias(true);
         path = new Path();
     }
@@ -55,7 +55,7 @@ public class BottomSheet extends View {
             case BOTTOMSHEET_STATUS_HIDE:
                 break;
             case BOTTOMSHEET_STATUS_SHOWING:
-                controlPoint -= (currentHeight < MaxHeight/3 ? 150*currentHeight/MaxHeight*4 : 150);
+                controlPoint -= (currentHeight < MaxHeight/3 ? 200*currentHeight/MaxHeight*4 : 200);
                 break;
             case BOTTOMSHEET_STATUS_PEEK:
                 controlPoint -= overShootHeight;
@@ -84,13 +84,15 @@ public class BottomSheet extends View {
 
                     if(currentHeight == peekHeight) {
                         Status = BOTTOMSHEET_STATUS_PEEK;
-                        ValueAnimator peek_VA = ValueAnimator.ofInt(150, 0);
-                        peek_VA.setDuration(300);
-                        peek_VA.setInterpolator(new OvershootInterpolator(4f));
+                        ValueAnimator peek_VA = ValueAnimator.ofInt(220, 0);
+                        peek_VA.setDuration(500);
+                        peek_VA.setInterpolator(new OvershootInterpolator(3f));
                         peek_VA.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                             @Override
                             public void onAnimationUpdate(ValueAnimator animation) {
                                 overShootHeight = (int) animation.getAnimatedValue();
+                                if(overShootHeight > 200)
+                                    overShootHeight = 200;
                                 invalidate();
                             }
                         });
@@ -109,5 +111,14 @@ public class BottomSheet extends View {
 
     public void setPeekHeight(int peekHeight) {
         this.peekHeight = peekHeight;
+    }
+
+    public int getStatus() {
+        return Status;
+    }
+
+    public interface AnimationListener {
+        void onAnimationStart();
+        void onAnimationEnd();
     }
 }

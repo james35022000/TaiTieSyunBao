@@ -16,6 +16,7 @@ import jcchen.taitiesyunbao.Presenter.StorePresenter;
 import jcchen.taitiesyunbao.Entity.StoreComment;
 import jcchen.taitiesyunbao.Entity.StoreInfo;
 import jcchen.taitiesyunbao.View.Container.Container;
+import jcchen.taitiesyunbao.View.MainActivity;
 
 /**
  * Created by JCChen on 2017/8/25.
@@ -27,8 +28,6 @@ public class StorePresenterImpl implements OnStoreListener, StorePresenter {
     private StorePresenter storePresenter;
 
     private StoreModel storeModel;
-
-    //private AsyncTask<String, Void, JSONObject> getStoreComment;
 
     private Context context;
 
@@ -97,8 +96,13 @@ public class StorePresenterImpl implements OnStoreListener, StorePresenter {
     }
 
     @Override
-    public void onCommentSuccess(StoreComment storeComment) {
-        container.showItem(storeComment);
+    public void onCommentSuccess(final StoreComment storeComment) {
+        ((MainActivity) context).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                container.showItem(storeComment);
+            }
+        });
     }
 
     @Override

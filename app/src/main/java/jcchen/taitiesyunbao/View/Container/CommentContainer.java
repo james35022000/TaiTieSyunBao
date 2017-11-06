@@ -1,18 +1,11 @@
 package jcchen.taitiesyunbao.View.Container;
 
 
-import android.animation.ValueAnimator;
 import android.content.Context;
-import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.animation.AccelerateInterpolator;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
@@ -115,4 +108,6 @@ public class CommentContainer extends RelativeLayout implements Container {
     public Context getActivity() {
         return context;
     }
+
+
 }
