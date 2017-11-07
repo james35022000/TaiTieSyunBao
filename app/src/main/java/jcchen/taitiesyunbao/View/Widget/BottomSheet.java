@@ -45,7 +45,7 @@ public class BottomSheet extends View {
         currentHeight = 0;
         MaxHeight = 0;
         paint = new Paint();
-        paint.setColor(ContextCompat.getColor(context, android.R.color.white));
+        paint.setColor(ContextCompat.getColor(context, android.R.color.black));
         paint.setAntiAlias(true);
         path = new Path();
     }
@@ -58,7 +58,7 @@ public class BottomSheet extends View {
             case BOTTOMSHEET_STATUS_HIDE:
                 break;
             case BOTTOMSHEET_STATUS_SHOWING:
-                controlPoint -= (currentHeight < MaxHeight/3 ? 200*currentHeight/MaxHeight*4 : 200);
+                controlPoint -= (currentHeight < MaxHeight/3 ? 150*currentHeight/MaxHeight*4 : 150);
                 break;
             case BOTTOMSHEET_STATUS_OVERSHOOT:
                 controlPoint -= overShootHeight;
@@ -78,9 +78,9 @@ public class BottomSheet extends View {
     public void show() {
         if(this.peekHeight > 0) {
             MaxHeight = peekHeight;
-            // Show BottomSheet animation start.
+            // Show BottomSheet animation.
             ValueAnimator show_VA = ValueAnimator.ofInt(0, peekHeight);
-            show_VA.setDuration(400);
+            show_VA.setDuration(300);
             show_VA.setInterpolator(new AccelerateInterpolator(0.6f));
             show_VA.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
@@ -93,33 +93,11 @@ public class BottomSheet extends View {
                         Status = BOTTOMSHEET_STATUS_OVERSHOOT;
                         if(animationListener != null)
                             animationListener.onShowAnimationEnd();
-
-                        //  Overshoot animation start.
-                        ValueAnimator overShoot_VA = ValueAnimator.ofInt(400, 0);
-                        overShoot_VA.setDuration(500);
-                        overShoot_VA.setInterpolator(new OvershootInterpolator(3f));
-                        overShoot_VA.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                            @Override
-                            public void onAnimationUpdate(ValueAnimator animation) {
-                                overShootHeight = (int) animation.getAnimatedValue();
-                                if(overShootHeight > 200)
-                                    overShootHeight = 200;
-                                invalidate();
-                            }
-                        });
-                        overShoot_VA.addListener(new AnimatorListenerAdapter() {
-                            @Override
-                            public void onAnimationEnd(Animator animation) {
-                                super.onAnimationEnd(animation);
-                                // Overshoot animation end.
-                                if(animationListener != null)
-                                    animationListener.onOverShootAnimationEnd();
-                            }
-                        });
-                        overShoot_VA.start();
+                        OverShoot();
                     }
-                    else
+                    else {
                         invalidate();
+                    }
                 }
             });
             show_VA.start();
@@ -127,6 +105,46 @@ public class BottomSheet extends View {
         else {
             Log.e("BottomSheet.show()", "Set PeekHeight before show.");
         }
+    }
+
+    public void OverShoot() {
+        // Brake animation.
+        ValueAnimator brake_VA = ValueAnimator.ofInt(0, 50);
+        brake_VA.setDuration(150);
+        brake_VA.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                overShootHeight = 150 + (int) animation.getAnimatedValue();
+                invalidate();
+            }
+        });
+        brake_VA.start();
+
+        //  Overshoot animation.
+        ValueAnimator overShoot_VA = ValueAnimator.ofInt(200, 0);
+        overShoot_VA.setDuration(200);
+        overShoot_VA.setStartDelay(150);
+        overShoot_VA.setInterpolator(new OvershootInterpolator(4f));
+        overShoot_VA.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                overShootHeight = (int) animation.getAnimatedValue();
+                if(overShootHeight > 200)
+                    overShootHeight = 200;
+                invalidate();
+            }
+        });
+        overShoot_VA.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                // Overshoot animation end.
+                if(animationListener != null)
+                    animationListener.onOverShootAnimationEnd();
+                Status = BOTTOMSHEET_STATUS_PEEK;
+            }
+        });
+        overShoot_VA.start();
     }
 
     public void setPeekHeight(int peekHeight) {
