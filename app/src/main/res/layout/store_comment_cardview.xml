@@ -4,7 +4,7 @@
     android:id="@+id/store_comment_cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    card_view:cardBackgroundColor="@color/cardview_light_background"
+    card_view:cardBackgroundColor="@android:color/transparent"
     card_view:cardElevation="0dp">
 
     <View
@@ -109,7 +109,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
-            android:background="@android:color/white" />
+            android:background="@android:color/transparent" />
 
         <ImageView
             android:id="@+id/resource_imageView"

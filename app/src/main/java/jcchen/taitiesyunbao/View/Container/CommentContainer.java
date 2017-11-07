@@ -74,6 +74,18 @@ public class CommentContainer extends RelativeLayout implements Container {
     public void show() {
         if(this.peekHeight > 0) {
             comment_bottomSheet.setPeekHeight(peekHeight);
+            comment_bottomSheet.addAnimationListener(new BottomSheet.onAnimationListener() {
+                @Override
+                public void onShowAnimationEnd() {
+                    // show content.
+                    comment_recyclerView.setVisibility(VISIBLE);
+                    comment_recyclerView.invalidate();
+                }
+                @Override
+                public void onOverShootAnimationEnd() {
+                    setClipChildren(true);
+                }
+            });
             getLayoutParams().height = peekHeight;
             invalidate();
             comment_bottomSheet.show();
@@ -108,6 +120,5 @@ public class CommentContainer extends RelativeLayout implements Container {
     public Context getActivity() {
         return context;
     }
-
 
 }

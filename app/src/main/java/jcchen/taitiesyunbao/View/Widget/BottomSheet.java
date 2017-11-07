@@ -1,5 +1,7 @@
 package jcchen.taitiesyunbao.View.Widget;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -12,9 +14,8 @@ import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
 
-import jcchen.taitiesyunbao.R;
-
 import static jcchen.taitiesyunbao.Entity.Constant.BOTTOMSHEET_STATUS_HIDE;
+import static jcchen.taitiesyunbao.Entity.Constant.BOTTOMSHEET_STATUS_OVERSHOOT;
 import static jcchen.taitiesyunbao.Entity.Constant.BOTTOMSHEET_STATUS_PEEK;
 import static jcchen.taitiesyunbao.Entity.Constant.BOTTOMSHEET_STATUS_SHOWING;
 
@@ -34,6 +35,8 @@ public class BottomSheet extends View {
 
     private Paint paint;
     private Path path;
+
+    private onAnimationListener animationListener;
 
     public BottomSheet(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
@@ -57,8 +60,10 @@ public class BottomSheet extends View {
             case BOTTOMSHEET_STATUS_SHOWING:
                 controlPoint -= (currentHeight < MaxHeight/3 ? 200*currentHeight/MaxHeight*4 : 200);
                 break;
-            case BOTTOMSHEET_STATUS_PEEK:
+            case BOTTOMSHEET_STATUS_OVERSHOOT:
                 controlPoint -= overShootHeight;
+                break;
+            case BOTTOMSHEET_STATUS_PEEK:
                 break;
         }
         path.reset();
@@ -73,6 +78,7 @@ public class BottomSheet extends View {
     public void show() {
         if(this.peekHeight > 0) {
             MaxHeight = peekHeight;
+            // Show BottomSheet animation start.
             ValueAnimator show_VA = ValueAnimator.ofInt(0, peekHeight);
             show_VA.setDuration(400);
             show_VA.setInterpolator(new AccelerateInterpolator(0.6f));
@@ -82,12 +88,17 @@ public class BottomSheet extends View {
                     Status = BOTTOMSHEET_STATUS_SHOWING;
                     currentHeight =  (int) animation.getAnimatedValue();
 
+                    // Show BottomSheet animation end.
                     if(currentHeight == peekHeight) {
-                        Status = BOTTOMSHEET_STATUS_PEEK;
-                        ValueAnimator peek_VA = ValueAnimator.ofInt(220, 0);
-                        peek_VA.setDuration(500);
-                        peek_VA.setInterpolator(new OvershootInterpolator(3f));
-                        peek_VA.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                        Status = BOTTOMSHEET_STATUS_OVERSHOOT;
+                        if(animationListener != null)
+                            animationListener.onShowAnimationEnd();
+
+                        //  Overshoot animation start.
+                        ValueAnimator overShoot_VA = ValueAnimator.ofInt(400, 0);
+                        overShoot_VA.setDuration(500);
+                        overShoot_VA.setInterpolator(new OvershootInterpolator(3f));
+                        overShoot_VA.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                             @Override
                             public void onAnimationUpdate(ValueAnimator animation) {
                                 overShootHeight = (int) animation.getAnimatedValue();
@@ -96,10 +107,19 @@ public class BottomSheet extends View {
                                 invalidate();
                             }
                         });
-                        peek_VA.start();
+                        overShoot_VA.addListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                super.onAnimationEnd(animation);
+                                // Overshoot animation end.
+                                if(animationListener != null)
+                                    animationListener.onOverShootAnimationEnd();
+                            }
+                        });
+                        overShoot_VA.start();
                     }
-
-                    invalidate();
+                    else
+                        invalidate();
                 }
             });
             show_VA.start();
@@ -113,12 +133,16 @@ public class BottomSheet extends View {
         this.peekHeight = peekHeight;
     }
 
+    public void addAnimationListener(onAnimationListener animationListener) {
+        this.animationListener = animationListener;
+    }
+
     public int getStatus() {
         return Status;
     }
 
-    public interface AnimationListener {
-        void onAnimationStart();
-        void onAnimationEnd();
+    public interface onAnimationListener {
+        void onShowAnimationEnd() ;
+        void onOverShootAnimationEnd();
     }
 }

@@ -15,9 +15,10 @@ public class Constant {
 
     public static final int BOTTOMSHEET_STATUS_HIDE = 0;
     public static final int BOTTOMSHEET_STATUS_SHOWING = 1;
-    public static final int BOTTOMSHEET_STATUS_PEEK = 2;
-    public static final int BOTTOMSHEET_STATUS_TOUCH = 3;
-    public static final int BOTTOMSHEET_STATUS_DRAGGING = 4;
-    public static final int BOTTOMSHEET_STATUS_SMOOTH_SCROLL= 5;
-    public static final int BOTTOMSHEET_STATUS_EXPAND = 6;
+    public static final int BOTTOMSHEET_STATUS_OVERSHOOT = 2;
+    public static final int BOTTOMSHEET_STATUS_PEEK = 3;
+    public static final int BOTTOMSHEET_STATUS_TOUCH = 4;
+    public static final int BOTTOMSHEET_STATUS_DRAGGING = 5;
+    public static final int BOTTOMSHEET_STATUS_SMOOTH_SCROLL= 6;
+    public static final int BOTTOMSHEET_STATUS_EXPAND = 7;
 }
