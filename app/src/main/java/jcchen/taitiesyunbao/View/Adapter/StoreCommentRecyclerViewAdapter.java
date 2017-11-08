@@ -37,6 +37,8 @@ public class StoreCommentRecyclerViewAdapter extends RecyclerView.Adapter<StoreC
 
     private boolean isCommentLoading = false;
 
+    private boolean AnimationState = true;
+
     private Context context;
 
     private List<StoreComment> commentList;
@@ -96,11 +98,11 @@ public class StoreCommentRecyclerViewAdapter extends RecyclerView.Adapter<StoreC
                     @Override
                     public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                         viewHolder.userPic_imageView.setImageBitmap(loadedImage);
-                        Animation animation = new AlphaAnimation(0, 1);
+                        /*Animation animation = new AlphaAnimation(0, 1);
                         AnimationSet animationSet = new AnimationSet(true);
                         animation.setDuration(500);
                         animationSet.addAnimation(animation);
-                        viewHolder.userPic_imageView.startAnimation(animationSet);
+                        viewHolder.userPic_imageView.startAnimation(animationSet);*/
                     }
                 });
                 viewHolder.time_textView.setText(commentList.get(index).getTime());
@@ -123,6 +125,9 @@ public class StoreCommentRecyclerViewAdapter extends RecyclerView.Adapter<StoreC
             default:
                 break;
         }
+
+        if(AnimationState)
+            contentAnimation(getItemViewType(index), viewHolder);
     }
 
     @Override
@@ -134,6 +139,27 @@ public class StoreCommentRecyclerViewAdapter extends RecyclerView.Adapter<StoreC
     public int getItemViewType(int position) {
         return position == 0? FIRST_CARD :
                 (position == commentList.size()) ? LOADING_CARD : DEFAULT_CARD;
+    }
+
+    public void setAnimationState(boolean AnimationState) {
+        this.AnimationState = AnimationState;
+    }
+
+    private void contentAnimation(int CARD, ViewHolder viewHolder) {
+        switch(CARD) {
+            case FIRST_CARD:
+
+                break;
+
+            case LOADING_CARD:
+                break;
+
+            case DEFAULT_CARD:
+                break;
+
+            default:
+                break;
+        }
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

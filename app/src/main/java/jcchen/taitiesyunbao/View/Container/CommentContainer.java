@@ -66,7 +66,7 @@ public class CommentContainer extends RelativeLayout implements Container {
         commentList = new ArrayList<>();
         commentList.add(null);
         adapter = new StoreCommentRecyclerViewAdapter(context, commentList);
-        comment_recyclerView.setAdapter(adapter);
+        //comment_recyclerView.setAdapter(adapter);
         comment_recyclerView.setLayoutManager(new LinearLayoutManager(context));
         comment_recyclerView.setVisibility(GONE);
     }
@@ -78,8 +78,7 @@ public class CommentContainer extends RelativeLayout implements Container {
                 @Override
                 public void onShowAnimationEnd() {
                     // show content.
-                    comment_recyclerView.setVisibility(VISIBLE);
-                    comment_recyclerView.invalidate();
+                    contentShow();
                 }
                 @Override
                 public void onOverShootAnimationEnd() {
@@ -95,6 +94,19 @@ public class CommentContainer extends RelativeLayout implements Container {
         }
     }
 
+    /**
+     * Show the content of BottomSheet after finishing showing animation.
+     *
+     * Suggest: Content show animation time should correspond to BottomSheet overShooting animation
+     * (ref. BottomSheet.OverShoot()) to show better results.
+     */
+    private void contentShow() {
+        adapter.setAnimationState(true);
+        comment_recyclerView.setAdapter(adapter);
+        comment_recyclerView.setVisibility(VISIBLE);
+        comment_recyclerView.scheduleLayoutAnimation();
+    }
+
     public void setPeekHeight(int peekHeight) {
         this.peekHeight = peekHeight;
     }
@@ -108,6 +120,7 @@ public class CommentContainer extends RelativeLayout implements Container {
     @Override
     public void showItem(Object object) {
         commentList.add((StoreComment) object);
+        adapter.setAnimationState(false);
         adapter.notifyItemChanged(commentList.size());
     }
 

@@ -45,7 +45,7 @@ public class BottomSheet extends View {
         currentHeight = 0;
         MaxHeight = 0;
         paint = new Paint();
-        paint.setColor(ContextCompat.getColor(context, android.R.color.black));
+        paint.setColor(ContextCompat.getColor(context, android.R.color.white));
         paint.setAntiAlias(true);
         path = new Path();
     }
@@ -107,7 +107,7 @@ public class BottomSheet extends View {
         }
     }
 
-    public void OverShoot() {
+    private void OverShoot() {
         // Brake animation.
         ValueAnimator brake_VA = ValueAnimator.ofInt(0, 50);
         brake_VA.setDuration(150);
@@ -120,7 +120,7 @@ public class BottomSheet extends View {
         });
         brake_VA.start();
 
-        //  Overshoot animation.
+        // Overshoot animation.
         ValueAnimator overShoot_VA = ValueAnimator.ofInt(200, 0);
         overShoot_VA.setDuration(200);
         overShoot_VA.setStartDelay(150);
