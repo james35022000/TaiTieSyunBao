@@ -1,15 +1,25 @@
 package jcchen.taitiesyunbao.View.Adapter;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.renderscript.Sampler;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
+import android.view.animation.OvershootInterpolator;
+import android.view.animation.TranslateAnimation;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -127,7 +137,7 @@ public class StoreCommentRecyclerViewAdapter extends RecyclerView.Adapter<StoreC
         }
 
         if(AnimationState)
-            contentAnimation(getItemViewType(index), viewHolder);
+            contentAnimation(getItemViewType(index), viewHolder, index);
     }
 
     @Override
@@ -145,16 +155,124 @@ public class StoreCommentRecyclerViewAdapter extends RecyclerView.Adapter<StoreC
         this.AnimationState = AnimationState;
     }
 
-    private void contentAnimation(int CARD, ViewHolder viewHolder) {
+    private void contentAnimation(int CARD, final ViewHolder viewHolder, int index) {
+        ObjectAnimator translationY, alphaIn;
+        AnimatorSet animatorSet;
         switch(CARD) {
             case FIRST_CARD:
+                // Star
+                for(int i = 0; i < 5; i++) {
+                    final int j = i;
+                    translationY = ObjectAnimator.ofFloat(viewHolder.star_imageView[i], "translationY", 300, 0);
+                    translationY.setDuration(250);
+                    translationY.setInterpolator(new OvershootInterpolator(2f));
+                    alphaIn = ObjectAnimator.ofFloat(viewHolder.star_imageView[i], "alpha", 0, 1);
+                    alphaIn.setDuration(100);
+                    animatorSet = new AnimatorSet();
+                    animatorSet.addListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationStart(Animator animation) {
+                            super.onAnimationStart(animation);
+                            viewHolder.star_imageView[j].setVisibility(View.VISIBLE);
+                        }
+                    });
+                    animatorSet.playTogether(translationY, alphaIn);
+                    animatorSet.setStartDelay(30 * i);
+                    animatorSet.start();
+                }
 
+                // Comment
+                translationY = ObjectAnimator.ofFloat(viewHolder.comment_editText, "translationY", 300, 0);
+                translationY.setDuration(250);
+                translationY.setInterpolator(new OvershootInterpolator(2f));
+                alphaIn = ObjectAnimator.ofFloat(viewHolder.comment_editText, "alpha", 0, 1);
+                alphaIn.setDuration(100);
+                animatorSet = new AnimatorSet();
+                animatorSet.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                        super.onAnimationStart(animation);
+                        viewHolder.comment_editText.setVisibility(View.VISIBLE);
+                    }
+                });
+                animatorSet.playTogether(translationY, alphaIn);
+                animatorSet.setStartDelay(90);
+                animatorSet.start();
+
+                // Button
+                translationY = ObjectAnimator.ofFloat(viewHolder.send_imageView, "translationY", 300, 0);
+                translationY.setDuration(250);
+                translationY.setInterpolator(new OvershootInterpolator(2f));
+                alphaIn = ObjectAnimator.ofFloat(viewHolder.send_imageView, "alpha", 0, 1);
+                alphaIn.setDuration(100);
+                animatorSet = new AnimatorSet();
+                animatorSet.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                        super.onAnimationStart(animation);
+                        viewHolder.send_imageView.setVisibility(View.VISIBLE);
+                    }
+                });
+                animatorSet.playTogether(translationY, alphaIn);
+                animatorSet.setStartDelay(150);
+                animatorSet.start();
                 break;
 
             case LOADING_CARD:
                 break;
 
             case DEFAULT_CARD:
+                // userPic
+                translationY = ObjectAnimator.ofFloat(viewHolder.userPic_imageView, "translationY", 300, 0);
+                translationY.setDuration(250);
+                translationY.setInterpolator(new OvershootInterpolator(1f));
+                alphaIn = ObjectAnimator.ofFloat(viewHolder.userPic_imageView, "alpha", 0, 1);
+                alphaIn.setDuration(100);
+                animatorSet = new AnimatorSet();
+                animatorSet.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                        super.onAnimationStart(animation);
+                        viewHolder.userPic_imageView.setVisibility(View.VISIBLE);
+                    }
+                });
+                animatorSet.playTogether(translationY, alphaIn);
+                animatorSet.setStartDelay(150 + index * 60);
+                animatorSet.start();
+
+                // userName & time
+                translationY = ObjectAnimator.ofFloat(viewHolder.userName_textView, "translationY", 300, 0);
+                translationY.setDuration(250);
+                translationY.setInterpolator(new OvershootInterpolator(1f));
+                alphaIn = ObjectAnimator.ofFloat(viewHolder.userName_textView, "alpha", 0, 1);
+                alphaIn.setDuration(100);
+                animatorSet = new AnimatorSet();
+                animatorSet.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                        super.onAnimationStart(animation);
+                        viewHolder.userName_textView.setVisibility(View.VISIBLE);
+                    }
+                });
+                animatorSet.playTogether(translationY, alphaIn);
+                animatorSet.setStartDelay(210 + index * 60);
+                animatorSet.start();
+                translationY = ObjectAnimator.ofFloat(viewHolder.time_textView, "translationY", 300, 0);
+                translationY.setDuration(250);
+                translationY.setInterpolator(new OvershootInterpolator(1f));
+                alphaIn = ObjectAnimator.ofFloat(viewHolder.time_textView, "alpha", 0, 1);
+                alphaIn.setDuration(100);
+                animatorSet = new AnimatorSet();
+                animatorSet.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                        super.onAnimationStart(animation);
+                        viewHolder.time_textView.setVisibility(View.VISIBLE);
+                    }
+                });
+                animatorSet.playTogether(translationY, alphaIn);
+                animatorSet.setStartDelay(210 + index * 60);
+                animatorSet.start();
                 break;
 
             default:
@@ -165,7 +283,8 @@ public class StoreCommentRecyclerViewAdapter extends RecyclerView.Adapter<StoreC
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public RoundedImageView userPic_imageView;
         public TextView userName_textView, comment_textView, time_textView;
-        public ImageView resource_imageView;
+        public EditText comment_editText;
+        public ImageView send_imageView, resource_imageView;
         public ImageView[] star_imageView = new ImageView[5];
         public ProgressBar progressBar;
         public ViewHolder(View v) {
@@ -180,6 +299,8 @@ public class StoreCommentRecyclerViewAdapter extends RecyclerView.Adapter<StoreC
             star_imageView[2] = (ImageView) v.findViewById(R.id.star2_imageView);
             star_imageView[3] = (ImageView) v.findViewById(R.id.star3_imageView);
             star_imageView[4] = (ImageView) v.findViewById(R.id.star4_imageView);
+            comment_editText = (EditText) v.findViewById(R.id.comment_editText);
+            send_imageView = (ImageView) v.findViewById(R.id.send_imageView);
             progressBar = (ProgressBar) v.findViewById(R.id.progressBar);
         }
     }

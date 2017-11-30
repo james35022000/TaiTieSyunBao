@@ -35,7 +35,9 @@
                 android:id="@+id/userPic_imageView"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:alpha="0"
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/userName_textView"
@@ -44,7 +46,9 @@
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/userPic_imageView"
                 android:layout_weight="1"
-                android:textStyle="bold" />
+                android:alpha="0"
+                android:textStyle="bold"
+                android:visibility="invisible" />
 
             <LinearLayout
                 android:id="@+id/rate_linearLayout"
@@ -60,6 +64,8 @@
                     android:layout_width="10dp"
                     android:layout_height="10dp"
                     android:layout_weight="1"
+                    android:alpha="0"
+                    android:visibility="invisible"
                     card_view:srcCompat="@drawable/star_selector" />
 
                 <ImageView
@@ -67,6 +73,8 @@
                     android:layout_width="10dp"
                     android:layout_height="10dp"
                     android:layout_weight="1"
+                    android:alpha="0"
+                    android:visibility="invisible"
                     card_view:srcCompat="@drawable/star_selector" />
 
                 <ImageView
@@ -74,6 +82,8 @@
                     android:layout_width="10dp"
                     android:layout_height="10dp"
                     android:layout_weight="1"
+                    android:alpha="0"
+                    android:visibility="invisible"
                     card_view:srcCompat="@drawable/star_selector" />
 
                 <ImageView
@@ -81,6 +91,8 @@
                     android:layout_width="10dp"
                     android:layout_height="10dp"
                     android:layout_weight="1"
+                    android:alpha="0"
+                    android:visibility="invisible"
                     card_view:srcCompat="@drawable/star_selector" />
 
                 <ImageView
@@ -88,6 +100,8 @@
                     android:layout_width="10dp"
                     android:layout_height="10dp"
                     android:layout_weight="1"
+                    android:alpha="0"
+                    android:visibility="invisible"
                     card_view:srcCompat="@drawable/star_selector" />
             </LinearLayout>
 
@@ -97,7 +111,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_weight="1"
-                android:textSize="12sp" />
+                android:alpha="0"
+                android:textSize="12sp"
+                android:visibility="invisible" />
         </RelativeLayout>
 
         <TextView
@@ -109,7 +125,9 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
-            android:background="@android:color/transparent" />
+            android:alpha="0"
+            android:background="@android:color/transparent"
+            android:visibility="invisible" />
 
         <ImageView
             android:id="@+id/resource_imageView"
@@ -117,6 +135,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/comment_textView"
+            android:alpha="0"
+            android:visibility="invisible"
             card_view:srcCompat="@drawable/powered_by_google_light" />
     </RelativeLayout>
 

@@ -30,7 +30,9 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
                 android:layout_weight="1"
+                android:alpha="0"
                 android:clickable="true"
+                android:visibility="invisible"
                 card_view:srcCompat="@drawable/star_selector" />
 
             <ImageView
@@ -39,7 +41,9 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
                 android:layout_weight="1"
+                android:alpha="0"
                 android:clickable="true"
+                android:visibility="invisible"
                 card_view:srcCompat="@drawable/star_selector" />
 
             <ImageView
@@ -48,7 +52,9 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
                 android:layout_weight="1"
+                android:alpha="0"
                 android:clickable="true"
+                android:visibility="invisible"
                 card_view:srcCompat="@drawable/star_selector" />
 
             <ImageView
@@ -57,7 +63,9 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
                 android:layout_weight="1"
+                android:alpha="0"
                 android:clickable="true"
+                android:visibility="invisible"
                 card_view:srcCompat="@drawable/star_selector" />
 
             <ImageView
@@ -66,7 +74,9 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
                 android:layout_weight="1"
+                android:alpha="0"
                 android:clickable="true"
+                android:visibility="invisible"
                 card_view:srcCompat="@drawable/star_selector" />
 
         </LinearLayout>
@@ -81,13 +91,15 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_weight="1"
+            android:alpha="0"
             android:background="@drawable/edittext_border_color"
             android:ems="10"
             android:gravity="top|left"
             android:hint="寫下你的想法..."
             android:inputType="textPersonName"
             android:padding="3dp"
-            android:textSize="10sp" />
+            android:textSize="10sp"
+            android:visibility="invisible" />
 
         <ImageView
             android:id="@+id/send_imageView"
@@ -96,7 +108,9 @@
             android:layout_below="@+id/comment_editText"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="10dp"
-            android:src="@drawable/send_icon" />
+            android:alpha="0"
+            android:src="@drawable/send_icon"
+            android:visibility="invisible" />
 
     </RelativeLayout>
 

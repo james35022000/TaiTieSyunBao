@@ -110,7 +110,7 @@ public class BottomSheet extends View {
     private void OverShoot() {
         // Brake animation.
         ValueAnimator brake_VA = ValueAnimator.ofInt(0, 50);
-        brake_VA.setDuration(150);
+        brake_VA.setDuration(200);
         brake_VA.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
@@ -123,7 +123,7 @@ public class BottomSheet extends View {
         // Overshoot animation.
         ValueAnimator overShoot_VA = ValueAnimator.ofInt(200, 0);
         overShoot_VA.setDuration(200);
-        overShoot_VA.setStartDelay(150);
+        overShoot_VA.setStartDelay(200);
         overShoot_VA.setInterpolator(new OvershootInterpolator(4f));
         overShoot_VA.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override

@@ -98,7 +98,7 @@ public class CommentContainer extends RelativeLayout implements Container {
      * Show the content of BottomSheet after finishing showing animation.
      *
      * Suggest: Content show animation time should correspond to BottomSheet overShooting animation
-     * (ref. BottomSheet.OverShoot()) to show better results.
+     * (ref. BottomSheet.OverShoot()) to display better results.
      */
     private void contentShow() {
         adapter.setAnimationState(true);
