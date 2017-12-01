@@ -5,8 +5,11 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Shader;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -33,7 +36,7 @@ public class BottomSheet extends View {
     private int currentHeight;
     private int overShootHeight;
 
-    private Paint paint;
+    private Paint paint_background, paint_shadow;
     private Path path;
 
     private onAnimationListener animationListener;
@@ -44,9 +47,13 @@ public class BottomSheet extends View {
         Status = BOTTOMSHEET_STATUS_HIDE;
         currentHeight = 0;
         MaxHeight = 0;
-        paint = new Paint();
-        paint.setColor(ContextCompat.getColor(context, android.R.color.white));
-        paint.setAntiAlias(true);
+        paint_background = new Paint();
+        paint_background.setColor(ContextCompat.getColor(context, android.R.color.white));
+        paint_background.setAntiAlias(true);
+        paint_shadow = new Paint();
+        paint_shadow.setStyle(Paint.Style.STROKE);
+        paint_shadow.setColor(ContextCompat.getColor(context, android.R.color.black));
+        paint_shadow.setAntiAlias(true);
         path = new Path();
     }
 
@@ -72,7 +79,16 @@ public class BottomSheet extends View {
         path.lineTo(getWidth(), MaxHeight - currentHeight);
         path.quadTo(getWidth()/2, controlPoint, 0, MaxHeight - currentHeight);
         path.lineTo(0, MaxHeight);
-        canvas.drawPath(path, paint);
+        canvas.drawPath(path, paint_background);
+
+        for(int i = 0; i < 20; i++) {
+            paint_shadow.setAlpha(127/20 * (20 - i));
+            path.reset();
+            path.moveTo(0, MaxHeight - currentHeight - i);
+            path.quadTo(getWidth()/2, controlPoint - i, getWidth(), MaxHeight - currentHeight - i);
+            path.quadTo(getWidth()/2, controlPoint - i, 0, MaxHeight - currentHeight - i);
+            canvas.drawPath(path, paint_shadow);
+        }
     }
 
     public void show() {
