@@ -61,6 +61,7 @@ public class BottomSheet extends View {
     protected void onDraw(Canvas canvas) {
         int controlPoint = MaxHeight - currentHeight;
         super.onDraw(canvas);
+        // Show
         switch(Status) {
             case BOTTOMSHEET_STATUS_HIDE:
                 break;
@@ -81,6 +82,7 @@ public class BottomSheet extends View {
         path.lineTo(0, MaxHeight);
         canvas.drawPath(path, paint_background);
 
+        // Shadow
         for(int i = 0; i < 20; i++) {
             paint_shadow.setAlpha(127/20 * (20 - i));
             path.reset();
@@ -91,6 +93,10 @@ public class BottomSheet extends View {
         }
     }
 
+    /**
+     * Show BottomSheet.
+     * Animation for 300ns.
+     */
     public void show() {
         if(this.peekHeight > 0) {
             MaxHeight = peekHeight;
@@ -116,6 +122,8 @@ public class BottomSheet extends View {
                     }
                 }
             });
+            if(animationListener != null)
+                animationListener.onShowAnimationStart();
             show_VA.start();
         }
         else {
@@ -123,6 +131,11 @@ public class BottomSheet extends View {
         }
     }
 
+    /**
+     * Implement overShooting effect.
+     * Brake for 200ns.
+     * OverShoot for 200ns.
+     */
     private void OverShoot() {
         // Brake animation.
         ValueAnimator brake_VA = ValueAnimator.ofInt(0, 50);
@@ -163,6 +176,10 @@ public class BottomSheet extends View {
         overShoot_VA.start();
     }
 
+    /**
+     * Before show BottomSheet, it must be set or it will send error message.
+     * @param peekHeight
+     */
     public void setPeekHeight(int peekHeight) {
         this.peekHeight = peekHeight;
     }
@@ -175,7 +192,15 @@ public class BottomSheet extends View {
         return Status;
     }
 
+    /**
+     * BottomSheet will call these listener in each state.
+     * Need to call addAnimationListener to add listener and implement each function.
+     *
+     * Warning: Must set "setClipChildren()" to false (implement in parent view) at
+     * onShowAnimationStart() and resume to true at onOverShootAnimationEnd().
+     */
     public interface onAnimationListener {
+        void onShowAnimationStart();
         void onShowAnimationEnd() ;
         void onOverShootAnimationEnd();
     }

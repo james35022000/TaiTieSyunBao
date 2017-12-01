@@ -41,7 +41,6 @@ public class CommentContainer extends RelativeLayout implements Container {
         super(context, attributeSet);
         this.context = context;
         this.peekHeight = -1;
-        setClipChildren(false);
     }
 
     public void loadComment(StoreInfo storeInfo) {
@@ -72,10 +71,17 @@ public class CommentContainer extends RelativeLayout implements Container {
         comment_recyclerView.setVisibility(GONE);
     }
 
+    /**
+     * Show BottomSheet and content.
+     */
     public void show() {
         if(this.peekHeight > 0) {
             comment_bottomSheet.setPeekHeight(peekHeight);
             comment_bottomSheet.addAnimationListener(new BottomSheet.onAnimationListener() {
+                @Override
+                public void onShowAnimationStart() {
+                    setClipChildren(false);
+                }
                 @Override
                 public void onShowAnimationEnd() {
                     // show content.
