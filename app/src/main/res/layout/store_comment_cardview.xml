@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:makeramen="http://schemas.android.com/tools"
     android:id="@+id/store_comment_cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -29,15 +30,15 @@
             android:id="@+id/userInfo_relativeLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            android:padding="10dp">
 
             <jcchen.taitiesyunbao.View.Widget.RoundedImageView
                 android:id="@+id/userPic_imageView"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_weight="1"
-                android:alpha="0"
-                android:visibility="invisible" />
+                android:scaleType="centerInside" />
 
             <TextView
                 android:id="@+id/userName_textView"
@@ -45,10 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/userPic_imageView"
-                android:layout_weight="1"
-                android:alpha="0"
-                android:textStyle="bold"
-                android:visibility="invisible" />
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:id="@+id/rate_linearLayout"
@@ -64,8 +62,6 @@
                     android:layout_width="10dp"
                     android:layout_height="10dp"
                     android:layout_weight="1"
-                    android:alpha="0"
-                    android:visibility="invisible"
                     card_view:srcCompat="@drawable/star_selector" />
 
                 <ImageView
@@ -73,8 +69,6 @@
                     android:layout_width="10dp"
                     android:layout_height="10dp"
                     android:layout_weight="1"
-                    android:alpha="0"
-                    android:visibility="invisible"
                     card_view:srcCompat="@drawable/star_selector" />
 
                 <ImageView
@@ -82,8 +76,6 @@
                     android:layout_width="10dp"
                     android:layout_height="10dp"
                     android:layout_weight="1"
-                    android:alpha="0"
-                    android:visibility="invisible"
                     card_view:srcCompat="@drawable/star_selector" />
 
                 <ImageView
@@ -91,8 +83,6 @@
                     android:layout_width="10dp"
                     android:layout_height="10dp"
                     android:layout_weight="1"
-                    android:alpha="0"
-                    android:visibility="invisible"
                     card_view:srcCompat="@drawable/star_selector" />
 
                 <ImageView
@@ -100,8 +90,6 @@
                     android:layout_width="10dp"
                     android:layout_height="10dp"
                     android:layout_weight="1"
-                    android:alpha="0"
-                    android:visibility="invisible"
                     card_view:srcCompat="@drawable/star_selector" />
             </LinearLayout>
 
@@ -111,9 +99,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_weight="1"
-                android:alpha="0"
-                android:textSize="12sp"
-                android:visibility="invisible" />
+                android:textSize="12sp" />
         </RelativeLayout>
 
         <TextView
@@ -125,9 +111,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
-            android:alpha="0"
-            android:background="@android:color/transparent"
-            android:visibility="invisible" />
+            android:background="@android:color/transparent" />
 
         <ImageView
             android:id="@+id/resource_imageView"
@@ -135,8 +119,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/comment_textView"
-            android:alpha="0"
-            android:visibility="invisible"
             card_view:srcCompat="@drawable/powered_by_google_light" />
     </RelativeLayout>
 

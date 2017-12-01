@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.ViewTreeObserver;
 import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
@@ -105,6 +106,13 @@ public class CommentContainer extends RelativeLayout implements Container {
         comment_recyclerView.setAdapter(adapter);
         comment_recyclerView.setVisibility(VISIBLE);
         comment_recyclerView.scheduleLayoutAnimation();
+        comment_recyclerView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                adapter.setAnimationState(false);
+                comment_recyclerView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            }
+        });
     }
 
     public void setPeekHeight(int peekHeight) {

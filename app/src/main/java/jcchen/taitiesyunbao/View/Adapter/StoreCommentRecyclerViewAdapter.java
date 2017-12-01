@@ -173,7 +173,7 @@ public class StoreCommentRecyclerViewAdapter extends RecyclerView.Adapter<StoreC
                         @Override
                         public void onAnimationStart(Animator animation) {
                             super.onAnimationStart(animation);
-                            viewHolder.star_imageView[j].setVisibility(View.VISIBLE);
+                            viewHolder.star_imageView[j].setAlpha(0f);
                         }
                     });
                     animatorSet.playTogether(translationY, alphaIn);
@@ -192,7 +192,7 @@ public class StoreCommentRecyclerViewAdapter extends RecyclerView.Adapter<StoreC
                     @Override
                     public void onAnimationStart(Animator animation) {
                         super.onAnimationStart(animation);
-                        viewHolder.comment_editText.setVisibility(View.VISIBLE);
+                        viewHolder.comment_editText.setAlpha(0f);
                     }
                 });
                 animatorSet.playTogether(translationY, alphaIn);
@@ -210,7 +210,7 @@ public class StoreCommentRecyclerViewAdapter extends RecyclerView.Adapter<StoreC
                     @Override
                     public void onAnimationStart(Animator animation) {
                         super.onAnimationStart(animation);
-                        viewHolder.send_imageView.setVisibility(View.VISIBLE);
+                        viewHolder.send_imageView.setAlpha(0f);
                     }
                 });
                 animatorSet.playTogether(translationY, alphaIn);
@@ -233,7 +233,7 @@ public class StoreCommentRecyclerViewAdapter extends RecyclerView.Adapter<StoreC
                     @Override
                     public void onAnimationStart(Animator animation) {
                         super.onAnimationStart(animation);
-                        viewHolder.userPic_imageView.setVisibility(View.VISIBLE);
+                        viewHolder.userPic_imageView.setAlpha(0f);
                     }
                 });
                 animatorSet.playTogether(translationY, alphaIn);
@@ -251,7 +251,7 @@ public class StoreCommentRecyclerViewAdapter extends RecyclerView.Adapter<StoreC
                     @Override
                     public void onAnimationStart(Animator animation) {
                         super.onAnimationStart(animation);
-                        viewHolder.userName_textView.setVisibility(View.VISIBLE);
+                        viewHolder.userName_textView.setAlpha(0f);
                     }
                 });
                 animatorSet.playTogether(translationY, alphaIn);
@@ -267,7 +267,7 @@ public class StoreCommentRecyclerViewAdapter extends RecyclerView.Adapter<StoreC
                     @Override
                     public void onAnimationStart(Animator animation) {
                         super.onAnimationStart(animation);
-                        viewHolder.time_textView.setVisibility(View.VISIBLE);
+                        viewHolder.time_textView.setAlpha(0f);
                     }
                 });
                 animatorSet.playTogether(translationY, alphaIn);
