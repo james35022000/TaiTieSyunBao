@@ -184,7 +184,7 @@ public class StoreCommentRecyclerViewAdapter extends RecyclerView.Adapter<StoreC
                 // Comment
                 translationY = ObjectAnimator.ofFloat(viewHolder.comment_editText, "translationY", 300, 0);
                 translationY.setDuration(250);
-                translationY.setInterpolator(new OvershootInterpolator(2f));
+                translationY.setInterpolator(new OvershootInterpolator(1.5f));
                 alphaIn = ObjectAnimator.ofFloat(viewHolder.comment_editText, "alpha", 0, 1);
                 alphaIn.setDuration(100);
                 animatorSet = new AnimatorSet();
@@ -202,7 +202,7 @@ public class StoreCommentRecyclerViewAdapter extends RecyclerView.Adapter<StoreC
                 // Button
                 translationY = ObjectAnimator.ofFloat(viewHolder.send_imageView, "translationY", 300, 0);
                 translationY.setDuration(250);
-                translationY.setInterpolator(new OvershootInterpolator(2f));
+                translationY.setInterpolator(new OvershootInterpolator(1.5f));
                 alphaIn = ObjectAnimator.ofFloat(viewHolder.send_imageView, "alpha", 0, 1);
                 alphaIn.setDuration(100);
                 animatorSet = new AnimatorSet();
@@ -272,6 +272,63 @@ public class StoreCommentRecyclerViewAdapter extends RecyclerView.Adapter<StoreC
                 });
                 animatorSet.playTogether(translationY, alphaIn);
                 animatorSet.setStartDelay(210 + index * 60);
+                animatorSet.start();
+
+                // star
+                for(int i = 0; i < 5; i++) {
+                    final int j = i;
+                    translationY = ObjectAnimator.ofFloat(viewHolder.star_imageView[i], "translationY", 300, 0);
+                    translationY.setDuration(250);
+                    translationY.setInterpolator(new OvershootInterpolator(0.7f));
+                    alphaIn = ObjectAnimator.ofFloat(viewHolder.star_imageView[i], "alpha", 0, 1);
+                    alphaIn.setDuration(100);
+                    animatorSet = new AnimatorSet();
+                    animatorSet.addListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationStart(Animator animation) {
+                            super.onAnimationStart(animation);
+                            viewHolder.star_imageView[j].setAlpha(0f);
+                        }
+                    });
+                    animatorSet.playTogether(translationY, alphaIn);
+                    animatorSet.setStartDelay(270 + index * 60 + 15 * i);
+                    animatorSet.start();
+                }
+
+                // comment
+                translationY = ObjectAnimator.ofFloat(viewHolder.comment_textView, "translationY", 300, 0);
+                translationY.setDuration(250);
+                translationY.setInterpolator(new OvershootInterpolator(1f));
+                alphaIn = ObjectAnimator.ofFloat(viewHolder.comment_textView, "alpha", 0, 1);
+                alphaIn.setDuration(100);
+                animatorSet = new AnimatorSet();
+                animatorSet.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                        super.onAnimationStart(animation);
+                        viewHolder.comment_textView.setAlpha(0f);
+                    }
+                });
+                animatorSet.playTogether(translationY, alphaIn);
+                animatorSet.setStartDelay(300 + index * 60);
+                animatorSet.start();
+
+                // resource
+                translationY = ObjectAnimator.ofFloat(viewHolder.resource_imageView, "translationY", 300, 0);
+                translationY.setDuration(250);
+                translationY.setInterpolator(new OvershootInterpolator(1f));
+                alphaIn = ObjectAnimator.ofFloat(viewHolder.resource_imageView, "alpha", 0, 1);
+                alphaIn.setDuration(100);
+                animatorSet = new AnimatorSet();
+                animatorSet.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                        super.onAnimationStart(animation);
+                        viewHolder.resource_imageView.setAlpha(0f);
+                    }
+                });
+                animatorSet.playTogether(translationY, alphaIn);
+                animatorSet.setStartDelay(330 + index * 60);
                 animatorSet.start();
                 break;
 

@@ -20,6 +20,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clipChildren="false"
+        android:clipToPadding="false"
         android:paddingBottom="10dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
@@ -30,6 +32,7 @@
             android:id="@+id/userInfo_relativeLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:clipChildren="false"
             android:clipToPadding="false"
             android:orientation="horizontal"
             android:padding="10dp">
@@ -38,6 +41,7 @@
                 android:id="@+id/userPic_imageView"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:cropToPadding="false"
                 android:scaleType="centerInside" />
 
             <TextView
