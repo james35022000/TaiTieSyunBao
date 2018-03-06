@@ -4,21 +4,14 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.renderscript.Sampler;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
 import android.view.animation.OvershootInterpolator;
-import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -29,29 +22,27 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 
 import java.util.List;
 
-import jcchen.taitiesyunbao.R;
-import jcchen.taitiesyunbao.View.Widget.RoundedImageView;
 import jcchen.taitiesyunbao.Entity.StoreComment;
+import jcchen.taitiesyunbao.R;
+import jcchen.taitiesyunbao.View.Widget.BottomSheetRV.RecyclerViewAdapter;
+import jcchen.taitiesyunbao.View.Widget.RoundedImageView;
 
 import static jcchen.taitiesyunbao.Entity.Constant.RESOURCE_GOOGLE;
 
 /**
- * Created by JCChen on 2017/7/28.
+ * Created by JCChen on 2018/2/27.
  */
 
-public class StoreCommentRecyclerViewAdapter extends RecyclerView.Adapter<StoreCommentRecyclerViewAdapter.ViewHolder> {
+public class StoreCommentRecyclerViewAdapter extends RecyclerViewAdapter<StoreCommentRecyclerViewAdapter.ViewHolder> {
 
     private final int DEFAULT_CARD = 0;
     private final int FIRST_CARD = 1;
     private final int LOADING_CARD = 2;
 
-    private boolean isCommentLoading = false;
-
-    private boolean AnimationState = true;
-
     private Context context;
-
     private List<StoreComment> commentList;
+
+    private boolean isCommentLoading = false;
 
     public StoreCommentRecyclerViewAdapter(Context context, List<StoreComment> commentList) {
         this.context = context;
@@ -62,36 +53,30 @@ public class StoreCommentRecyclerViewAdapter extends RecyclerView.Adapter<StoreC
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view;
         switch (viewType) {
-
             case FIRST_CARD:
                 view = LayoutInflater.from(viewGroup.getContext())
                         .inflate(R.layout.comment_first_cardview, viewGroup, false);
                 break;
-
             case LOADING_CARD:
                 view = LayoutInflater.from(viewGroup.getContext())
                         .inflate(R.layout.comment_recyclerview_progressbar, viewGroup, false);
                 break;
-
             case DEFAULT_CARD:
                 view = LayoutInflater.from(viewGroup.getContext())
                         .inflate(R.layout.store_comment_cardview, viewGroup, false);
                 break;
-
             default:
                 view = null;
                 break;
         }
-        return new ViewHolder(view);
+        return new StoreCommentRecyclerViewAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder viewHolder, final int index) {
-        switch(getItemViewType(index)) {
-
+    public void bindViewHolder(final int position, final StoreCommentRecyclerViewAdapter.ViewHolder viewHolder) {
+        switch(getItemViewType(position)) {
             case FIRST_CARD:
                 break;
-
             case LOADING_CARD:
                 if(isCommentLoading)
                     viewHolder.progressBar.setVisibility(View.VISIBLE);
@@ -99,12 +84,11 @@ public class StoreCommentRecyclerViewAdapter extends RecyclerView.Adapter<StoreC
                     viewHolder.progressBar.setVisibility(View.GONE);
                 viewHolder.progressBar.requestLayout();
                 break;
-
             case DEFAULT_CARD:
-                viewHolder.comment_textView.setText(commentList.get(index).getComment());
-                viewHolder.userName_textView.setText(commentList.get(index).getUserName());
+                viewHolder.comment_textView.setText(commentList.get(position).getComment());
+                viewHolder.userName_textView.setText(commentList.get(position).getUserName());
                 final ImageLoader imageLoader = ImageLoader.getInstance();
-                imageLoader.loadImage(commentList.get(index).getUserPicUrl(), new SimpleImageLoadingListener() {
+                imageLoader.loadImage(commentList.get(position).getUserPicUrl(), new SimpleImageLoadingListener() {
                     @Override
                     public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                         viewHolder.userPic_imageView.setImageBitmap(loadedImage);
@@ -115,14 +99,14 @@ public class StoreCommentRecyclerViewAdapter extends RecyclerView.Adapter<StoreC
                         viewHolder.userPic_imageView.startAnimation(animationSet);*/
                     }
                 });
-                viewHolder.time_textView.setText(commentList.get(index).getTime());
+                viewHolder.time_textView.setText(commentList.get(position).getTime());
                 for (int i = 0; i < 5; i++) {
-                    if (i < Integer.valueOf(commentList.get(index).getRate()))
+                    if (i < Integer.valueOf(commentList.get(position).getRate()))
                         viewHolder.star_imageView[i].setSelected(true);
                     else
                         viewHolder.star_imageView[i].setSelected(false);
                 }
-                switch (commentList.get(index).getResource()) {
+                switch (commentList.get(position).getResource()) {
                     case RESOURCE_GOOGLE:
                         viewHolder.resource_imageView.setImageDrawable(ContextCompat
                                 .getDrawable(context, R.drawable.powered_by_google_light));
@@ -131,13 +115,9 @@ public class StoreCommentRecyclerViewAdapter extends RecyclerView.Adapter<StoreC
                         break;
                 }
                 break;
-
             default:
                 break;
         }
-
-        if(AnimationState)
-            contentAnimation(getItemViewType(index), viewHolder, index);
     }
 
     @Override
@@ -147,15 +127,12 @@ public class StoreCommentRecyclerViewAdapter extends RecyclerView.Adapter<StoreC
 
     @Override
     public int getItemViewType(int position) {
-        return position == 0? FIRST_CARD :
-                (position == commentList.size()) ? LOADING_CARD : DEFAULT_CARD;
+        return position == 0 ? FIRST_CARD :
+                    (position == commentList.size()) ? LOADING_CARD : DEFAULT_CARD;
     }
 
-    public void setAnimationState(boolean AnimationState) {
-        this.AnimationState = AnimationState;
-    }
-
-    private void contentAnimation(int CARD, final ViewHolder viewHolder, int index) {
+    @Override
+    public void displayContentAnimation(int CARD, final ViewHolder viewHolder, int index) {
         ObjectAnimator translationY, alphaIn;
         AnimatorSet animatorSet;
         switch(CARD) {
@@ -360,14 +337,5 @@ public class StoreCommentRecyclerViewAdapter extends RecyclerView.Adapter<StoreC
             send_imageView = (ImageView) v.findViewById(R.id.send_imageView);
             progressBar = (ProgressBar) v.findViewById(R.id.progressBar);
         }
-    }
-
-    public void setLoadingState(boolean isCommentLoading) {
-        this.isCommentLoading = isCommentLoading;
-        notifyItemChanged(getItemCount());
-    }
-
-    public List<StoreComment> getCommentList() {
-        return commentList;
     }
 }

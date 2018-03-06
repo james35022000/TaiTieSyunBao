@@ -3,30 +3,48 @@
 
     <item
         is-multidex="true"
-        jar="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jar="C:\Users\Jack-NB\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp3\okhttp\3.8.1\4d060ca3190df0eda4dc13415532a12e15ca5f11\okhttp-3.8.1.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="3d46489ea840de7cc79ddc655e56ca5fbb9cd6ed">
-        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_fa0e223d470f5c7556bc6e0a483553f11a71c96b\classes.dex" />
+        sha1="4d060ca3190df0eda4dc13415532a12e15ca5f11">
+        <dex dex="D:\GitHub\TaiTieSyunBao\app\build\intermediates\transforms\dex\debug\folders\1000\10\okhttp-3.8.1_f7bf3b60e863ada2bc2251f202f2d0d7953c710c\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jar="D:\GitHub\TaiTieSyunBao\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
-        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_c0c8b9bf2d0871bf411ec03f7bd60a47cba0029c\classes.dex" />
+        sha1="a97b987cda64989782f413f2d0e2beb55f6e0cfa">
+        <dex dex="D:\GitHub\TaiTieSyunBao\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_f17a9748e2cf59b1bf4fac0d93e832abe5f5e7a0\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao\app\libs\universal-image-loader-1.9.5.jar"
+        jar="D:\GitHub\TaiTieSyunBao\app\libs\universal-image-loader-1.9.5.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
         sha1="442dbfb517b9ab5cb5c6da7ebf8cc28ec5bd0375">
-        <dex dex="C:\Users\Jack-PC\Documents\GitHub\TaiTieSyunBao\app\build\intermediates\transforms\dex\debug\folders\1000\2\universal-image-loader-1.9.5_219d6a4c9b98d67439928fec9b7b02fa48b512b9\classes.dex" />
+        <dex dex="D:\GitHub\TaiTieSyunBao\app\build\intermediates\transforms\dex\debug\folders\1000\2\universal-image-loader-1.9.5_3e82a8569df2a0f9c575133d618e4d3ff626f060\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\GitHub\TaiTieSyunBao\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
+        <dex dex="D:\GitHub\TaiTieSyunBao\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_62d4096bfc734e52e63871bfe8f65d7b8919a7aa\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Jack-NB\.gradle\caches\modules-2\files-2.1\com.squareup.okio\okio\1.13.0\a9283170b7305c8d92d25aff02a6ab7e45d06cbe\okio-1.13.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="a9283170b7305c8d92d25aff02a6ab7e45d06cbe">
+        <dex dex="D:\GitHub\TaiTieSyunBao\app\build\intermediates\transforms\dex\debug\folders\1000\10\okio-1.13.0_2bda45336b24a13d94950583ffd9444b64aea291\classes.dex" />
     </item>
 
 </items>
